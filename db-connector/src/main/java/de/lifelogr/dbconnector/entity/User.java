@@ -14,11 +14,17 @@ public class User
     @Id
     private ObjectId id;
 
-    private String telegramUserId;
-    private String telegramChatId;
-
     private String username;
 
-    @Reference
-    private List<TrackingObject> trackingObjects;
+    public ObjectId getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

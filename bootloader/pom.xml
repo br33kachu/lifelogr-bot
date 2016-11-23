@@ -64,5 +64,10 @@
             <artifactId>webservice</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>de.lifelogr</groupId>
+            <artifactId>db-connector</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>
