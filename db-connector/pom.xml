@@ -11,5 +11,11 @@
 
     <artifactId>db-connector</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>org.mongodb.morphia</groupId>
+            <artifactId>morphia</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+    </dependencies>
 </project>
