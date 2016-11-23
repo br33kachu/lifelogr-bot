@@ -16,16 +16,28 @@ public class DBConnector
     private final Morphia morphia = new Morphia();
     private Datastore datastore = null;
 
+    /**
+     * Private constructor, so none can create an instance of DBConnector.
+     */
     private DBConnector()
     {
+        // Build MongoDB auth URI
         MongoClientURI uri = new MongoClientURI("mongodb://syp:xjwyP0qu_YxL9L55p179tRLlBe3KNWMy@lifelogr.de/lifelog_bot");
         MongoClient mongoClient = new MongoClient(uri);
+
+        // Map entities to MongoDB
         morphia.mapPackage("de.lifelogr.dbconnector.entity");
 
+        // Connect to MongoDB
         datastore = morphia.createDatastore(mongoClient, uri.getDatabase());
         datastore.ensureIndexes();
     }
 
+    /**
+     * Get the one and only instance of DBConnector. Thread-safe.
+     *
+     * @return DBConnector instance.
+     */
     public static DBConnector getInstance()
     {
         if (instance == null) {
@@ -39,11 +51,21 @@ public class DBConnector
         return instance;
     }
 
+    /**
+     * Save a single User to the database.
+     *
+     * @param user User to be saved.
+     */
     public void addUser(User user)
     {
         datastore.save(user);
     }
 
+    /**
+     * Retrieve a List of all Users in the database.
+     *
+     * @return List of Users.
+     */
     public List<User> getAllUsers()
     {
         final Query<User> query = datastore.createQuery(User.class);
