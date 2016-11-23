@@ -1,4 +1,5 @@
 import de.lifelogr.communicator.Communicator;
+import de.lifelogr.webservice.Webservice;
 
 public class Bootloader
 {
@@ -6,5 +7,7 @@ public class Bootloader
     {
         // Init Communicator
         Communicator c = Communicator.getInstance();
+        Thread wsThread = new Thread(new Webservice());
+        wsThread.start();
     }
 }
