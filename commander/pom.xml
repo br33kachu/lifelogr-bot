@@ -13,4 +13,12 @@
     <packaging>jar</packaging>
     <name>Command Executioner</name>
     <description>Defines all commands which users can execute.</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>de.lifelogr</groupId>
+            <artifactId>communicator</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
 </project>
