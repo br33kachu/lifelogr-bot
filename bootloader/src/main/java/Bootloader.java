@@ -14,8 +14,7 @@ public class Bootloader
         Communicator c = Communicator.getInstance();
 
         // Start webserver
-        Thread wsThread = new Thread(new Webservice());
-        wsThread.start();
+        new Thread(new Webservice()).start();
 
         // Put user in database
         DBConnector dbc = DBConnector.getInstance();
