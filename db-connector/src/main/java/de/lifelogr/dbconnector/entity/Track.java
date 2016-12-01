@@ -1,7 +1,5 @@
 package de.lifelogr.dbconnector.entity;
 
-import org.mongodb.morphia.annotations.Entity;
-
 import java.util.Date;
 
 public class Track {

@@ -1,10 +1,14 @@
 package de.lifelogr.dbconnector.entity;
 
-import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Reference;
+import org.mongodb.morphia.annotations.Field;
+import org.mongodb.morphia.annotations.Index;
+import org.mongodb.morphia.annotations.Indexes;
 
 import java.util.List;
 
+@Indexes(
+        @Index(value = "name", fields = @Field("name"))
+)
 public class TrackingObject {
     private String name;
     private String unit;
