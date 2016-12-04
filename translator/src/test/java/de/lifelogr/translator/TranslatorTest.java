@@ -6,7 +6,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Created by marco on 04.12.2016.
+ * @author Marco Kretz
+ * @date 04.12.2016
  */
 public class TranslatorTest
 {
@@ -98,7 +99,7 @@ public class TranslatorTest
     public void testTranslateToTrack_00()
     {
         String userText = "Track Banane";
-        assertEquals("/track banane 1.0 ", this.translator.translate(userText));
+        assertEquals("/track banane 1.0", this.translator.translate(userText));
     }
 
     @Test
@@ -127,5 +128,12 @@ public class TranslatorTest
     {
         String userText = "Zähle Kaffee 3";
         assertEquals("/track kaffee 3.0", this.translator.translate(userText));
+    }
+
+    @Test
+    public void testTranslateToTrack_05()
+    {
+        String userText = "Ich habe 2 Bananen gegessen";
+        assertEquals("/track bananen 2.0", this.translator.translate(userText));
     }
 }
