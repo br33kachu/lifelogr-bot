@@ -1,6 +1,8 @@
 package de.lifelogr.translator;
 
+import java.util.Arrays;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 /**
  * Klasse zum Übersetzen von freiem Text in entsprechende Kommandos.
@@ -14,6 +16,7 @@ public class Translator
             "^(neu(er|es))?\\s?(profil|account)\\s?(anlegen|erstellen|starten)?$",
             "^(start|starten)$"
     };
+    private final String helpCommandPattern = "^(hilfe|help|anleitung|funktion(en)?|wie geht das|was (kannst|machst) du)(\\?)?$";
 
     /**
      * Übersetze einen vom User gesendeten Text in das entsprechende Kommando.
@@ -26,12 +29,38 @@ public class Translator
         // Text normalisieren
         text = text.trim().toLowerCase();
 
+        // Versuche in /start zu übersetzen
+        if (this.matchesStartCommand(text)) return "/start";
+        else if (this.matchesHelpCommand(text)) return "/help";
+
+        return "uknown";
+    }
+
+    /**
+     * Überprüft, ob ein String als Kommando "/start" interpretiert werden kann.
+     *
+     * @param text Zu überprüfender Text
+     * @return Ob der String als Kommando "/start" interpretiert wurde oder nicht.
+     */
+    private boolean matchesStartCommand(String text)
+    {
         for (String pattern : this.startCommandPatterns) {
             if (text.matches(pattern)) {
-                return "/start";
+                return true;
             }
         }
 
-        return "uknown command";
+        return false;
+    }
+
+    /**
+     * Überprüft, ob ein String als Kommando "/help" interpretiert werden kann.
+     *
+     * @param text Zu überprüfender Text
+     * @return Ob der String als Kommando "/help" interpretiert wurde oder nicht.
+     */
+    private boolean matchesHelpCommand(String text)
+    {
+        return text.matches(this.helpCommandPattern);
     }
 }
