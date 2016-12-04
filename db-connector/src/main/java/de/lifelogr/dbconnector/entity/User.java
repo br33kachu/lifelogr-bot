@@ -1,5 +1,7 @@
 package de.lifelogr.dbconnector.entity;
 
+import com.mongodb.DBObject;
+import de.lifelogr.notifier.Notifier;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.*;
 
@@ -133,4 +135,6 @@ public class User
     public void setTrackingObjects(List<TrackingObject> trackingObjects) {
         this.trackingObjects = trackingObjects;
     }
+
+
 }
