@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * @author Marco Kretz
  * @date 04.12.2016
  */
-public abstract class CommandMatcher
+abstract class CommandMatcher
 {
     protected ArrayList<String> patterns = new ArrayList<>();
 

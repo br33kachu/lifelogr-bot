@@ -1,12 +1,8 @@
 package de.lifelogr.translator;
 
-import de.lifelogr.translator.matcher.CommandMatcher;
 import de.lifelogr.translator.matcher.HelpCommandMatcher;
 import de.lifelogr.translator.matcher.StartCommandMatcher;
 import de.lifelogr.translator.matcher.TrackCommandMatcher;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Klasse zum Übersetzen von freiem Text in entsprechende Kommandos.

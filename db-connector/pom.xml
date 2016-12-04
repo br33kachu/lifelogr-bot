@@ -17,10 +17,5 @@
             <artifactId>morphia</artifactId>
             <version>1.2.1</version>
         </dependency>
-        <dependency>
-            <groupId>de.lifelogr</groupId>
-            <artifactId>notifier</artifactId>
-            <version>1.0</version>
-        </dependency>
     </dependencies>
 </project>
