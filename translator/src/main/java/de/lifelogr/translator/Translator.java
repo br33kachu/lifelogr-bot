@@ -1,9 +1,5 @@
 package de.lifelogr.translator;
 
-import java.util.Arrays;
-import java.util.regex.Pattern;
-import java.util.stream.Stream;
-
 /**
  * Klasse zum Übersetzen von freiem Text in entsprechende Kommandos.
  *
@@ -30,10 +26,13 @@ public class Translator
         text = text.trim().toLowerCase();
 
         // Versuche in /start zu übersetzen
-        if (this.matchesStartCommand(text)) return "/start";
-        else if (this.matchesHelpCommand(text)) return "/help";
+        if (this.matchesStartCommand(text)) {
+            return "/start";
+        } else if (this.matchesHelpCommand(text)) {
+            return "/help";
+        }
 
-        return "uknown";
+        return "unknown";
     }
 
     /**
