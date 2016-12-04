@@ -98,20 +98,34 @@ public class TranslatorTest
     public void testTranslateToTrack_00()
     {
         String userText = "Track Banane";
-        assertEquals("/track banane", this.translator.translate(userText));
+        assertEquals("/track banane 1.0 ", this.translator.translate(userText));
     }
 
     @Test
     public void testTranslateToTrack_01()
     {
         String userText = "tracke Banane";
-        assertEquals("/track banane", this.translator.translate(userText));
+        assertEquals("/track banane 1.0", this.translator.translate(userText));
     }
 
     @Test
     public void testTranslateToTrack_02()
     {
         String userText = "zähle Banane";
-        assertEquals("/track banane", this.translator.translate(userText));
+        assertEquals("/track banane 1.0", this.translator.translate(userText));
+    }
+
+    @Test
+    public void testTranslateToTrack_03()
+    {
+        String userText = "track Banane 2";
+        assertEquals("/track banane 2.0", this.translator.translate(userText));
+    }
+
+    @Test
+    public void testTranslateToTrack_04()
+    {
+        String userText = "Zähle Kaffee 3";
+        assertEquals("/track kaffee 3.0", this.translator.translate(userText));
     }
 }
