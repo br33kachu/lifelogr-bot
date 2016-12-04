@@ -1,5 +1,6 @@
 package de.lifelogr.dbconnector;
 
+import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import de.lifelogr.dbconnector.entity.User;
@@ -49,6 +50,11 @@ public class DBConnector
         }
 
         return instance;
+    }
+
+    public DBCollection getUsersCollection()
+    {
+        return this.datastore.getCollection(User.class);
     }
 
     /**
