@@ -1,5 +1,8 @@
 package de.lifelogr.translator;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Klasse zum Übersetzen von freiem Text in entsprechende Kommandos.
  *
@@ -13,6 +16,9 @@ public class Translator
             "^(start|starten)$"
     };
     private final String helpCommandPattern = "^(hilfe|help|anleitung|funktion(en)?|wie geht das|was (kannst|machst) du)(\\?)?$";
+    private final String[] trackCommandPatterns = {
+            "^(track(e)?|zähl(e)?){1}\\s{1}(\\w+)$"
+    };
 
     /**
      * Übersetze einen vom User gesendeten Text in das entsprechende Kommando.
@@ -30,6 +36,11 @@ public class Translator
             return "/start";
         } else if (this.matchesHelpCommand(text)) {
             return "/help";
+        }
+
+        String trackingObject = this.getTrackValue(text);
+        if (!trackingObject.equals("unknown object")) {
+            return "/track " + trackingObject;
         }
 
         return "unknown";
@@ -61,5 +72,19 @@ public class Translator
     private boolean matchesHelpCommand(String text)
     {
         return text.matches(this.helpCommandPattern);
+    }
+
+    private String getTrackValue(String text)
+    {
+        for (String s : this.trackCommandPatterns) {
+            Pattern p = Pattern.compile(s);
+            Matcher m = p.matcher(text);
+
+            if (m.find()) {
+                return m.group(4);
+            }
+        }
+
+        return "unknown object";
     }
 }

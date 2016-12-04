@@ -91,4 +91,27 @@ public class TranslatorTest
         String userText = "Wie geht das";
         assertEquals("/help", this.translator.translate(userText));
     }
+
+    // /track Kommando
+    // ======================================================================
+    @Test
+    public void testTranslateToTrack_00()
+    {
+        String userText = "Track Banane";
+        assertEquals("/track banane", this.translator.translate(userText));
+    }
+
+    @Test
+    public void testTranslateToTrack_01()
+    {
+        String userText = "tracke Banane";
+        assertEquals("/track banane", this.translator.translate(userText));
+    }
+
+    @Test
+    public void testTranslateToTrack_02()
+    {
+        String userText = "zähle Banane";
+        assertEquals("/track banane", this.translator.translate(userText));
+    }
 }
