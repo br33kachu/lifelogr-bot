@@ -1,0 +1,147 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.17.0/vis.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.17.0/vis.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<!-- NAVIGATION BAR AND LOGO! -->
+<nav class="light-blue" role="navigation">
+    <div class="nav-wrapper container">
+        <a id="logo-container" href="#" class="brand-logo">
+            LifeLogr
+        </a>
+    </div>
+</nav>
+<!-- BODY AND SOMETHING -->
+<div class="header center green-text">
+    <h5>Dein Diagramm:</h5>
+</div>
+<div id="divlogout" class="row">
+    <div class="col s9"></div>
+    <div class="btn red col s2">
+        <span>Abmelden</span>
+    </div>
+    <div class="col s1"></div>
+</div>
+
+<div class="row">
+    <div class="col s1"></div>
+    <div id="visualization" class="col s10">
+    </div>
+</div>
+    <div class="col s1"></div>
+</div>
+
+<div class="row">
+    <!-- DATEFORMS -->
+    <div class="col s3"></div>
+    <div id="datefrom" class="col s3">
+        <label for="dateFrom">Datum von:</label>
+        <input id="dateFrom" type="date" class="date-picker" name="dateFrom">
+    </div>
+    <div id="dateTo" class="col s3">
+        <label for="dateTo">Datum bis:</label>
+        <input id="dateTo" type="date" class="date-picker" name="dateTo">
+    </div>
+    <div class="col s3"></div>
+    <script>
+        /* TODO Datum einstellen und bei Auswahl, Graph verändern!
+        var $datepickerfrom = $('#datefrom');
+        $datepickerfrom.set('select', dateStart, {format: 'yyyy-mm-dd'});
+        var $datepickerto = $('#dateTo');
+        $datepickerto.set('select', dateEnd, {format: 'yyyy-mm-dd'});
+        */
+    </script>
+</div>
+
+<div class="row">
+    <!-- CHECKBOXES -->
+    <div class="col s3"></div>
+    <div id="checkboxes" class="col s6">
+        <div class="row">
+            <input type="checkbox" class="filled-in" id="checkbox-Bier" checked="checked" />
+            <label for="checkbox-Bier">Bier</label>
+        </div>
+        <div class="row">
+            <input type="checkbox" class="filled-in" id="checkbox-Kaffee" checked="checked" />
+            <label for="checkbox-Kaffee">Kaffee</label>
+        </div>
+        <div class="row">
+            <input type="checkbox" class="filled-in" id="checkbox-Banane" checked="checked" />
+            <label for="checkbox-Banane">Banane</label>
+        </div>
+    </div>
+    <div class="col s3"></div>
+</div>
+
+<div id="debug" class="row">
+</div>
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+
+<script>
+    var container = document.getElementById('visualization');
+
+    var items;
+    /*items = [{"x":"2016-11-11","y":"5","group":"Bier"},
+        {"x":"2016-11-20","y":"10","group":"Bier"},
+        {"x":"2016-11-21","y":"15","group":"Bier"},
+        {"x":"2016-11-22","y":"20","group":"Bier"},
+        {"x":"2016-11-23","y":"25","group":"Bier"},
+        {"x":"2016-11-24","y":"30","group":"Bier"},
+        {"x":"2016-11-25","y":"33","group":"Bier"},
+        {"x":"2016-11-26","y":"37","group":"Bier"},
+        {"x":"2016-11-27","y":"45","group":"Bier"},
+        {"x":"2016-11-28","y":"48","group":"Bier"},
+        {"x":"2016-11-20","y":"1","group":"Banane"},
+        {"x":"2016-11-21","y":"2","group":"Banane"},
+        {"x":"2016-11-22","y":"4","group":"Banane"},
+        {"x":"2016-11-23","y":"5","group":"Banane"},
+        {"x":"2016-11-24","y":"5","group":"Banane"},
+        {"x":"2016-11-25","y":"5","group":"Banane"},
+        {"x":"2016-11-26","y":"7","group":"Banane"},
+        {"x":"2016-11-27","y":"8","group":"Banane"},
+        {"x":"2016-11-24","y":"7","group":"Kaffee"},
+        {"x":"2016-11-25","y":"12","group":"Kaffee"},
+        {"x":"2016-11-26","y":"15","group":"Kaffee"},
+        {"x":"2016-11-27","y":"20","group":"Kaffee"}]; */
+    /* SETTINGS FOR VISJS */
+    var dateEnd = new Date();
+    dateEnd.setHours(0,0,0,0);
+    var dateStart = dateEnd-(30*1000*60*60*24);
+    var options = {
+        defaultGroup: 'ungrouped',
+        start: dateStart,
+        end: dateEnd,
+    };
+
+    $.ajax({
+        async: false,
+        dataType: "text",
+        url: 'http://localhost/getDataset/112233aabbcc' ,
+    }).done(function (result) {
+        items = result;
+        /*
+                        var debugdiv = document.createElement("div");
+                        debugdiv.setAttribute("class","col s12");
+                        var debugtext = document.createTextNode(items);
+                        debugdiv.appendChild(debugtext);
+                        document.getElementById("debug").appendChild(debugdiv);
+        */
+    });
+    var dataset = new vis.DataSet(items);
+    var Graph2d = new vis.Graph2d(container, dataset, options);
+
+
+</script>
+</body>
+</html>
