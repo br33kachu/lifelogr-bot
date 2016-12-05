@@ -21,7 +21,7 @@ public class Translator
     public String translate(String text)
     {
         // Text normalisieren
-        text = text.trim().toLowerCase();
+        text = text.trim().toLowerCase().replaceAll(" +", " ");
 
         HelpCommandMatcher hcm = new HelpCommandMatcher();
         if (hcm.matches(text)) {
@@ -36,8 +36,6 @@ public class Translator
         TrackCommandMatcher tcm = new TrackCommandMatcher();
         if (tcm.matches(text)) {
             return tcm.getTrackingParams(text).toString();
-        } else {
-            System.out.println("NOT MATCHED :(");
         }
 
         return null;

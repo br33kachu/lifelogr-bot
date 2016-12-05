@@ -3,7 +3,6 @@ package de.lifelogr.translator.matcher;
 import de.lifelogr.translator.structures.TrackingParams;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

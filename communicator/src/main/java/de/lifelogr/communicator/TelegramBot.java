@@ -1,5 +1,6 @@
 package de.lifelogr.communicator;
 
+import de.lifelogr.translator.Translator;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
@@ -16,22 +17,23 @@ public class TelegramBot extends TelegramLongPollingBot
     private final String botToken = "289154338:AAHw9d0vFfamnqQjIJDiCpPrXfHcRaG3cwg";
 
     /**
-     * Fired when user sent a message to the bot.
+     * Wir für jede einzelne empfangene Nachricht ausgeführt.
      *
-     * @param update Includes user info and sent message.
+     * @param update Enthält User-Infos und gesendete Nachricht.
      */
     @Override
     public void onUpdateReceived(Update update)
     {
-        // TODO: Let the message get translated by the translator and execute command.
         if (update.hasMessage()) {
             Message message = update.getMessage();
-            System.out.println("Neue Nachricht von " + message.getFrom().toString() + " empfangen!");
+            BotLogger.info("LIFELOG", "Neue Nachricht von " + message.getFrom().toString() + " empfangen!");
 
+            // Enthält die Nachricht geschriebenen Text?
             if (message.hasText()) {
+                String translatedCommand = new Translator().translate(message.getText());
                 SendMessage sendMessageRequest = new SendMessage();
                 sendMessageRequest.setChatId(message.getChatId().toString());
-                sendMessageRequest.setText("Du hast gesagt: " + message.getText());
+                sendMessageRequest.setText("Das habe ich übersetzt: " + translatedCommand);
 
                 try {
                     sendMessage(sendMessageRequest);
