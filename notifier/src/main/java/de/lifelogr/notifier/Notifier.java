@@ -11,6 +11,7 @@ public class Notifier extends Observer {
 
     private static Notifier instance;
     Notifier notifier = Notifier.getInstance();
+    Informant informant = Informant.getInstance();
 
     private Notifier() {}
 
@@ -23,7 +24,7 @@ public class Notifier extends Observer {
 
     @Override
     public void onInform(User user) {
-        System.out.println();
+        System.out.println(user);
     }
 }
 

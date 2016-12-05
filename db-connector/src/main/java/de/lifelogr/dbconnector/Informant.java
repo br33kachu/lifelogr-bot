@@ -1,8 +1,6 @@
 package de.lifelogr.dbconnector;
 
 import de.lifelogr.dbconnector.entity.User;
-import org.mongodb.morphia.annotations.PostPersist;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,9 +9,17 @@ import java.util.List;
  */
 public class Informant {
 
+    private static Informant instance;
     private static List<Observer> observerList = new ArrayList<>();
 
-    public void Informant() {}
+    private void Informant() {}
+
+    public static Informant getInstance() {
+        if(Informant.instance == null) {
+            Informant.instance = new Informant();
+        }
+        return Informant.instance;
+    }
 
     public void register(Observer observer) {
         if(!this.observerList.contains(observer)) {

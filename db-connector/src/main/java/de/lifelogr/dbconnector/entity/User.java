@@ -136,6 +136,7 @@ public class User
         this.trackingObjects = trackingObjects;
     }
 
+
     @PrePersist
         public void prePersist(DBObject object) {
             Informant.notify((User) object);
