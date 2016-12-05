@@ -18,6 +18,11 @@
             <version>1.0</version>
         </dependency>
         <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-reactivestreams</artifactId>
+            <version>1.3.0</version>
+        </dependency>
+        <dependency>
             <groupId>de.lifelogr</groupId>
             <artifactId>db-connector</artifactId>
             <version>1.0</version>
