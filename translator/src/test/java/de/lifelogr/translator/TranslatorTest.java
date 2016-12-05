@@ -157,4 +157,32 @@ public class TranslatorTest
         String userText = "2.5 Kaffee getrunken";
         assertEquals("/track kaffee 2.5", this.translator.translate(userText));
     }
+
+    @Test
+    public void testTranslateToTrack_09()
+    {
+        String userText = "Ich hatte 2 Bier";
+        assertEquals("/track bier 2.0", this.translator.translate(userText));
+    }
+
+    @Test
+    public void testTranslateToTrack_10()
+    {
+        String userText = "1 Bier";
+        assertEquals("/track bier 1.0", this.translator.translate(userText));
+    }
+
+    @Test
+    public void testTranslateToTrack_11()
+    {
+        String userText = "12 Bier getrunken";
+        assertEquals("/track bier 12.0", this.translator.translate(userText));
+    }
+
+    @Test
+    public void testTranslateToTrack_12()
+    {
+        String userText = "asdf Bier getrunken";
+        assertNull(this.translator.translate(userText));
+    }
 }

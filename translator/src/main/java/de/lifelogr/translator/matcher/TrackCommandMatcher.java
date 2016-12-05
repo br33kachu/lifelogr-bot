@@ -17,7 +17,7 @@ public class TrackCommandMatcher extends CommandMatcher
     public TrackCommandMatcher()
     {
         this.patterns.add("^(track(e)?|z(ä|ae)hl(e)?)\\s(?<name>\\w+)(\\s(?<value>[-+]?[0-9]*\\.?[0-9]+))?$");
-        this.patterns.add("^(ich\\shab(e)?\\s)?(?<value>[-+]?[0-9]*\\.?[0-9]+|ein(e)?|zwei|drei|vier|f(ü|ue)nf|sechs|sieben|acht|neun|zehn|elf|zw(ö|oe)lf)\\s(?<name>\\w+)\\s(gegessen|getrunken|verspeist)$");
+        this.patterns.add("^(ich\\s(hab(e)|hatte)?\\s)?(?<value>[-+]?[0-9]*\\.?[0-9]+|ein(e)?|zwei|drei|vier|f(ü|ue)nf|sechs|sieben|acht|neun|zehn|elf|zw(ö|oe)lf)\\s(?<name>\\w+)(\\s(gegessen|getrunken|verspeist))?$");
 
         this.numberStringMap = new HashMap<>();
         this.numberStringMap.put("ein", 1.0);
@@ -61,7 +61,7 @@ public class TrackCommandMatcher extends CommandMatcher
                 } catch (NumberFormatException nfe) {
                     value = this.numberStringMap.get(m.group("value"));
                 } catch (Exception e) {
-                    value = 1.0;
+                    value = 0.0;
                 }
 
                 return new TrackingParams(name, value);
