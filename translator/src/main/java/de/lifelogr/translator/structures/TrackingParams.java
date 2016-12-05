@@ -1,4 +1,4 @@
-package de.lifelogr.translator;
+package de.lifelogr.translator.structures;
 
 /**
  * @author Marco Kretz
@@ -26,5 +26,10 @@ public class TrackingParams {
 
     public void setValue(double value) {
         this.value = value;
+    }
+
+    public String toString()
+    {
+        return "/track " + this.name + " " + this.value;
     }
 }

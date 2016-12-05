@@ -12,7 +12,7 @@ abstract class CommandMatcher
 
     public boolean matches(String text)
     {
-        for (String pattern : patterns) {
+        for (String pattern : this.patterns) {
             if (text.matches(pattern)) {
                 return true;
             }

@@ -133,7 +133,28 @@ public class TranslatorTest
     @Test
     public void testTranslateToTrack_05()
     {
-        String userText = "Ich habe 2 Bananen gegessen";
-        assertEquals("/track bananen 2.0", this.translator.translate(userText));
+        String userText = "Ich habe 2 Kaffee getrunken";
+        assertEquals("/track kaffee 2.0", this.translator.translate(userText));
+    }
+
+    @Test
+    public void testTranslateToTrack_06()
+    {
+        String userText = "Ich habe drei Kaffee getrunken";
+        assertEquals("/track kaffee 3.0", this.translator.translate(userText));
+    }
+
+    @Test
+    public void testTranslateToTrack_07()
+    {
+        String userText = "Ich habe fünf Bananen gegessen";
+        assertEquals("/track banane 5.0", this.translator.translate(userText));
+    }
+
+    @Test
+    public void testTranslateToTrack_08()
+    {
+        String userText = "2.5 Kaffee getrunken";
+        assertEquals("/track kaffee 2.5", this.translator.translate(userText));
     }
 }
