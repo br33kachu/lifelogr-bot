@@ -66,7 +66,7 @@ public class DBConnector
      *
      * @param user User to be saved.
      */
-    public void addUser(User user)
+    public void saveUser(User user)
     {
         datastore.save(user);
     }
@@ -109,9 +109,5 @@ public class DBConnector
             return objectId;
         }
         return null;
-    }
-
-    public User loadUserFromDBObject(DBObject object) {
-        return morphia.fromDBObject(datastore, User.class, object);
     }
 }

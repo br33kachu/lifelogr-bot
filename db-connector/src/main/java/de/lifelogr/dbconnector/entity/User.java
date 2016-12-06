@@ -139,11 +139,8 @@ public class User
 
 
     @PostPersist
-        public void postPersist(DBObject object) {
-            DBConnector dbc = DBConnector.getInstance();
-            Informant.notifyObserver(dbc.loadUserFromDBObject(object));
+        public void postPersist() {
+        Informant.notifyObserver(this);
     }
 
 }
-
-
