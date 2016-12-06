@@ -6,6 +6,7 @@ import de.lifelogr.dbconnector.Informant;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class User
     private List<TrackingObject> trackingObjects;
 
     public User() {
+        this.trackingObjects = new ArrayList<>();
     }
 
     public ObjectId getId() {
@@ -140,7 +142,7 @@ public class User
 
     @PostPersist
         public void postPersist() {
-        Informant.notifyObserver(this);
+            Informant.notifyObserver(this);
     }
 
 }

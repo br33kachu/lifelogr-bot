@@ -1,5 +1,6 @@
 package de.lifelogr.dbconnector;
 
+import de.lifelogr.dbconnector.entity.TrackingObject;
 import de.lifelogr.dbconnector.entity.User;
 
 /**
@@ -7,5 +8,5 @@ import de.lifelogr.dbconnector.entity.User;
  */
 public abstract class Observer {
 
-    public abstract void onInform(User user);
+    public abstract void onInform(User user, TrackingObject trackingObject);
 }

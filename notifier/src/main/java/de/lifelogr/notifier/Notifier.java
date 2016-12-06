@@ -3,7 +3,9 @@ package de.lifelogr.notifier;
 import de.lifelogr.dbconnector.Informant;
 import de.lifelogr.dbconnector.Observer;
 import de.lifelogr.dbconnector.entity.*;
-import de.lifelogr.drink.DrinkCaffein;
+import de.lifelogr.recommendations.RecommendationsDrink;
+import de.lifelogr.trackingobjects.TrackingObjectType;
+import de.lifelogr.trackingobjects.TrackingObjects;
 
 /**
  * Created by Christin on 04.12.2016.
@@ -11,13 +13,16 @@ import de.lifelogr.drink.DrinkCaffein;
 public class Notifier extends Observer {
 
     private static Notifier instance = null;
-    Informant informant = Informant.getInstance();
-    DrinkCaffein drinkCaffein;
+    Informant informant;
+    TrackingObjects trackingObjects;
+    RecommendationsDrink recommendationsDrink;
 
 
     private Notifier() {
+        this.informant = Informant.getInstance();
         this.informant.register(this);
-        this.drinkCaffein = new DrinkCaffein();
+        this.trackingObjects = TrackingObjects.getInstance();
+        this.recommendationsDrink = new RecommendationsDrink();
     }
 
     public static Notifier getInstance() {
@@ -28,8 +33,12 @@ public class Notifier extends Observer {
     }
 
     @Override
-    public void onInform(User user) {
-        System.out.println(user.getUsername());
+    public void onInform(User user, TrackingObject trackingObject) {
+        for (TrackingObject tObject:user.getTrackingObjects()) {
+            if(this.trackingObjects.getType(tObject.getName()) == TrackingObjectType.KOFFEIN) {
+                System.out.println(this.recommendationsDrink.recommend(TrackingObjectType.KOFFEIN));
+            }
+        }
     }
 }
 
