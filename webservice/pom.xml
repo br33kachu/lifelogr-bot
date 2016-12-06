@@ -42,5 +42,10 @@
             <artifactId>json</artifactId>
             <version>20160810</version>
         </dependency>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>bson</artifactId>
+            <version>RELEASE</version>
+        </dependency>
     </dependencies>
 </project>

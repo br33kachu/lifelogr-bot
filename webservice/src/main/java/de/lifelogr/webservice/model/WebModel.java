@@ -26,6 +26,13 @@ public class WebModel {
 
     public String getDiagram(String dataSet) {
         Map<String, String> model = new HashMap<>();
+
+        // Set Welcome-Header
+        // TODO get real User and set the name
+        String username = System.getProperty("user.name");
+        String welcome = "Hi "+username+"! Hier sind deine tracks: ";
+        model.put("welcome", welcome);
+
         // Get Items and set it as 'item' element for HBS
         String items = "items = ";
         items = items.concat(dataSet);

@@ -22,15 +22,27 @@
     </div>
 </nav>
 <!-- BODY AND SOMETHING -->
-<div class="header center green-text">
-    <h5>Dein Diagramm:</h5>
-</div>
 <div id="divlogout" class="row">
     <div class="col s9"></div>
-    <div class="btn red col s2">
+    <div id="logout" class="waves-effect waves-light btn red col s3" onclick="logout()">
         <span>Abmelden</span>
     </div>
-    <div class="col s1"></div>
+    <script>
+        function logout() {
+            var $textfield = $('#logout');
+            $.ajax({
+                datatype: 'json',
+                url: 'logout',
+                type: 'GET',
+                success: function(result) {
+                    window.open('/','_self');
+                }
+            })
+        }
+    </script>
+</div>
+<div class="header center green-text">
+    <h5>{{welcome}}</h5>
 </div>
 
 <div class="row">
@@ -81,7 +93,7 @@
     /* SETTINGS FOR VISJS */
     var dateEnd = new Date();
     dateEnd.setHours(0,0,0,0);
-    var dateStart = dateEnd-(30*1000*60*60*24);
+    var dateStart = dateEnd-(15*1000*60*60*24);
     var options = {
         legend: true,
         defaultGroup: '',

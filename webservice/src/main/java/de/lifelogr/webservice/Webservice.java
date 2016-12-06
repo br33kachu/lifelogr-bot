@@ -61,6 +61,15 @@ public class Webservice implements Runnable
             return webController.getJSONDataSet(id);
         });
 
+
+        /**
+         * Loging out and destroy Session
+         * TODO Destroy the Session!
+         */
+        get("/test/logout",(request, response) -> {
+            return "{'loggedout': 'ok'}";
+        });
+
         // ----------- TEST METHODS FOR PROTOTYPE -------------
 
         /**
