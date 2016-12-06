@@ -34,10 +34,8 @@ public class Notifier extends Observer {
 
     @Override
     public void onInform(User user, TrackingObject trackingObject) {
-        for (TrackingObject tObject:user.getTrackingObjects()) {
-            if(this.trackingObjects.getType(tObject.getName()) == TrackingObjectType.KOFFEIN) {
-                System.out.println(this.recommendationsDrink.recommend(TrackingObjectType.KOFFEIN));
-            }
+        if(this.trackingObjects.getType(trackingObject.getName()) == TrackingObjectType.KOFFEIN) {
+            System.out.println(this.recommendationsDrink.recommend(TrackingObjectType.KOFFEIN));
         }
     }
 }

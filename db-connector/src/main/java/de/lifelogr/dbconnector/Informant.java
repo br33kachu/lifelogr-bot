@@ -30,7 +30,7 @@ public class Informant {
 
     public static void notifyObserver(User user, TrackingObject object) {
         for (Observer observer : Informant.observerList) {
-            //observer.onInform(user);
+            observer.onInform(user, object);
         }
     }
     

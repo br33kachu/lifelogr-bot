@@ -16,11 +16,8 @@ public class RecommendationsDrink {
         this.recommendations.put(TrackingObjectType.KOFFEIN, "Du hast heute schon sehr viel Koffein zu dir genommen! Trink doch lieber mal ein Glas Wasser, das schont deinen Magen.");
     }
 
-    public int consumed(List<TrackingObject> objects) {
-        for (TrackingObject tObject:objects) {
-
-        }
-        return 1;
+    public boolean recommenationNeeded() {
+        return true;
     }
 
     public String recommend(TrackingObjectType type) {
