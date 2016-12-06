@@ -26,7 +26,7 @@ public class Notifier extends Observer {
 
     @Override
     public void onInform(User user) {
-        System.out.println(user);
+        System.out.println(user.getUsername());
     }
 }
 
