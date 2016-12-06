@@ -38,9 +38,19 @@
                     <span>Anmelden</span>
                 </a>
             </form>
+            <script>
+                function login() {
+                    window.open('/test/diagram','_self');
+                }
+                $('#input_token').onkeyup(function (e) {
+                    if (e.keyCode === 13) {
+                        login();
+                    }
+                })
+            </script>
         </div>
     </div>
-    <div id="authfail" class="col s2 red"></div>
+    <div id="authfail" class="col s2"></div>
     <div class="col s2"></div>
     <div class="row center">
         <div class="col s1"></div>
@@ -54,28 +64,5 @@
 </div>
 <!-- Compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
-<script>
-    function login() {
-        var $textfield = $('#input_token');
-        $.ajax({
-            datatype: 'json',
-            url: 'login?token='+$textfield.val(),
-            type: 'GET',
-            success: function(result) {
-                if(result['auth'] === 'true') {
-                    window.open('diagram','_self');
-                } else {
-                    var $authfail = $('#authfail');
-                    $authfail.text("Token existiert nicht");
-                }
-            }
-        })
-    }
-    $('#input_token').onkeyup(function (e) {
-        if (e.keyCode === 13) {
-            login();
-        }
-    })
-</script>
 </body>
 </html>

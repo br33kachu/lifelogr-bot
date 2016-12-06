@@ -6,6 +6,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import de.lifelogr.dbconnector.entity.TrackingObject;
 import de.lifelogr.dbconnector.entity.User;
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
@@ -82,22 +83,30 @@ public class DBConnector
         return query.asList();
     }
 
+
     /**
      * Retrieve a JSON-String containing a List of all Tracking-Objects
      *
      * @return List of TrackingObjects if a User with matching token exists
      */
-    public List<TrackingObject> getTrackingObjectByToken(String token)
+    public List<TrackingObject> getTrackingObjectByUserId(ObjectId userId)
+    {
+        User user = datastore.get(User.class, userId);
+        Date date = new Date();
+        if(date.before(user.getTokenExpirationDate())) {
+            return user.getTrackingObjects();
+        }
+        return null;
+    }
+
+    public ObjectId getUserIdByToken(String token)
     {
         List<User> userList = datastore.createQuery(User.class)
                 .field("token").equal(token)
                 .asList();
         if(userList.size() == 1) {
-            User user = userList.get(0);
-            Date date = new Date();
-            if(date.before(user.getTokenExpirationDate())) {
-                return user.getTrackingObjects();
-            }
+            ObjectId objectId = userList.get(0).getId();
+            return objectId;
         }
         return null;
     }

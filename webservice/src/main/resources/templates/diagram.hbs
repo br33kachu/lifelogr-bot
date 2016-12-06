@@ -22,15 +22,27 @@
     </div>
 </nav>
 <!-- BODY AND SOMETHING -->
-<div class="header center green-text">
-    <h5>Dein Diagramm:</h5>
-</div>
 <div id="divlogout" class="row">
     <div class="col s9"></div>
-    <div class="btn red col s2">
+    <div id="logout" class="waves-effect waves-light btn red col s3" onclick="logout()">
         <span>Abmelden</span>
     </div>
-    <div class="col s1"></div>
+    <script>
+        function logout() {
+            var $textfield = $('#logout');
+            $.ajax({
+                datatype: 'json',
+                url: 'logout',
+                type: 'GET',
+                success: function(result) {
+                    window.open('/','_self');
+                }
+            })
+        }
+    </script>
+</div>
+<div class="header center green-text">
+    <h5>{{welcome}}</h5>
 </div>
 
 <div class="row">
@@ -66,82 +78,44 @@
 <div class="row">
     <!-- CHECKBOXES -->
     <div class="col s3"></div>
-    <div id="checkboxes" class="col s6">
-        <div class="row">
-            <input type="checkbox" class="filled-in" id="checkbox-Bier" checked="checked" />
-            <label for="checkbox-Bier">Bier</label>
-        </div>
-        <div class="row">
-            <input type="checkbox" class="filled-in" id="checkbox-Kaffee" checked="checked" />
-            <label for="checkbox-Kaffee">Kaffee</label>
-        </div>
-        <div class="row">
-            <input type="checkbox" class="filled-in" id="checkbox-Banane" checked="checked" />
-            <label for="checkbox-Banane">Banane</label>
-        </div>
+    <div id="checkboxes" class="col s6">{{{checkBoxes}}}
     </div>
     <div class="col s3"></div>
 </div>
 
-<div id="debug" class="row">
-</div>
 <!-- Compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
 
 <script>
     var container = document.getElementById('visualization');
-
     var items;
-    /*items = [{"x":"2016-11-11","y":"5","group":"Bier"},
-        {"x":"2016-11-20","y":"10","group":"Bier"},
-        {"x":"2016-11-21","y":"15","group":"Bier"},
-        {"x":"2016-11-22","y":"20","group":"Bier"},
-        {"x":"2016-11-23","y":"25","group":"Bier"},
-        {"x":"2016-11-24","y":"30","group":"Bier"},
-        {"x":"2016-11-25","y":"33","group":"Bier"},
-        {"x":"2016-11-26","y":"37","group":"Bier"},
-        {"x":"2016-11-27","y":"45","group":"Bier"},
-        {"x":"2016-11-28","y":"48","group":"Bier"},
-        {"x":"2016-11-20","y":"1","group":"Banane"},
-        {"x":"2016-11-21","y":"2","group":"Banane"},
-        {"x":"2016-11-22","y":"4","group":"Banane"},
-        {"x":"2016-11-23","y":"5","group":"Banane"},
-        {"x":"2016-11-24","y":"5","group":"Banane"},
-        {"x":"2016-11-25","y":"5","group":"Banane"},
-        {"x":"2016-11-26","y":"7","group":"Banane"},
-        {"x":"2016-11-27","y":"8","group":"Banane"},
-        {"x":"2016-11-24","y":"7","group":"Kaffee"},
-        {"x":"2016-11-25","y":"12","group":"Kaffee"},
-        {"x":"2016-11-26","y":"15","group":"Kaffee"},
-        {"x":"2016-11-27","y":"20","group":"Kaffee"}]; */
+    {{{items}}}
     /* SETTINGS FOR VISJS */
     var dateEnd = new Date();
     dateEnd.setHours(0,0,0,0);
-    var dateStart = dateEnd-(30*1000*60*60*24);
+    var dateStart = dateEnd-(15*1000*60*60*24);
     var options = {
-        defaultGroup: 'ungrouped',
+        legend: true,
+        defaultGroup: '',
         start: dateStart,
         end: dateEnd,
     };
 
-    $.ajax({
-        async: false,
-        dataType: "text",
-        url: 'http://localhost/getDataset/112233aabbcc' ,
-    }).done(function (result) {
-        items = result;
-        /*
-                        var debugdiv = document.createElement("div");
-                        debugdiv.setAttribute("class","col s12");
-                        var debugtext = document.createTextNode(items);
-                        debugdiv.appendChild(debugtext);
-                        document.getElementById("debug").appendChild(debugdiv);
-        */
-    });
     var dataset = new vis.DataSet(items);
-    var Graph2d = new vis.Graph2d(container, dataset, options);
+    var graph2d = new vis.Graph2d(container, dataset, options);
 
+    function onClickCheckbox(id) {
+        var $checkbox = $('#'+id);
+        var groupId = $('#label'+id).text();
+        var visibility = $checkbox.prop('checked');
+        setVisibility(groupId, visibility);
+    }
 
+    function setVisibility(groupId, visibility) {
+        var options = {groups:{visibility:{ }}};
+        options.groups.visibility[groupId] = visibility;
+        graph2d.setOptions(options);
+    }
 </script>
 </body>
 </html>
