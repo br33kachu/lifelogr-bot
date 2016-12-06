@@ -23,6 +23,8 @@ public class Bootloader
 
         User u = new User();
         u.setUsername("tester" + Long.toString(Math.round(Math.random() * 100)));
-        dbc.addUser(u);
+        dbc.saveUser(u);
+        u.setUsername("Horst");
+        dbc.saveUser(u);
     }
 }
