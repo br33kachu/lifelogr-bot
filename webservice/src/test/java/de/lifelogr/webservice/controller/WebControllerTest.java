@@ -21,7 +21,7 @@ public class WebControllerTest {
 */
     @org.junit.Test
     public void getJSONDataSet() throws Exception {
-        ObjectId id = new ObjectId("583cb111135672de475d8bea");
+        ObjectId id = new ObjectId("5846e843135672de475dc4a8");
         String result = webController.getJSONDataSet(id);
         assertNotEquals(result, null);
         System.out.println(result);
@@ -30,7 +30,7 @@ public class WebControllerTest {
     @org.junit.Test
     public void getUserIdByToken_01() throws Exception {
         ObjectId id = webController.getUserIdByToken("112233aabbcc");
-        ObjectId expectedId = new ObjectId("583cb111135672de475d8bea");
+        ObjectId expectedId = new ObjectId("5846e843135672de475dc4a8");
         assertEquals(id.toString(), expectedId.toString());
     }
 
