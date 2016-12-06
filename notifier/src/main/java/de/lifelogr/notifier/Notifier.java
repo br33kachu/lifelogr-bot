@@ -9,17 +9,19 @@ import de.lifelogr.dbconnector.entity.*;
  */
 public class Notifier extends Observer {
 
-    private static Notifier instance;
-    Notifier notifier = Notifier.getInstance();
+    private static Notifier instance = null;
     Informant informant = Informant.getInstance();
 
-    private Notifier() {}
+
+    private Notifier() {
+        informant.register(this);
+    }
 
     public static Notifier getInstance() {
-        if (Notifier.instance == null) {
-            Notifier.instance = new Notifier();
+        if (instance == null) {
+            instance = new Notifier();
         }
-        return Notifier.instance;
+        return instance;
     }
 
     @Override

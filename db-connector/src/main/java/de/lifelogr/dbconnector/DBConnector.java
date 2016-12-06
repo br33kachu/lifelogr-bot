@@ -1,6 +1,7 @@
 package de.lifelogr.dbconnector;
 
 import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import de.lifelogr.dbconnector.entity.TrackingObject;
@@ -99,5 +100,9 @@ public class DBConnector
             }
         }
         return null;
+    }
+
+    public User loadUserFromDBObject(DBObject object) {
+        return morphia.fromDBObject(datastore, User.class, object);
     }
 }

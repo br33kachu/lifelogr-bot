@@ -1,6 +1,7 @@
 package de.lifelogr.dbconnector.entity;
 
 import com.mongodb.DBObject;
+import de.lifelogr.dbconnector.DBConnector;
 import de.lifelogr.dbconnector.Informant;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.*;
@@ -139,7 +140,8 @@ public class User
 
     @PrePersist
         public void prePersist(DBObject object) {
-            Informant.notify((User) object);
+            DBConnector dbc = DBConnector.getInstance();
+            Informant.notifyObserver(dbc.loadUserFromDBObject(object));
     }
 
 }

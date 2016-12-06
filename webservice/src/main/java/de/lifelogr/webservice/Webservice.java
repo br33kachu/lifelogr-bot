@@ -15,7 +15,7 @@ public class Webservice implements Runnable
     @Override
     public void run() {
         //configure Spark
-        port(80);
+        //port(80);
 
         System.out.println("Running spark...");
         WebController webController = new WebController();

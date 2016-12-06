@@ -12,10 +12,6 @@
     <artifactId>translator</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>de.lifelogr</groupId>
-            <artifactId>commander</artifactId>
-            <version>1.0</version>
-        </dependency>
+
     </dependencies>
 </project>

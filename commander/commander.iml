@@ -56,6 +56,7 @@
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.9" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpmime:4.5.2" level="project" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.5" level="project" />
+    <orderEntry type="module" module-name="translator" />
     <orderEntry type="module" module-name="db-connector" />
     <orderEntry type="library" name="Maven: org.mongodb.morphia:morphia:1.2.1" level="project" />
     <orderEntry type="library" name="Maven: org.mongodb:mongo-java-driver:3.2.2" level="project" />
