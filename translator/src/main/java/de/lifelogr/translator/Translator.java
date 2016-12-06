@@ -12,7 +12,7 @@ import de.lifelogr.translator.matcher.TrackCommandMatcher;
  */
 public class Translator
 {
-    public static Translator instance = null;
+    private static Translator instance = null;
     private static Object mutex = new Object();
 
     private HelpCommandMatcher hcm;
