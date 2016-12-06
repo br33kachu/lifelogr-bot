@@ -16,7 +16,7 @@ public class TranslatorTest
     @Before
     public void before()
     {
-        this.translator = new Translator();
+        this.translator =Translator.getInstance();
     }
 
     // /start Kommando

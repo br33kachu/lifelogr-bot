@@ -51,8 +51,10 @@ public class TrackCommandMatcher extends CommandMatcher
                 String name = m.group("name");
 
                 // Wenn Mehrzahl angegeben wurde, Einzahl verwenden
-                if (name.endsWith("en")) {
+                if (name.endsWith("en") || name.endsWith("re")) {
                     name = name.substring(0, name.length() - 1);
+                } else if (name.endsWith("ren")) {
+                    name = name.substring(0, name.length() -2);
                 }
 
                 // Versuche, den angegebenen Wert zu ermitteln
@@ -61,7 +63,7 @@ public class TrackCommandMatcher extends CommandMatcher
                 } catch (NumberFormatException nfe) {
                     value = this.numberStringMap.get(m.group("value"));
                 } catch (Exception e) {
-                    value = 0.0;
+                    value = 1.0;
                 }
 
                 return new TrackingParams(name, value);
