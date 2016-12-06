@@ -1,14 +1,12 @@
 package de.lifelogr.webservice.controller;
 
-import com.github.jknack.handlebars.Handlebars;
-import com.github.jknack.handlebars.Template;
 import de.lifelogr.dbconnector.DBConnector;
 import de.lifelogr.dbconnector.entity.Track;
 import de.lifelogr.dbconnector.entity.TrackingObject;
+import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -18,9 +16,9 @@ import java.util.List;
 public class WebController {
     public WebController(){}
 
-    public String getJSONDataSet(String token) {
+    public String getJSONDataSet(ObjectId userId) {
         DBConnector dbc = DBConnector.getInstance();
-        List<TrackingObject> trackingObjectList = dbc.getTrackingObjectByToken(token);
+        List<TrackingObject> trackingObjectList = dbc.getTrackingObjectByUserId(userId);
         JSONArray jsonArray = new JSONArray();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         for(TrackingObject trackingObject: trackingObjectList) {
@@ -47,7 +45,13 @@ public class WebController {
                 }
             }
         }
-        System.out.println(jsonArray.toString());
         return jsonArray.toString();
     }
+
+    public ObjectId getUserIdByToken(String token) {
+        DBConnector dbc = DBConnector.getInstance();
+        ObjectId objectId = dbc.getUserIdByToken(token);
+        return objectId;
+    }
+
 }
