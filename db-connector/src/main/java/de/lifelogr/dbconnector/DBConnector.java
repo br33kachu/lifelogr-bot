@@ -1,6 +1,7 @@
 package de.lifelogr.dbconnector;
 
 import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import de.lifelogr.dbconnector.entity.TrackingObject;
@@ -82,6 +83,7 @@ public class DBConnector
         return query.asList();
     }
 
+
     /**
      * Retrieve a JSON-String containing a List of all Tracking-Objects
      *
@@ -109,4 +111,7 @@ public class DBConnector
         return null;
     }
 
+    public User loadUserFromDBObject(DBObject object) {
+        return morphia.fromDBObject(datastore, User.class, object);
+    }
 }

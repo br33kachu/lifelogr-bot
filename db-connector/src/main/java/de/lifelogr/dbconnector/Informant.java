@@ -9,16 +9,16 @@ import java.util.List;
  */
 public class Informant {
 
-    private static Informant instance;
+    private static Informant instance = null;
     private static List<Observer> observerList = new ArrayList<>();
 
     private void Informant() {}
 
     public static Informant getInstance() {
-        if(Informant.instance == null) {
-            Informant.instance = new Informant();
+        if(instance == null) {
+            instance = new Informant();
         }
-        return Informant.instance;
+        return instance;
     }
 
     public void register(Observer observer) {
@@ -27,7 +27,7 @@ public class Informant {
         }
     }
 
-    public static void notify(User user) {
+    public static void notifyObserver(User user) {
         for (Observer observer : Informant.observerList) {
             observer.onInform(user);
         }

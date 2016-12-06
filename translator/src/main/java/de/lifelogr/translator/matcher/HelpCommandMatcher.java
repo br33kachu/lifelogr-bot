@@ -8,6 +8,6 @@ public class HelpCommandMatcher extends CommandMatcher
 {
     public HelpCommandMatcher()
     {
-        this.patterns.add("^(hilfe|help|anleitung|funktion(en)?|wie geht das|was (kannst|machst) du)(\\?)?$");
+        this.patterns.add("^(\\?|hilfe|help|anleitung|funktion(en)?|wie geht das|was (kannst|machst) du)(\\?)?$");
     }
 }

@@ -30,7 +30,7 @@ public class TelegramBot extends TelegramLongPollingBot
 
             // Enthält die Nachricht geschriebenen Text?
             if (message.hasText()) {
-                String translatedCommand = new Translator().translate(message.getText());
+                String translatedCommand = Translator.getInstance().translate(message.getText());
                 SendMessage sendMessageRequest = new SendMessage();
                 sendMessageRequest.setChatId(message.getChatId().toString());
                 sendMessageRequest.setText("Das habe ich übersetzt: " + translatedCommand);

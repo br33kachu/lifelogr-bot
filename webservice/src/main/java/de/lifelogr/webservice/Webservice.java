@@ -10,9 +10,6 @@ public class Webservice implements Runnable
 {
     @Override
     public void run() {
-        //configure Spark
-        port(4567);
-
         System.out.println("Running spark...");
         WebController webController = new WebController();
         WebModel webModel = new WebModel();

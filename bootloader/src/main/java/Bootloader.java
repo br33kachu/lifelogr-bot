@@ -1,6 +1,7 @@
 import de.lifelogr.communicator.Communicator;
 import de.lifelogr.dbconnector.DBConnector;
 import de.lifelogr.dbconnector.entity.User;
+import de.lifelogr.notifier.Notifier;
 import de.lifelogr.webservice.Webservice;
 
 /**
@@ -18,6 +19,7 @@ public class Bootloader
 
         // Put user in database
         DBConnector dbc = DBConnector.getInstance();
+        Notifier notifier = Notifier.getInstance();
 
         User u = new User();
         u.setUsername("tester" + Long.toString(Math.round(Math.random() * 100)));
