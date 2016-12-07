@@ -24,6 +24,6 @@ public class RecommendationsDrink {
         if (type.equals(TrackingObjectType.KOFFEIN)) {
             return this.recommendations.get(TrackingObjectType.KOFFEIN);
         }
-        return "fehler";
+        return "error";
     }
 }
