@@ -37,20 +37,21 @@ public class TrackCommand extends BotCommand
             String name = arguments[0].trim();
             Double count = Double.parseDouble(arguments[1]);
 
-            TrackingObject tr = currentUser.getTrackingObjectByName(name);
+            TrackingObject trackingObject = currentUser.getTrackingObjectByName(name);
 
-            if (tr == null) {
-                tr = new TrackingObject();
-                tr.setName(name);
-                tr.setCurrentCount(count);
-                currentUser.getTrackingObjects().add(tr);
-            } else {
-                Track track = new Track();
-                track.setCount(count);
-                tr.setCurrentCount(tr.getCurrentCount() + count);
-                tr.getTracks().add(track);
+            if (trackingObject == null) {
+                trackingObject = new TrackingObject();
+                trackingObject.setName(name);
+                trackingObject.setCurrentCount(count);
+                currentUser.getTrackingObjects().add(trackingObject);
             }
 
+            // Add Track to TrackingObject
+            Track track = new Track();
+            track.setCount(count);
+            trackingObject.getTracks().add(track);
+
+            // Persist changes
             this.icrudUser.saveUser(currentUser);
         }
     }

@@ -13,7 +13,9 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.logging.BotLogger;
 
 /**
- * @author marco
+ *
+ *
+ * @author Marco Kretz
  */
 public class StartCommand extends BotCommand
 {
