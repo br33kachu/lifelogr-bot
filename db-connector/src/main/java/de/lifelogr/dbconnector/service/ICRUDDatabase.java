@@ -78,9 +78,9 @@ public class ICRUDDatabase {
      * @param telegramId die eindeutige TelegramID des Users
      * @return User-Objekt, falls ein User mit der telegramId existiert - andernfalls null
      */
-    public User getUser(String telegramId) {
+    public User getUser(int telegramId) {
         User user = datastore.createQuery(User.class)
-                .field("telegramId").equalIgnoreCase(telegramId)
+                .field("telegramId").equal(telegramId)
                 .get();
         return user;
     }
@@ -94,12 +94,12 @@ public class ICRUDDatabase {
      * @param trackingObject das hinzufügende TrackingObjekt
      * @return
      */
-    public int updateTrackingObjectByTelegramId(String telegramId, TrackingObject trackingObject) {
+    public int updateTrackingObjectByTelegramId(int telegramId, TrackingObject trackingObject) {
         int status = 0;
         if (trackingObject != null) {
             // Erstelle einen UpdateQuery mit dem passenden User
             final Query<User> userQuery = datastore.createQuery(User.class)
-                    .field("telegramId").equalIgnoreCase(telegramId);
+                    .field("telegramId").equal(telegramId);
             User user = userQuery.get();
             // Wurde ein User gefunden?
             if (user != null) {
