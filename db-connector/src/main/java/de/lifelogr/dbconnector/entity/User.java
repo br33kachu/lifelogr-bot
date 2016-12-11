@@ -171,13 +171,30 @@ public class User
         return (!this.username.isEmpty() && !this.birthDate.isEmpty());
     }
 
+    public TrackingObject getLastAddedTrackingObject()
+    {
+        TrackingObject result = null;
+
+        for (TrackingObject current : this.trackingObjects) {
+            if (result == null) {
+                result = current;
+            } else {
+                if (current.getTracks().get(current.getTracks().size() - 1).getDate().getTime() > result.getTracks().get(current.getTracks().size() - 1).getDate().getTime()) {
+                    result = current;
+                }
+            }
+        }
+
+        return result;
+    }
+
     @PostLoad
     public void cacheTrackingObjects()
     {
         this.trackingObjectsTemp = new ArrayList<>(this.trackingObjects);
     }
 
-    /*@PostPersist
+    @PostPersist
     public void postPersist()
     {
         for (int i = 0; i < this.trackingObjects.size(); i++) {
@@ -190,5 +207,5 @@ public class User
                 return;
             }
         }
-    }*/
+    }
 }
