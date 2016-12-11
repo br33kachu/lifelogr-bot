@@ -16,13 +16,14 @@ public class Notifier extends Observer {
     Informant informant;
     TrackingObjects trackingObjects;
     RecommendationsDrink recommendationsDrink;
-
+    TrackingObjectType trackingObjectType;
 
     private Notifier() {
         this.informant = Informant.getInstance();
         this.informant.register(this);
         this.trackingObjects = TrackingObjects.getInstance();
         this.recommendationsDrink = new RecommendationsDrink();
+        this.trackingObjectType = null;
     }
 
     public static Notifier getInstance() {
@@ -34,9 +35,12 @@ public class Notifier extends Observer {
 
     @Override
     public void onInform(User user, TrackingObject trackingObject) {
-        if(this.trackingObjects.getType(trackingObject.getName()) == TrackingObjectType.KOFFEIN) {
+        this.trackingObjectType = trackingObjects.getType(trackingObject.getName());
+        if (this.trackingObjectType == TrackingObjectType.KOFFEIN && this.recommendationsDrink.recommenationNeeded(user, this.trackingObjectType)) {
             System.out.println(this.recommendationsDrink.recommend(TrackingObjectType.KOFFEIN));
-        }
+        } else if (this.trackingObjectType == TrackingObjectType.ALKOHOL) {
+            System.out.println(this.recommendationsDrink.recommend(TrackingObjectType.ALKOHOL));
+        } else if (this.trackingObjectType == TrackingObjectType.UNBEKANNT) {}
     }
 }
 
