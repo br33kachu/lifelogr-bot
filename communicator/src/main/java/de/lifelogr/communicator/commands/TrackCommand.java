@@ -44,6 +44,8 @@ public class TrackCommand extends BotCommand
                 trackingObject.setName(name);
                 trackingObject.setCurrentCount(count);
                 currentUser.getTrackingObjects().add(trackingObject);
+            } else {
+                trackingObject.setCurrentCount(trackingObject.getCurrentCount() + count);
             }
 
             // Add Track to TrackingObject
