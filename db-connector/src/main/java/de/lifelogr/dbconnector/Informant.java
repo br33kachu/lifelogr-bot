@@ -1,5 +1,6 @@
 package de.lifelogr.dbconnector;
 
+import de.lifelogr.dbconnector.entity.TrackingObject;
 import de.lifelogr.dbconnector.entity.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +28,9 @@ public class Informant {
         }
     }
 
-    public static void notifyObserver(User user) {
+    public static void notifyObserver(User user, TrackingObject object) {
         for (Observer observer : Informant.observerList) {
-            observer.onInform(user);
+            observer.onInform(user, object);
         }
     }
     

@@ -1,13 +1,11 @@
 package de.lifelogr.dbconnector.entity;
 
-import com.mongodb.DBObject;
-import de.lifelogr.dbconnector.DBConnector;
 import de.lifelogr.dbconnector.Informant;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.*;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity("users")
 @Indexes(
@@ -28,9 +26,13 @@ public class User
     private String lastName;
     private String nickName;
     private String birthDate;
-    private List<TrackingObject> trackingObjects;
+    private ArrayList<TrackingObject> trackingObjects;
+    @Transient
+    private ArrayList<TrackingObject> trackingObjectsTemp = null;
 
-    public User() {
+    public User()
+    {
+        this.trackingObjects = new ArrayList<>();
     }
 
     public ObjectId getId() {
@@ -129,18 +131,32 @@ public class User
         this.birthDate = birthDate;
     }
 
-    public List<TrackingObject> getTrackingObjects() {
+    public ArrayList<TrackingObject> getTrackingObjects() {
         return trackingObjects;
     }
 
-    public void setTrackingObjects(List<TrackingObject> trackingObjects) {
+    public void setTrackingObjects(ArrayList<TrackingObject> trackingObjects) {
         this.trackingObjects = trackingObjects;
     }
 
-
-    @PostPersist
-        public void postPersist() {
-        Informant.notifyObserver(this);
+    @PostLoad
+    public void cacheTrackingObjects()
+    {
+        this.trackingObjectsTemp = new ArrayList<>(this.trackingObjects);
     }
 
+    @PostPersist
+    public void postPersist()
+    {
+        for (int i = 0; i < this.trackingObjects.size(); i++) {
+            TrackingObject current = this.trackingObjects.get(i);
+            TrackingObject cached = this.trackingObjectsTemp.get(i);
+
+            if (current.getTracks().size() != cached.getTracks().size()) {
+                Informant.notifyObserver(this, current);
+
+                return;
+            }
+        }
+    }
 }

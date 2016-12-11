@@ -1,4 +1,4 @@
-package de.lifelogr.drink;
+package de.lifelogr.trackingobjects;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,11 +6,11 @@ import java.util.List;
 /**
  * Created by christin on 06.12.16.
  */
-public class DrinkCaffein {
+public class Drinks {
 
     private List<String> drinksCaffein = new ArrayList<>();
 
-    public DrinkCaffein() {
+    public Drinks() {
         this.drinksCaffein.add("cappuccino");
         this.drinksCaffein.add("espresso");
         this.drinksCaffein.add("kaffee");
@@ -23,6 +23,7 @@ public class DrinkCaffein {
         this.drinksCaffein.add("cocacola");
         this.drinksCaffein.add("mate");
         this.drinksCaffein.add("clubmate");
+        this.drinksCaffein.add("mate");
         this.drinksCaffein.add("pepsi");
         this.drinksCaffein.add("energydrink");
         this.drinksCaffein.add("redbull");
@@ -30,5 +31,9 @@ public class DrinkCaffein {
 
     public List<String> getDrinksCaffein() {
         return drinksCaffein;
+    }
+
+    public boolean contain(String name) {
+        return true;
     }
 }
