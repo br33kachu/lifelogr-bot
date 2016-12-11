@@ -179,7 +179,7 @@ public class User
             if (result == null) {
                 result = current;
             } else {
-                if (current.getTracks().get(current.getTracks().size() - 1).getDate().getTime() > result.getTracks().get(current.getTracks().size() - 1).getDate().getTime()) {
+                if (current.getTracks().get(current.getTracks().size() - 1).getDate().getTime() > result.getTracks().get(result.getTracks().size() - 1).getDate().getTime()) {
                     result = current;
                 }
             }
@@ -197,15 +197,6 @@ public class User
     @PostPersist
     public void postPersist()
     {
-        for (int i = 0; i < this.trackingObjects.size(); i++) {
-            TrackingObject current = this.trackingObjects.get(i);
-            TrackingObject cached = this.trackingObjectsTemp.get(i);
-
-            if (current.getTracks().size() != cached.getTracks().size()) {
-                Informant.notifyObserver(this, current);
-
-                return;
-            }
-        }
+        Informant.notifyObserver(this, this.getLastAddedTrackingObject());
     }
 }

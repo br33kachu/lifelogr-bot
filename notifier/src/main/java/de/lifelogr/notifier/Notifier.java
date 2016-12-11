@@ -1,5 +1,6 @@
 package de.lifelogr.notifier;
 
+import de.lifelogr.communicator.Communicator;
 import de.lifelogr.dbconnector.Informant;
 import de.lifelogr.dbconnector.Observer;
 import de.lifelogr.dbconnector.entity.*;
@@ -36,8 +37,8 @@ public class Notifier extends Observer {
     @Override
     public void onInform(User user, TrackingObject trackingObject) {
         this.trackingObjectType = trackingObjects.getType(trackingObject.getName());
-        if (this.trackingObjectType == TrackingObjectType.KOFFEIN && this.recommendationsDrink.recommenationNeeded(user, this.trackingObjectType)) {
-            System.out.println(this.recommendationsDrink.recommend(TrackingObjectType.KOFFEIN));
+        if (this.trackingObjectType == TrackingObjectType.KOFFEIN) {
+            Communicator.getInstance().sendMessage(user.getChatId().toString(), this.recommendationsDrink.recommend(trackingObjectType));
         } else if (this.trackingObjectType == TrackingObjectType.ALKOHOL) {
             System.out.println(this.recommendationsDrink.recommend(TrackingObjectType.ALKOHOL));
         } else if (this.trackingObjectType == TrackingObjectType.UNBEKANNT) {}
