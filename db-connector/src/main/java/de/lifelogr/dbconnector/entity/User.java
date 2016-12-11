@@ -141,6 +141,17 @@ public class User
         return trackingObjects;
     }
 
+    public TrackingObject getTrackingObjectByName(String name)
+    {
+        for (TrackingObject trackingObject : this.trackingObjects) {
+            if (trackingObject.getName().toLowerCase().equals(name.toLowerCase())) {
+                return trackingObject;
+            }
+        }
+
+        return null;
+    }
+
     public void setTrackingObjects(ArrayList<TrackingObject> trackingObjects) {
         this.trackingObjects = trackingObjects;
     }

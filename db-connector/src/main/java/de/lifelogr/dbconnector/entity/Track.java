@@ -1,10 +1,10 @@
 package de.lifelogr.dbconnector.entity;
 
-import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Entity;
 
 import java.util.Date;
 
-@Embedded
+@Entity
 public class Track {
     private Integer count;
     private Date date;
@@ -23,9 +23,5 @@ public class Track {
 
     public Date getDate() {
         return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 }

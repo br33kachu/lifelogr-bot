@@ -110,6 +110,7 @@ public class TelegramBot extends TelegramLongPollingCommandBot
                         }
 
                     }
+                    sendMessage.setText("Sorry, das habe ich leider nicht verstanden. " + Emoji.DISAPPOINTED_BUT_RELIEVED_FACE);
                 } else {
                     sendMessage.setText("Bitte lege dir zuerst ein Profil an ;)");
                 }
