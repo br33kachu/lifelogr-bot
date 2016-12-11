@@ -2,6 +2,7 @@ package de.lifelogr.dbconnector.entity;
 
 import org.mongodb.morphia.annotations.Embedded;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Embedded
@@ -13,7 +14,8 @@ public class TrackingObject {
     private List<Track> tracks;
 
     public TrackingObject() {
-    }
+        this.tracks = new ArrayList<>()
+;    }
 
     public String getName() {
         return name;

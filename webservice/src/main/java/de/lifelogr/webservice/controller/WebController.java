@@ -29,7 +29,7 @@ public class WebController {
         for (TrackingObject trackingObject : trackingObjectList) {
             JSONObject jsonObject;
             if (trackingObject.getCategory() == 0) {
-                int sum = 0;
+                Double sum = 0.0;
                 // TODO Date on same day wont shown correctly FIX IT?
                 for (Track track : trackingObject.getTracks()) {
                     jsonObject = new JSONObject();

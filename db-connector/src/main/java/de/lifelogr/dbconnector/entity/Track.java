@@ -1,23 +1,23 @@
 package de.lifelogr.dbconnector.entity;
 
-import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Embedded;
 
 import java.util.Date;
 
-@Entity
+@Embedded
 public class Track {
-    private Integer count;
+    private Double count;
     private Date date;
 
     public Track() {
         this.date = new Date();
     }
 
-    public Integer getCount() {
+    public Double getCount() {
         return count;
     }
 
-    public void setCount(Integer count) {
+    public void setCount(Double count) {
         this.count = count;
     }
 

@@ -177,7 +177,7 @@ public class User
         this.trackingObjectsTemp = new ArrayList<>(this.trackingObjects);
     }
 
-    @PostPersist
+    /*@PostPersist
     public void postPersist()
     {
         for (int i = 0; i < this.trackingObjects.size(); i++) {
@@ -190,5 +190,5 @@ public class User
                 return;
             }
         }
-    }
+    }*/
 }
