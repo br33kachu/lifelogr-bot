@@ -1,19 +1,15 @@
 package de.lifelogr.dbconnector.entity;
 
-import org.mongodb.morphia.annotations.Field;
-import org.mongodb.morphia.annotations.Index;
-import org.mongodb.morphia.annotations.Indexes;
+import org.mongodb.morphia.annotations.Embedded;
 
 import java.util.List;
 
-@Indexes(
-        @Index(value = "name", fields = @Field("name"))
-)
+@Embedded
 public class TrackingObject {
     private String name;
     private String unit;
-    private double currentCount;
-    private int category;
+    private Double currentCount;
+    private Integer category;
     private List<Track> tracks;
 
     public TrackingObject() {
@@ -35,19 +31,19 @@ public class TrackingObject {
         this.unit = unit;
     }
 
-    public double getCurrentCount() {
+    public Double getCurrentCount() {
         return currentCount;
     }
 
-    public void setCurrentCount(double currentCount) {
+    public void setCurrentCount(Double currentCount) {
         this.currentCount = currentCount;
     }
 
-    public int getCategory() {
+    public Integer getCategory() {
         return category;
     }
 
-    public void setCategory(int category) {
+    public void setCategory(Integer category) {
         this.category = category;
     }
 

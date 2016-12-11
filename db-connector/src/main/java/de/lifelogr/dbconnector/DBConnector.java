@@ -2,6 +2,7 @@ package de.lifelogr.dbconnector;
 
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
 import de.lifelogr.dbconnector.entity.User;
 import org.mongodb.morphia.Datastore;
@@ -24,6 +25,7 @@ public class DBConnector
     {
         // Build MongoDB auth URI
         MongoClientURI uri = new MongoClientURI("mongodb://syp:xjwyP0qu_YxL9L55p179tRLlBe3KNWMy@lifelogr.de/lifelog_bot");
+
         MongoClient mongoClient = new MongoClient(uri);
 
         // Map entities to MongoDB

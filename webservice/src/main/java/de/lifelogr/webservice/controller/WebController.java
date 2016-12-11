@@ -2,7 +2,8 @@ package de.lifelogr.webservice.controller;
 
 import de.lifelogr.dbconnector.entity.Track;
 import de.lifelogr.dbconnector.entity.TrackingObject;
-import de.lifelogr.dbconnector.service.ICRUDDatabase;
+import de.lifelogr.dbconnector.impl.ICRUDUserImpl;
+import de.lifelogr.dbconnector.services.ICRUDUser;
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,14 +15,14 @@ import java.util.List;
  * Created by micha on 29.11.2016.
  */
 public class WebController {
-    ICRUDDatabase ICRUDDatabase;
+    ICRUDUser ICRUDUser;
 
     public WebController() {
-        ICRUDDatabase = new ICRUDDatabase();
+        ICRUDUser = new ICRUDUserImpl();
     }
 
     public String getJSONDataSet(ObjectId userId) {
-        List<TrackingObject> trackingObjectList = ICRUDDatabase.getTrackingObjectByUserId(userId);
+        List<TrackingObject> trackingObjectList = ICRUDUser.getTrackingObjectByUserId(userId);
         JSONArray jsonArray = new JSONArray();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         for (TrackingObject trackingObject : trackingObjectList) {
@@ -53,7 +54,7 @@ public class WebController {
     }
 
     public ObjectId getUserIdByToken(String token) {
-        ObjectId objectId = ICRUDDatabase.getUserIdByToken(token);
+        ObjectId objectId = ICRUDUser.getUserIdByToken(token);
         return objectId;
     }
 
