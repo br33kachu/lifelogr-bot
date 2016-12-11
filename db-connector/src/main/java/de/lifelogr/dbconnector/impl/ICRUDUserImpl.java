@@ -33,15 +33,13 @@ public class ICRUDUserImpl implements ICRUDUser
     @Override
     public User getUserByTelegramId(Integer id)
     {
-        DBConnector dbc = DBConnector.getInstance();
-
-        return dbc.getDatastore().createQuery(User.class).field("telegramId").equal(id).get();
+        return this.ds.createQuery(User.class).field("telegramId").equal(id).get();
     }
 
     @Override
-    public ObjectId getUserIdByToken(String token)
+    public User getUserByToken(String token)
     {
-        return null;
+        return this.ds.createQuery(User.class).field("token").equal(token).get();
     }
 
     @Override

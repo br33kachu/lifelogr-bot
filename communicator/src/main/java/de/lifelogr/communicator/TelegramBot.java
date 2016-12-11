@@ -2,6 +2,7 @@ package de.lifelogr.communicator;
 
 import de.lifelogr.communicator.commands.HelpCommand;
 import de.lifelogr.communicator.commands.StartCommand;
+import de.lifelogr.communicator.commands.TrackCommand;
 import de.lifelogr.communicator.services.Emoji;
 import de.lifelogr.dbconnector.DBConnector;
 import de.lifelogr.dbconnector.entity.TrackingObject;
@@ -45,6 +46,7 @@ public class TelegramBot extends TelegramLongPollingCommandBot
         HelpCommand helpCommand = new HelpCommand(this);
         register(helpCommand);
         register(new StartCommand(this));
+        register(new TrackCommand(this));
 
         // Registriere Aktion für unbekannte Kommandos
         registerDefaultAction(((absSender, message) -> {
@@ -71,10 +73,9 @@ public class TelegramBot extends TelegramLongPollingCommandBot
     @Override
     public void processNonCommandUpdate(Update update)
     {
-        User user = this.icrudUser.getUserByTelegramId(update.getMessage().getFrom().getId());
-
-         if (update.hasMessage()) {
+        if (update.hasMessage()) {
             Message message = update.getMessage();
+            User user = this.icrudUser.getUserByTelegramId(update.getMessage().getFrom().getId());
 
             if (message.hasText()) {
                 SendMessage sendMessage = new SendMessage();
@@ -85,7 +86,8 @@ public class TelegramBot extends TelegramLongPollingCommandBot
                     switch (user.getQuestion()) {
                         case "username":
                             this.icrudUser.updateField(user, "username", message.getText().trim());
-                            sendMessage.setText("Hallo " + message.getText().trim() + "! Dein Profil wurde angelegt.");
+                            this.icrudUser.updateField(user, "question", "");
+                            sendMessage.setText("Hallo " + message.getText().trim() + "! Dein Profil wurde angelegt.\nViel Spaß mit der Nutzung des LifeLogr-Bots " + Emoji.SMILING_FACE_WITH_SMILING_EYES);
                             break;
                     }
                 } else if (user != null) {

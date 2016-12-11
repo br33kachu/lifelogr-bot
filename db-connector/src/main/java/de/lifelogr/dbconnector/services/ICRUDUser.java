@@ -6,15 +6,12 @@ import org.bson.types.ObjectId;
 
 import java.util.List;
 
-/**
- * Created by micha on 10.12.2016.
- */
 public interface ICRUDUser
 {
-    public List<User> getAllUsers();
-    public User getUserByTelegramId(Integer id);
-    public ObjectId getUserIdByToken(String token);
-    public List<TrackingObject> getTrackingObjectByUserId(ObjectId id);
-    public void saveUser(User user);
-    public void updateField(User user, String field, String value);
+    List<User> getAllUsers();
+    User getUserByTelegramId(Integer id);
+    User getUserByToken(String token);
+    List<TrackingObject> getTrackingObjectByUserId(ObjectId id);
+    void saveUser(User user);
+    void updateField(User user, String field, String value);
 }

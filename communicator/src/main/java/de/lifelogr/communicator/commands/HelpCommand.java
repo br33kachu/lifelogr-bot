@@ -1,5 +1,6 @@
 package de.lifelogr.communicator.commands;
 
+import de.lifelogr.communicator.services.Emoji;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Chat;
 import org.telegram.telegrambots.api.objects.User;
@@ -29,7 +30,14 @@ public class HelpCommand extends BotCommand
         SendMessage helpMessage = new SendMessage();
         helpMessage.setChatId(chat.getId().toString());
         helpMessage.enableHtml(true);
-        helpMessage.setText("<b>Hilfe</b>\n" + "Das sind die registrierten Kommandos dieses Bots:\n\n╭∩╮（︶︿︶）╭∩╮");
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("Das sind meine unterstützten Kommandos:\n\n");
+        this.commandRegistry.getRegisteredCommands().forEach((command) -> {
+            builder.append("<strong>/" + command.getCommandIdentifier() + "</strong> - " + command.getDescription() + "\n");
+        });
+
+        helpMessage.setText(builder.toString());
 
         try {
             absSender.sendMessage(helpMessage);
