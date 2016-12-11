@@ -6,7 +6,7 @@ package de.lifelogr.trackingobjects;
 public class TrackingObjects {
 
     private static TrackingObjects instance = null;
-    Drinks drinks = new Drinks();
+    private Drinks drinks = new Drinks();
 
     private TrackingObjects() {}
 
@@ -20,6 +20,8 @@ public class TrackingObjects {
     public TrackingObjectType getType(String trackingObject) {
         if (this.drinks.getDrinksCaffein().contains(trackingObject)) {
             return TrackingObjectType.KOFFEIN;
+        } else if (this.drinks.getDrinksAlcohol().contains(trackingObject)) {
+            return TrackingObjectType.ALKOHOL;
         }
         return TrackingObjectType.UNBEKANNT;
     }

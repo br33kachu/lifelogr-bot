@@ -9,6 +9,7 @@ import java.util.List;
 public class Drinks {
 
     private List<String> drinksCaffein = new ArrayList<>();
+    private List<String> drinksAlcohol = new ArrayList<>();
 
     public Drinks() {
         this.drinksCaffein.add("cappuccino");
@@ -33,7 +34,7 @@ public class Drinks {
         return drinksCaffein;
     }
 
-    public boolean contain(String name) {
-        return true;
+    public List<String> getDrinksAlcohol() {
+        return drinksAlcohol;
     }
 }
