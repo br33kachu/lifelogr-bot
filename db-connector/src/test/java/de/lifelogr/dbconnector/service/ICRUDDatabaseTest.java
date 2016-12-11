@@ -24,7 +24,7 @@ public class ICRUDDatabaseTest {
     @Test
     public void insertUserTest01() {
         testUser = new User();
-        testUser.setChatId(00000001);
+        testUser.setChatId(new Long(0000001));
         testUser.setTelegramId(00000001);
         icrudUser.saveUser(testUser);
         dbUser = icrudUser.getUserByTelegramId(123456789);
