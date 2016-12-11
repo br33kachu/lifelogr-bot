@@ -2,6 +2,7 @@ package de.lifelogr.webservice.controller;
 
 import de.lifelogr.dbconnector.entity.Track;
 import de.lifelogr.dbconnector.entity.TrackingObject;
+import de.lifelogr.dbconnector.entity.User;
 import de.lifelogr.dbconnector.impl.ICRUDUserImpl;
 import de.lifelogr.dbconnector.services.ICRUDUser;
 import org.bson.types.ObjectId;
@@ -54,8 +55,8 @@ public class WebController {
     }
 
     public ObjectId getUserIdByToken(String token) {
-        ObjectId objectId = ICRUDUser.getUserIdByToken(token);
-        return objectId;
+        User user = ICRUDUser.getUserByToken(token);
+        return user.getId();
     }
 
 }

@@ -1,6 +1,5 @@
 package de.lifelogr.dbconnector.impl;
 
-import com.mongodb.operation.UpdateOperation;
 import de.lifelogr.dbconnector.DBConnector;
 import de.lifelogr.dbconnector.entity.TrackingObject;
 import de.lifelogr.dbconnector.entity.User;
