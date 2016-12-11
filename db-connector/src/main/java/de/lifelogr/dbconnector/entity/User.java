@@ -9,14 +9,18 @@ import java.util.Date;
 
 @Entity("users")
 @Indexes(
-        @Index(value = "username", fields = @Field("username"))
+        {
+                @Index(value = "username", fields = @Field("username")),
+                @Index(value = "token", fields = @Field("token")),
+                @Index(value = "telegramId", fields = @Field("telegramId"))
+        }
 )
 public class User
 {
     @Id
     private ObjectId id;
-    private int telegramId;
-    private int chatId;
+    private Integer telegramId;
+    private Long chatId;
     private String token;
     private Date tokenExpirationDate;
     private Date doNotDisturbUntil;
@@ -26,9 +30,11 @@ public class User
     private String lastName;
     private String nickName;
     private String birthDate;
+    @Embedded
     private ArrayList<TrackingObject> trackingObjects;
     @Transient
     private ArrayList<TrackingObject> trackingObjectsTemp = null;
+    private String question;
 
     public User()
     {
@@ -43,19 +49,19 @@ public class User
         this.id = id;
     }
 
-    public int getTelegramId() {
+    public Integer getTelegramId() {
         return telegramId;
     }
 
-    public void setTelegramId(int telegramId) {
+    public void setTelegramId(Integer telegramId) {
         this.telegramId = telegramId;
     }
 
-    public int getChatId() {
+    public Long getChatId() {
         return chatId;
     }
 
-    public void setChatId(int chatId) {
+    public void setChatId(Long chatId) {
         this.chatId = chatId;
     }
 
@@ -135,8 +141,34 @@ public class User
         return trackingObjects;
     }
 
+    public TrackingObject getTrackingObjectByName(String name)
+    {
+        for (TrackingObject trackingObject : this.trackingObjects) {
+            if (trackingObject.getName().toLowerCase().equals(name.toLowerCase())) {
+                return trackingObject;
+            }
+        }
+
+        return null;
+    }
+
     public void setTrackingObjects(ArrayList<TrackingObject> trackingObjects) {
         this.trackingObjects = trackingObjects;
+    }
+
+    public String getQuestion()
+    {
+        return question;
+    }
+
+    public void setQuestion(String question)
+    {
+        this.question = question;
+    }
+
+    public boolean istFullyRegistered()
+    {
+        return (!this.username.isEmpty() && !this.birthDate.isEmpty());
     }
 
     @PostLoad

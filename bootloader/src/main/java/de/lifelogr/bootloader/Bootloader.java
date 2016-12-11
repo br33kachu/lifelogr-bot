@@ -22,15 +22,15 @@ public class Bootloader
 
         // Put user in database
         DBConnector dbc = DBConnector.getInstance();
-        Notifier notifier = Notifier.getInstance();
+        //Notifier notifier = Notifier.getInstance();
 
-        User u = new User();
+        /*User u = new User();
         u.setUsername("tester" + Long.toString(Math.round(Math.random() * 100)));
         dbc.saveUser(u);
         u.setUsername("Horst");
         TrackingObject trackingObject = new TrackingObject();
         trackingObject.setName("kaffee");
         u.getTrackingObjects().add(trackingObject);
-        dbc.saveUser(u);
+        dbc.saveUser(u);*/
     }
 }
