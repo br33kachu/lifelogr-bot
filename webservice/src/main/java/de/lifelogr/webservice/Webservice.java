@@ -4,10 +4,9 @@ import de.lifelogr.webservice.controller.WebController;
 import de.lifelogr.webservice.model.WebModel;
 import org.bson.types.ObjectId;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
 
-public class Webservice implements Runnable
-{
+public class Webservice implements Runnable {
     @Override
     public void run() {
         System.out.println("Running spark...");
@@ -17,7 +16,7 @@ public class Webservice implements Runnable
         /**
          * MainLoginScreen where the user can send the token for authenticating
          */
-        get("/", (request,response) -> webModel.getLogin());
+        get("/", (request, response) -> webModel.getLogin());
 
         /**
          * Login with Token - If user with that token exists, create a session and save the objectID
@@ -27,9 +26,9 @@ public class Webservice implements Runnable
         get("/login", ((request, response) -> {
             String token = request.queryParams("token");
             ObjectId id = webController.getUserIdByToken(token);
-            if(id != null) {
+            if (id != null) {
                 String ok = "{\"auth\":\"true\"}";
-                if(!request.session().isNew()) {
+                if (!request.session().isNew()) {
                     System.out.println("create Session!");
                     request.session(true);
                     request.session().attribute("userID", id);
@@ -66,7 +65,7 @@ public class Webservice implements Runnable
          * Loging out and destroy Session
          * TODO Destroy the Session!
          */
-        get("/test/logout",(request, response) -> {
+        get("/test/logout", (request, response) -> {
             return "{'loggedout': 'ok'}";
         });
 
@@ -75,7 +74,7 @@ public class Webservice implements Runnable
         /**
          * MainLoginScreen where the user can send the token for authenticating
          */
-        get("/test", (request,response) -> webModel.getTestLogin());
+        get("/test", (request, response) -> webModel.getTestLogin());
 
         /**
          * Get TestDiagrams - only showing one specifig testUser

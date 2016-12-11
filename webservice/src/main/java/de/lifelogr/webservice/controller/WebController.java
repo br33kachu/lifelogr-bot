@@ -1,8 +1,8 @@
 package de.lifelogr.webservice.controller;
 
-import de.lifelogr.dbconnector.DBConnector;
 import de.lifelogr.dbconnector.entity.Track;
 import de.lifelogr.dbconnector.entity.TrackingObject;
+import de.lifelogr.dbconnector.service.ICRUDDatabase;
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,16 +14,19 @@ import java.util.List;
  * Created by micha on 29.11.2016.
  */
 public class WebController {
-    public WebController(){}
+    ICRUDDatabase ICRUDDatabase;
+
+    public WebController() {
+        ICRUDDatabase = new ICRUDDatabase();
+    }
 
     public String getJSONDataSet(ObjectId userId) {
-        DBConnector dbc = DBConnector.getInstance();
-        List<TrackingObject> trackingObjectList = dbc.getTrackingObjectByUserId(userId);
+        List<TrackingObject> trackingObjectList = ICRUDDatabase.getTrackingObjectByUserId(userId);
         JSONArray jsonArray = new JSONArray();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        for(TrackingObject trackingObject: trackingObjectList) {
+        for (TrackingObject trackingObject : trackingObjectList) {
             JSONObject jsonObject;
-            if(trackingObject.getCategory() == 0) {
+            if (trackingObject.getCategory() == 0) {
                 int sum = 0;
                 // TODO Date on same day wont shown correctly FIX IT?
                 for (Track track : trackingObject.getTracks()) {
@@ -50,8 +53,7 @@ public class WebController {
     }
 
     public ObjectId getUserIdByToken(String token) {
-        DBConnector dbc = DBConnector.getInstance();
-        ObjectId objectId = dbc.getUserIdByToken(token);
+        ObjectId objectId = ICRUDDatabase.getUserIdByToken(token);
         return objectId;
     }
 
