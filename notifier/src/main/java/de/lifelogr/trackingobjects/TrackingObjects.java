@@ -18,9 +18,9 @@ public class TrackingObjects {
     }
 
     public TrackingObjectType getType(String trackingObject) {
-        if (this.drinks.getDrinksCaffein().contains(trackingObject)) {
+        if (this.drinks.getDrinksCaffein().contains(trackingObject.toLowerCase())) {
             return TrackingObjectType.KOFFEIN;
-        } else if (this.drinks.getDrinksAlcohol().contains(trackingObject)) {
+        } else if (this.drinks.getDrinksAlcohol().contains(trackingObject.toLowerCase())) {
             return TrackingObjectType.ALKOHOL;
         }
         return TrackingObjectType.UNBEKANNT;
