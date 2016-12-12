@@ -43,6 +43,12 @@ public class StartCommand extends BotCommand
             de.lifelogr.dbconnector.entity.User newUser = new de.lifelogr.dbconnector.entity.User();
             newUser.setTelegramId(user.getId());
             newUser.setChatId(chat.getId());
+            if (user.getFirstName() != null && !user.getFirstName().isEmpty())
+                newUser.setFirstName(user.getFirstName());
+            if (user.getLastName() != null && !user.getLastName().isEmpty())
+                newUser.setLastName(user.getLastName());
+            if (user.getUserName() != null && !user.getUserName().isEmpty())
+                newUser.setUsername(user.getUserName());
             newUser.setQuestion("username");
             icrudUser.saveUser(newUser);
 
