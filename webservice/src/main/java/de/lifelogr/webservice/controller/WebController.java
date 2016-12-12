@@ -5,7 +5,6 @@ import de.lifelogr.dbconnector.entity.TrackingObject;
 import de.lifelogr.dbconnector.entity.User;
 import de.lifelogr.dbconnector.impl.ICRUDUserImpl;
 import de.lifelogr.dbconnector.services.ICRUDUser;
-import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -22,8 +21,8 @@ public class WebController {
         ICRUDUser = new ICRUDUserImpl();
     }
 
-    public String getJSONDataSet(ObjectId userId) {
-        List<TrackingObject> trackingObjectList = ICRUDUser.getTrackingObjectByUserId(userId);
+    public String getJSONDataSet(int telegramId) {
+        List<TrackingObject> trackingObjectList = ICRUDUser.getUserByTelegramId(telegramId).getTrackingObjects();
         JSONArray jsonArray = new JSONArray();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         for (TrackingObject trackingObject : trackingObjectList) {
@@ -54,9 +53,9 @@ public class WebController {
         return jsonArray.toString();
     }
 
-    public ObjectId getUserIdByToken(String token) {
+    public int getTelegramIdByToken(String token) {
         User user = ICRUDUser.getUserByToken(token);
-        return user.getId();
+        return user.getTelegramId();
     }
 
 }

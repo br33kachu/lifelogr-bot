@@ -1,8 +1,7 @@
 package de.lifelogr.webservice.controller;
 
-import org.bson.types.ObjectId;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * Created by micha on 06.12.2016.
@@ -21,17 +20,17 @@ public class WebControllerTest {
 */
     @org.junit.Test
     public void getJSONDataSet() throws Exception {
-        ObjectId id = new ObjectId("5846e843135672de475dc4a8");
-        String result = webController.getJSONDataSet(id);
+        int telegramId = 666999;
+        String result = webController.getJSONDataSet(telegramId);
         assertNotEquals(result, null);
         System.out.println(result);
     }
 
     @org.junit.Test
     public void getUserIdByToken_01() throws Exception {
-        ObjectId id = webController.getUserIdByToken("112233aabbcc");
-        ObjectId expectedId = new ObjectId("5846e843135672de475dc4a8");
-        assertEquals(id.toString(), expectedId.toString());
+        int telegramId = webController.getTelegramIdByToken("112233aabbcc");
+        int expectedId = 666999;
+        assertEquals(telegramId, expectedId);
     }
 
 }

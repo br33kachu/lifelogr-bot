@@ -2,13 +2,15 @@ package de.lifelogr.webservice;
 
 import de.lifelogr.webservice.controller.WebController;
 import de.lifelogr.webservice.model.WebModel;
-import org.bson.types.ObjectId;
+import spark.Spark;
 
 import static spark.Spark.get;
 
 public class Webservice implements Runnable {
     @Override
     public void run() {
+        Spark.staticFileLocation("/public");
+
         System.out.println("Running spark...");
         WebController webController = new WebController();
         WebModel webModel = new WebModel();
@@ -25,13 +27,13 @@ public class Webservice implements Runnable {
          */
         get("/login", ((request, response) -> {
             String token = request.queryParams("token");
-            ObjectId id = webController.getUserIdByToken(token);
-            if (id != null) {
+            int id = webController.getTelegramIdByToken(token);
+            if (id != 0) {
                 String ok = "{\"auth\":\"true\"}";
                 if (!request.session().isNew()) {
                     System.out.println("create Session!");
                     request.session(true);
-                    request.session().attribute("userID", id);
+                    request.session().attribute("telegramID", id);
                     return ok;
                 } else {
                     System.out.println("Session already exists!");
@@ -46,8 +48,8 @@ public class Webservice implements Runnable {
          *  Get DiagramSite - if a session exists
          */
         get("/diagram", (request, response) -> {
-            ObjectId id = request.session().attribute("userID");
-            String dataSet = webController.getJSONDataSet(id);
+            int telegramId = request.session().attribute("telegramID");
+            String dataSet = webController.getJSONDataSet(telegramId);
             return webModel.getDiagram(dataSet);
         });
 
@@ -55,9 +57,11 @@ public class Webservice implements Runnable {
          * Get Trackingobjects, for the sessionUser
          */
         //get("/", (req,res) -> new ModelAndView(model), "main.hbs"), new HandlebarsTemplateEngine());
-        get("/getDataset", (request, response) -> {
-            ObjectId id = request.session().attribute("userID");
-            return webController.getJSONDataSet(id);
+        get("/dataset/{telegramId}", (request, response) -> {
+            response.header("Content-Type", "application/json");
+            //ObjectId id = request.session().attribute("userID");
+            int telegramId = 666999;
+            return webController.getJSONDataSet(telegramId);
         });
 
 
@@ -80,9 +84,14 @@ public class Webservice implements Runnable {
          * Get TestDiagrams - only showing one specifig testUser
          */
         get("/test/diagram", (request, response) -> {
-            ObjectId id = new ObjectId("5846e843135672de475dc4a8");
-            String dataSet = webController.getJSONDataSet(id);
+            int telegramId = 666999;
+            String dataSet = webController.getJSONDataSet(telegramId);
             return webModel.getDiagram(dataSet);
+        });
+
+        get("/favicon.ico", (request, response) -> {
+            response.header("Content-Type", "image/png");
+            return "/favicon.ico";
         });
     }
 
