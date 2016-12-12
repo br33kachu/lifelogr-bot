@@ -1,10 +1,8 @@
 package de.lifelogr.dbconnector.impl;
 
 import de.lifelogr.dbconnector.DBConnector;
-import de.lifelogr.dbconnector.entity.TrackingObject;
 import de.lifelogr.dbconnector.entity.User;
 import de.lifelogr.dbconnector.services.ICRUDUser;
-import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
@@ -39,12 +37,6 @@ public class ICRUDUserImpl implements ICRUDUser
     public User getUserByToken(String token)
     {
         return this.ds.createQuery(User.class).field("token").equal(token).get();
-    }
-
-    @Override
-    public List<TrackingObject> getTrackingObjectByUserId(ObjectId id)
-    {
-        return null;
     }
 
     @Override
