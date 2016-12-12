@@ -32,8 +32,6 @@ public class User
     private String birthDate;
     @Embedded
     private ArrayList<TrackingObject> trackingObjects;
-    @Transient
-    private ArrayList<TrackingObject> trackingObjectsTemp = null;
     private String question;
 
     public User()
@@ -41,103 +39,128 @@ public class User
         this.trackingObjects = new ArrayList<>();
     }
 
-    public ObjectId getId() {
+    public ObjectId getId()
+    {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(ObjectId id)
+    {
         this.id = id;
     }
 
-    public Integer getTelegramId() {
+    public Integer getTelegramId()
+    {
         return telegramId;
     }
 
-    public void setTelegramId(Integer telegramId) {
+    public void setTelegramId(Integer telegramId)
+    {
         this.telegramId = telegramId;
     }
 
-    public Long getChatId() {
+    public Long getChatId()
+    {
         return chatId;
     }
 
-    public void setChatId(Long chatId) {
+    public void setChatId(Long chatId)
+    {
         this.chatId = chatId;
     }
 
-    public String getToken() {
+    public String getToken()
+    {
         return token;
     }
 
-    public void setToken(String token) {
+    public void setToken(String token)
+    {
         this.token = token;
     }
 
-    public Date getTokenExpirationDate() {
+    public Date getTokenExpirationDate()
+    {
         return tokenExpirationDate;
     }
 
-    public void setTokenExpirationDate(Date tokenExpirationDate) {
+    public void setTokenExpirationDate(Date tokenExpirationDate)
+    {
         this.tokenExpirationDate = tokenExpirationDate;
     }
 
-    public Date getDoNotDisturbUntil() {
+    public Date getDoNotDisturbUntil()
+    {
         return doNotDisturbUntil;
     }
 
-    public void setDoNotDisturbUntil(Date doNotDisturbUntil) {
+    public void setDoNotDisturbUntil(Date doNotDisturbUntil)
+    {
         this.doNotDisturbUntil = doNotDisturbUntil;
     }
 
-    public String getUsername() {
+    public String getUsername()
+    {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(String username)
+    {
         this.username = username;
     }
 
-    public Date getCreatedAt() {
+    public Date getCreatedAt()
+    {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(Date createdAt)
+    {
         this.createdAt = createdAt;
     }
 
-    public String getFirstName() {
+    public String getFirstName()
+    {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(String firstName)
+    {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
+    public String getLastName()
+    {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(String lastName)
+    {
         this.lastName = lastName;
     }
 
-    public String getNickName() {
+    public String getNickName()
+    {
         return nickName;
     }
 
-    public void setNickName(String nickName) {
+    public void setNickName(String nickName)
+    {
         this.nickName = nickName;
     }
 
-    public String getBirthDate() {
+    public String getBirthDate()
+    {
         return birthDate;
     }
 
-    public void setBirthDate(String birthDate) {
+    public void setBirthDate(String birthDate)
+    {
         this.birthDate = birthDate;
     }
 
-    public ArrayList<TrackingObject> getTrackingObjects() {
+    public ArrayList<TrackingObject> getTrackingObjects()
+    {
         return trackingObjects;
     }
 
@@ -152,7 +175,8 @@ public class User
         return null;
     }
 
-    public void setTrackingObjects(ArrayList<TrackingObject> trackingObjects) {
+    public void setTrackingObjects(ArrayList<TrackingObject> trackingObjects)
+    {
         this.trackingObjects = trackingObjects;
     }
 
@@ -188,15 +212,13 @@ public class User
         return result;
     }
 
-    @PostLoad
-    public void cacheTrackingObjects()
-    {
-        this.trackingObjectsTemp = new ArrayList<>(this.trackingObjects);
-    }
-
     @PostPersist
     public void postPersist()
     {
-        Informant.notifyObserver(this, this.getLastAddedTrackingObject());
+        TrackingObject lastTrackingObject = this.getLastAddedTrackingObject();
+
+        if (lastTrackingObject != null) {
+            Informant.notifyObserver(this, this.getLastAddedTrackingObject());
+        }
     }
 }

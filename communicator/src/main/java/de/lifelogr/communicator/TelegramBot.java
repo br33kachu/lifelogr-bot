@@ -10,6 +10,7 @@ import de.lifelogr.dbconnector.entity.User;
 import de.lifelogr.dbconnector.impl.ICRUDUserImpl;
 import de.lifelogr.dbconnector.services.ICRUDUser;
 import de.lifelogr.translator.Translator;
+import de.lifelogr.translator.structures.CommandParams;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
@@ -73,10 +74,12 @@ public class TelegramBot extends TelegramLongPollingCommandBot
     @Override
     public void processNonCommandUpdate(Update update)
     {
+        // Wenn eine Nachricht empfangen wurde
         if (update.hasMessage()) {
             Message message = update.getMessage();
             User user = this.icrudUser.getUserByTelegramId(update.getMessage().getFrom().getId());
 
+            // Wenn die Nachricht Text enthält
             if (message.hasText()) {
                 SendMessage sendMessage = new SendMessage();
                 sendMessage.setChatId(message.getChatId().toString());
@@ -92,30 +95,36 @@ public class TelegramBot extends TelegramLongPollingCommandBot
                     }
                 } else if (user != null) {
                     // Übersetzte Text in Kommando
-                    String translatedCommand = Translator.getInstance().translate(message.getText());
+                    CommandParams translatedCmdParams = Translator.getInstance().translate(message.getText());
 
-                    if (translatedCommand != null) {
+                    // Wenn der Text in ein Kommando übersetzt werden konnte, verusuche das Kommando auszuführen
+                    if (translatedCmdParams != null) {
                         // Hole das entsprechende Kommando
-                        BotCommand cmd = this.getRegisteredCommand(translatedCommand.split(" ")[0].substring(1));
+                        BotCommand cmd = this.getRegisteredCommand(translatedCmdParams.getName());
 
+                        // Ist das Kommando im System vorhanden, führe es aus
                         if (cmd != null) {
                             cmd.execute(
                                     this,
                                     update.getMessage().getFrom(),
                                     update.getMessage().getChat(),
-                                    translatedCommand.split(" ")
+                                    translatedCmdParams.getParams().toArray(new String[0])
                             );
 
                             return;
                         }
 
                     }
+
+                    // Das Kommando konnte nicht gefunden werden
                     sendMessage.setText("Sorry, das habe ich leider nicht verstanden. " + Emoji.DISAPPOINTED_BUT_RELIEVED_FACE);
                 } else {
-                    sendMessage.setText("Bitte lege dir zuerst ein Profil an ;)");
+                    // Der User hat noch ein Profil angelegt
+                    sendMessage.enableHtml(true);
+                    sendMessage.setText("Bitte lege dir zuerst ein Profil an. Gib einfach '<b>Start</b>' ein, um loszulegen!");
                 }
 
-
+                // Sende Nachricht an den User
                 try {
                     sendMessage(sendMessage);
                 } catch (TelegramApiException e) {

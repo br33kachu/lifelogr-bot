@@ -3,6 +3,7 @@ package de.lifelogr.translator;
 import de.lifelogr.translator.matcher.HelpCommandMatcher;
 import de.lifelogr.translator.matcher.StartCommandMatcher;
 import de.lifelogr.translator.matcher.TrackCommandMatcher;
+import de.lifelogr.translator.structures.CommandParams;
 
 /**
  * Klasse zum Übersetzen von freiem Text in entsprechende Kommandos.
@@ -45,21 +46,21 @@ public class Translator
      * @param text Zu übersetzender Text
      * @return Übersetztes Kommando
      */
-    public String translate(String text)
+    public CommandParams translate(String text)
     {
         // Text normalisieren
         text = text.trim().toLowerCase().replaceAll(" +", " ");
 
         if (this.hcm.matches(text)) {
-            return "/help";
+            return this.hcm.getCommandParams(text);
         }
 
         if (this.scm.matches(text)) {
-            return "/start";
+            return this.scm.getCommandParams(text);
         }
 
         if (this.tcm.matches(text)) {
-            return tcm.getTrackingParams(text).toString();
+            return this.tcm.getCommandParams(text);
         }
 
         return null;
