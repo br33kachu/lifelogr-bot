@@ -1,5 +1,6 @@
 package de.lifelogr.webservice;
 
+import de.lifelogr.dbconnector.entity.User;
 import de.lifelogr.webservice.controller.WebController;
 import de.lifelogr.webservice.model.WebModel;
 import spark.Spark;
@@ -49,8 +50,9 @@ public class Webservice implements Runnable {
          */
         get("/diagram", (request, response) -> {
             int telegramId = request.session().attribute("telegramID");
+            User user = webController.getUserByTelegramId(telegramId);
             String dataSet = webController.getJSONDataSet(telegramId);
-            return webModel.getDiagram(dataSet);
+            return webModel.getDiagram(dataSet, user);
         });
 
         /**
@@ -58,10 +60,13 @@ public class Webservice implements Runnable {
          */
         //get("/", (req,res) -> new ModelAndView(model), "main.hbs"), new HandlebarsTemplateEngine());
         get("/dataset/{telegramId}", (request, response) -> {
-            response.header("Content-Type", "application/json");
             //ObjectId id = request.session().attribute("userID");
-            int telegramId = 666999;
-            return webController.getJSONDataSet(telegramId);
+            try {
+                int telegramId = Integer.parseInt(request.params("telegramId"));
+                return webController.getJSONDataSet(telegramId);
+            } catch (NumberFormatException e) {
+                return null;
+            }
         });
 
 
@@ -84,15 +89,18 @@ public class Webservice implements Runnable {
          * Get TestDiagrams - only showing one specifig testUser
          */
         get("/test/diagram", (request, response) -> {
-            int telegramId = 666999;
+            int telegramId = 292994467;
+            User user = webController.getUserByTelegramId(telegramId);
             String dataSet = webController.getJSONDataSet(telegramId);
-            return webModel.getDiagram(dataSet);
+            return webModel.getDiagram(dataSet, user);
         });
 
         get("/favicon.ico", (request, response) -> {
-            response.header("Content-Type", "image/png");
+            response.header("Content-Type", "x-icon");
             return "/favicon.ico";
         });
+
+
     }
 
 }

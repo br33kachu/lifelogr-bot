@@ -1,7 +1,9 @@
 package de.lifelogr.webservice.controller;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import de.lifelogr.dbconnector.entity.User;
+import org.junit.Test;
+
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by micha on 06.12.2016.
@@ -18,6 +20,7 @@ public class WebControllerTest {
 
     }
 */
+    /*
     @org.junit.Test
     public void getJSONDataSet() throws Exception {
         int telegramId = 666999;
@@ -32,5 +35,12 @@ public class WebControllerTest {
         int expectedId = 666999;
         assertEquals(telegramId, expectedId);
     }
-
+*/
+    @Test
+    public void testGetJSONDataSet_00() {
+        int telegramId = 292994467;
+        User user = webController.getUserByTelegramId(telegramId);
+        String dataSet = webController.getJSONDataSet(telegramId);
+        assertNotNull(dataSet);
+    }
 }

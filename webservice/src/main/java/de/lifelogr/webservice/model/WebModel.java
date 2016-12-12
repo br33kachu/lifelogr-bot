@@ -1,5 +1,6 @@
 package de.lifelogr.webservice.model;
 
+import de.lifelogr.dbconnector.entity.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import spark.ModelAndView;
@@ -28,25 +29,31 @@ public class WebModel {
         return login;
     }
 
-    public String getDiagram(String dataSet) {
+    public String getDiagram(String items, User user) {
         Map<String, String> model = new HashMap<>();
 
         model.put("title", "Lgr - Diagramme");
         // Set Welcome-Header
-        // TODO get real User and set the name
-        String username = System.getProperty("user.name");
+        String username;
+        if (user.getUsername() != null && !user.getUsername().isEmpty()) {
+            username = user.getUsername();
+        } else if (user.getFirstName() != null && !user.getFirstName().isEmpty()) {
+            username = user.getFirstName();
+        } else {
+            username = "Anwender";
+        }
         String welcome = "Hi " + username + "! Hier sind deine tracks: ";
         model.put("welcome", welcome);
 
         // Get Items and set it as 'item' element for HBS
-        String items = "items = ";
-        items = items.concat(dataSet);
-        items = items.concat(";");
-        model.put("items", items);
+        String itemModel = "items = ";
+        itemModel = itemModel.concat(items);
+        itemModel = itemModel.concat(";");
+        model.put("items", itemModel);
 
         // Create Checkboxes for HBS
         String checkBoxes = "";
-        List<String> groups = getGroups(dataSet);
+        List<String> groups = getGroups(items);
         for (String group : groups) {
             checkBoxes = checkBoxes.concat("\n" +
                     "        <div class=\"row\">\n" +

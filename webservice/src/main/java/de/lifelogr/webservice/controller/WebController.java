@@ -15,21 +15,21 @@ import java.util.List;
  * Created by micha on 29.11.2016.
  */
 public class WebController {
-    ICRUDUser ICRUDUser;
+    private ICRUDUser icrudUser;
 
     public WebController() {
-        ICRUDUser = new ICRUDUserImpl();
+        icrudUser = new ICRUDUserImpl();
     }
 
     public String getJSONDataSet(int telegramId) {
-        List<TrackingObject> trackingObjectList = ICRUDUser.getUserByTelegramId(telegramId).getTrackingObjects();
+        List<TrackingObject> trackingObjectList = icrudUser.getUserByTelegramId(telegramId).getTrackingObjects();
         JSONArray jsonArray = new JSONArray();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for (TrackingObject trackingObject : trackingObjectList) {
             JSONObject jsonObject;
-            if (trackingObject.getCategory() == 0) {
+            if (trackingObject.getCategory() == null) {
                 Double sum = 0.0;
-                // TODO Date on same day wont shown correctly FIX IT?
+                // TODO Time is not correctly
                 for (Track track : trackingObject.getTracks()) {
                     jsonObject = new JSONObject();
                     String formattedDate = simpleDateFormat.format(track.getDate());
@@ -39,7 +39,7 @@ public class WebController {
                     jsonObject.put("group", trackingObject.getName());
                     jsonArray.put(jsonObject);
                 }
-            } else {
+            } else if (trackingObject.getCategory() == 1) {
                 for (Track track : trackingObject.getTracks()) {
                     jsonObject = new JSONObject();
                     String formattedDate = simpleDateFormat.format(track.getDate());
@@ -54,8 +54,12 @@ public class WebController {
     }
 
     public int getTelegramIdByToken(String token) {
-        User user = ICRUDUser.getUserByToken(token);
+        User user = icrudUser.getUserByToken(token);
         return user.getTelegramId();
     }
 
+    public User getUserByTelegramId(int telegramId) {
+        User user = icrudUser.getUserByTelegramId(telegramId);
+        return user;
+    }
 }
