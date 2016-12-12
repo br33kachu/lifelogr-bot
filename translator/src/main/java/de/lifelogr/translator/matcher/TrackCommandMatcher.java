@@ -1,6 +1,6 @@
 package de.lifelogr.translator.matcher;
 
-import de.lifelogr.translator.structures.TrackingParams;
+import de.lifelogr.translator.structures.CommandParams;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -38,7 +38,8 @@ public class TrackCommandMatcher extends CommandMatcher
         this.numberStringMap.put("zwoelf", 12.0);
     }
 
-    public TrackingParams getTrackingParams(String text)
+    @Override
+    public CommandParams getCommandParams(String text)
     {
         // Untersuche den Text mit allen verfügbaren /track-Patterns.
         for (String pattern : this.patterns) {
@@ -66,7 +67,7 @@ public class TrackCommandMatcher extends CommandMatcher
                     value = 1.0;
                 }
 
-                return new TrackingParams(name, value);
+                return new CommandParams("track", name, String.valueOf(value));
             }
         }
 
