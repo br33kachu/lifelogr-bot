@@ -28,6 +28,8 @@ public class Drinks {
         this.drinksCaffein.add("pepsi");
         this.drinksCaffein.add("energydrink");
         this.drinksCaffein.add("redbull");
+
+        this.drinksAlcohol.add("Absinth");
     }
 
     public List<String> getDrinksCaffein() {

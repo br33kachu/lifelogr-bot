@@ -4,7 +4,7 @@ import de.lifelogr.communicator.Communicator;
 import de.lifelogr.dbconnector.Informant;
 import de.lifelogr.dbconnector.Observer;
 import de.lifelogr.dbconnector.entity.*;
-import de.lifelogr.recommendations.RecommendationsDrink;
+import de.lifelogr.recommendations.Recommendations;
 import de.lifelogr.trackingobjects.TrackingObjectType;
 import de.lifelogr.trackingobjects.TrackingObjects;
 
@@ -16,15 +16,17 @@ public class Notifier extends Observer {
     private static Notifier instance = null;
     Informant informant;
     TrackingObjects trackingObjects;
-    RecommendationsDrink recommendationsDrink;
+    Recommendations recommendations;
     TrackingObjectType trackingObjectType;
+    Communicator communicator;
 
     private Notifier() {
         this.informant = Informant.getInstance();
         this.informant.register(this);
         this.trackingObjects = TrackingObjects.getInstance();
-        this.recommendationsDrink = new RecommendationsDrink();
+        this.recommendations = new Recommendations();
         this.trackingObjectType = null;
+        this.communicator = Communicator.getInstance();
     }
 
     public static Notifier getInstance() {
@@ -37,8 +39,8 @@ public class Notifier extends Observer {
     @Override
     public void onInform(User user, TrackingObject trackingObject) {
         this.trackingObjectType = trackingObjects.getType(trackingObject.getName());
-        if ((this.trackingObjectType == TrackingObjectType.KOFFEIN || this.trackingObjectType == TrackingObjectType.ALKOHOL) && this.recommendationsDrink.recommenationNeeded(user, trackingObjectType)) {
-            Communicator.getInstance().sendMessage(user.getChatId().toString(), this.recommendationsDrink.recommend(trackingObjectType));
+        if ((this.trackingObjectType == TrackingObjectType.KOFFEIN || this.trackingObjectType == TrackingObjectType.ALKOHOL) && this.recommendations.recommendationNeeded(user, trackingObjectType, "drink")) {
+            this.communicator.sendMessage(user.getChatId().toString(), this.recommendations.recommend(user, trackingObjectType));
         } else if (this.trackingObjectType == TrackingObjectType.UNBEKANNT) {}
     }
 }

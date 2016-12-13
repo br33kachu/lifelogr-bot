@@ -30,6 +30,7 @@ public class User
     private String lastName;
     private String nickName;
     private String birthDate;
+    private Date lastRecommendation;
     @Embedded
     private ArrayList<TrackingObject> trackingObjects;
     private String question;
@@ -157,6 +158,13 @@ public class User
     public void setBirthDate(String birthDate)
     {
         this.birthDate = birthDate;
+    }
+
+    public Date getLastRecommendation() {
+        return lastRecommendation;
+    }
+    public void setLastRecommendation(Date lastRecommendation) {
+        this.lastRecommendation = lastRecommendation;
     }
 
     public ArrayList<TrackingObject> getTrackingObjects()
