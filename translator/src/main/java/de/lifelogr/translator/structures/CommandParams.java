@@ -33,4 +33,9 @@ public class CommandParams
     {
         return params;
     }
+
+    public String toString()
+    {
+        return "{ name: " + this.name + ", params: " + this.params.toString() + " }";
+    }
 }
