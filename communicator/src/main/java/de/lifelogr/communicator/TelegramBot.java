@@ -85,7 +85,7 @@ public class TelegramBot extends TelegramLongPollingCommandBot
                 sendMessage.setChatId(message.getChatId().toString());
 
                 // Der User ist registriert und antwortet auf eine Frage
-                if (user != null && !user.getQuestion().isEmpty()) {
+                if (user != null && user.getQuestion() != null && !user.getQuestion().isEmpty()) {
                     switch (user.getQuestion()) {
                         case "username":
                             this.icrudUser.updateField(user, "username", message.getText().trim());
@@ -114,6 +114,8 @@ public class TelegramBot extends TelegramLongPollingCommandBot
                             return;
                         }
 
+                    } else {
+                        sendMessage.setText("Sorry, das habe ich leider nicht verstanden...");
                     }
 
                     // Das Kommando konnte nicht gefunden werden
