@@ -2,7 +2,6 @@ package de.lifelogr.dbconnector;
 
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
-import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
 import de.lifelogr.dbconnector.entity.User;
 import org.mongodb.morphia.Datastore;

@@ -4,8 +4,6 @@ import de.lifelogr.communicator.commands.HelpCommand;
 import de.lifelogr.communicator.commands.StartCommand;
 import de.lifelogr.communicator.commands.TrackCommand;
 import de.lifelogr.communicator.services.Emoji;
-import de.lifelogr.dbconnector.DBConnector;
-import de.lifelogr.dbconnector.entity.TrackingObject;
 import de.lifelogr.dbconnector.entity.User;
 import de.lifelogr.dbconnector.impl.ICRUDUserImpl;
 import de.lifelogr.dbconnector.services.ICRUDUser;

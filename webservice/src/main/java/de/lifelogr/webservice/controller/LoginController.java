@@ -1,12 +1,5 @@
 package de.lifelogr.webservice.controller;
 
-import spark.Request;
-import spark.Response;
-import spark.Route;
-
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by micha on 05.12.2016.
  */

@@ -7,5 +7,5 @@ import de.lifelogr.dbconnector.entity.User;
  */
 public interface ICommunicator
 {
-    public void sendMessage(User user, String text);
+    void sendMessage(User user, String text);
 }
