@@ -1,4 +1,4 @@
-package de.lifelogr.trackingobjects;
+package de.lifelogr.notifier.trackingobjects;
 
 import de.lifelogr.dbconnector.services.TrackingObjectType;
 
@@ -21,9 +21,11 @@ public class TrackingObjects {
 
     public TrackingObjectType getType(String trackingObject) {
         if (this.drinks.getDrinksCaffein().contains(trackingObject.toLowerCase())) {
-            return TrackingObjectType.KOFFEIN;
+            return TrackingObjectType.CAFFEIN;
         } else if (this.drinks.getDrinksAlcohol().contains(trackingObject.toLowerCase())) {
-            return TrackingObjectType.ALKOHOL;
+            return TrackingObjectType.ALCOHOL;
+        } else if (this.drinks.getDrinksBeauty().contains(trackingObject.toLowerCase())) {
+            return TrackingObjectType.BEAUTY;
         }
         return TrackingObjectType.UNBEKANNT;
     }

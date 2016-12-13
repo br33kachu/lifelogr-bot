@@ -4,11 +4,10 @@ import de.lifelogr.communicator.Communicator;
 import de.lifelogr.dbconnector.Informant;
 import de.lifelogr.dbconnector.Observer;
 import de.lifelogr.dbconnector.entity.*;
-import de.lifelogr.recommendations.Recommendations;
+import de.lifelogr.notifier.recommendations.RecommendationController;
 import de.lifelogr.dbconnector.services.TrackingObjectType;
-import de.lifelogr.trackingobjects.TrackingObjects;
+import de.lifelogr.notifier.trackingobjects.TrackingObjects;
 
-import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -17,17 +16,17 @@ import java.util.Random;
 public class Notifier extends Observer {
 
     private static Notifier instance = null;
-    Informant informant;
-    TrackingObjects trackingObjects;
-    Recommendations recommendations;
-    TrackingObjectType trackingObjectType;
-    Communicator communicator;
+    private Informant informant;
+    private TrackingObjects trackingObjects;
+    private RecommendationController recommendationController;
+    private TrackingObjectType trackingObjectType;
+    private Communicator communicator;
 
     private Notifier() {
         this.informant = Informant.getInstance();
         this.informant.register(this);
         this.trackingObjects = TrackingObjects.getInstance();
-        this.recommendations = new Recommendations();
+        this.recommendationController = new RecommendationController();
         this.trackingObjectType = null;
         this.communicator = Communicator.getInstance();
     }
@@ -42,8 +41,8 @@ public class Notifier extends Observer {
     @Override
     public void onInform(User user, TrackingObject trackingObject) {
         this.trackingObjectType = trackingObjects.getType(trackingObject.getName());
-        if ((this.trackingObjectType == TrackingObjectType.KOFFEIN || this.trackingObjectType == TrackingObjectType.ALKOHOL) && this.recommendations.recommendationNeeded(user, trackingObjectType, "drink")) {
-            String[] result = this.recommendations.recommend(user, trackingObjectType);
+        if ((this.trackingObjectType == TrackingObjectType.CAFFEIN || this.trackingObjectType == TrackingObjectType.ALCOHOL || this.trackingObjectType == TrackingObjectType.BEAUTY) && this.recommendationController.recommendationNeeded(user, trackingObjectType, "drink")) {
+            String[] result = this.recommendationController.recommend(user, trackingObjectType);
             int random = new Random().nextInt(result.length);
             this.communicator.sendMessage(user.getChatId().toString(), result[random]);
         } else if (this.trackingObjectType == TrackingObjectType.UNBEKANNT) {}

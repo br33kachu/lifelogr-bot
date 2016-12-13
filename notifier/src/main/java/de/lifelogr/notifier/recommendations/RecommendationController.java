@@ -1,4 +1,4 @@
-package de.lifelogr.recommendations;
+package de.lifelogr.notifier.recommendations;
 
 import de.lifelogr.dbconnector.entity.Track;
 import de.lifelogr.dbconnector.entity.TrackingObject;
@@ -6,19 +6,19 @@ import de.lifelogr.dbconnector.entity.User;
 import de.lifelogr.dbconnector.impl.ICRUDUserImpl;
 import de.lifelogr.dbconnector.services.ICRUDUser;
 import de.lifelogr.dbconnector.services.TrackingObjectType;
-import de.lifelogr.trackingobjects.TrackingObjects;
+import de.lifelogr.notifier.trackingobjects.TrackingObjects;
 
 import java.util.Date;
 
 /**
  * Created by Christin on 12.12.2016.
  */
-public class Recommendations {
+public class RecommendationController {
 
     private RecommendationsDrink recommendationsDrink;
     private TrackingObjects trackingObject;
 
-    public Recommendations() {
+    public RecommendationController() {
         this.recommendationsDrink = new RecommendationsDrink();
         this.trackingObject = TrackingObjects.getInstance();
     }
@@ -48,7 +48,7 @@ public class Recommendations {
         user.addLastRecommendations(type, new Date());
         ICRUDUser icrudUser = new ICRUDUserImpl();
         icrudUser.saveUser(user);
-        if(type == TrackingObjectType.KOFFEIN || type == TrackingObjectType.ALKOHOL) {
+        if (type == TrackingObjectType.CAFFEIN || type == TrackingObjectType.ALCOHOL || type == TrackingObjectType.BEAUTY) {
             return this.recommendationsDrink.getRecommendations().get(type);
         }
         else return null;
