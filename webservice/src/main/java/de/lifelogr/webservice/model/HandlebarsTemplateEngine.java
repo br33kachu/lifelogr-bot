@@ -31,8 +31,6 @@ import spark.TemplateEngine;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-;
-
 /**
  * Renders HTML from Route output using
  * https://github.com/jknack/handlebars.java.

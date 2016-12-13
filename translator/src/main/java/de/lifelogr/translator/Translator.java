@@ -14,7 +14,7 @@ import de.lifelogr.translator.structures.CommandParams;
 public class Translator
 {
     private static Translator instance = null;
-    private static Object mutex = new Object();
+    private static final Object mutex = new Object();
 
     private HelpCommandMatcher hcm;
     private StartCommandMatcher scm;

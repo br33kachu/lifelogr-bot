@@ -74,9 +74,7 @@ public class Webservice implements Runnable {
          * Loging out and destroy Session
          * TODO Destroy the Session!
          */
-        get("/test/logout", (request, response) -> {
-            return "{'loggedout': 'ok'}";
-        });
+        get("/test/logout", (request, response) -> "{'loggedout': 'ok'}");
 
         // ----------- TEST METHODS FOR PROTOTYPE -------------
 

@@ -18,9 +18,7 @@ public class CommandParams
         this.params = new ArrayList<>();
 
         if (params != null) {
-            Arrays.stream(params).forEach((param) -> {
-                this.params.add(param);
-            });
+            Arrays.stream(params).forEach((param) -> this.params.add(param));
         }
     }
 

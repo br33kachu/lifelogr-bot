@@ -2,8 +2,6 @@ package de.lifelogr.bootloader;
 
 import de.lifelogr.communicator.Communicator;
 import de.lifelogr.dbconnector.DBConnector;
-import de.lifelogr.dbconnector.entity.TrackingObject;
-import de.lifelogr.dbconnector.entity.User;
 import de.lifelogr.notifier.Notifier;
 import de.lifelogr.webservice.Webservice;
 
