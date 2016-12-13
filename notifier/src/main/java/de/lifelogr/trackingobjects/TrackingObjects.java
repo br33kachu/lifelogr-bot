@@ -1,5 +1,7 @@
 package de.lifelogr.trackingobjects;
 
+import de.lifelogr.dbconnector.services.TrackingObjectType;
+
 /**
  * Created by christin on 06.12.16.
  */

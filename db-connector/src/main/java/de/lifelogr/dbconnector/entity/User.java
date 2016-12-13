@@ -1,11 +1,13 @@
 package de.lifelogr.dbconnector.entity;
 
 import de.lifelogr.dbconnector.Informant;
+import de.lifelogr.dbconnector.services.TrackingObjectType;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 @Entity("users")
 @Indexes(
@@ -30,7 +32,7 @@ public class User
     private String lastName;
     private String nickName;
     private String birthDate;
-    private Date lastRecommendation;
+    private HashMap<TrackingObjectType, Date> lastRecommendations;
     @Embedded
     private ArrayList<TrackingObject> trackingObjects;
     private String question;
@@ -38,6 +40,7 @@ public class User
     public User()
     {
         this.trackingObjects = new ArrayList<>();
+        this.lastRecommendations = new HashMap<>();
     }
 
     public ObjectId getId()
@@ -160,11 +163,12 @@ public class User
         this.birthDate = birthDate;
     }
 
-    public Date getLastRecommendation() {
-        return lastRecommendation;
+    public HashMap<TrackingObjectType, Date> getLastRecommendations() {
+        return lastRecommendations;
     }
-    public void setLastRecommendation(Date lastRecommendation) {
-        this.lastRecommendation = lastRecommendation;
+
+    public void addLastRecommendations(TrackingObjectType type, Date date) {
+        this.lastRecommendations.put(type, date);
     }
 
     public ArrayList<TrackingObject> getTrackingObjects()
