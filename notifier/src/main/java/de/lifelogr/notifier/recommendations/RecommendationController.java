@@ -16,11 +16,11 @@ import java.util.Date;
 public class RecommendationController {
 
     private RecommendationsDrink recommendationsDrink;
-    private TrackingObjects trackingObject;
+    private TrackingObjects trackingObjects;
 
     public RecommendationController() {
         this.recommendationsDrink = new RecommendationsDrink();
-        this.trackingObject = TrackingObjects.getInstance();
+        this.trackingObjects = TrackingObjects.getInstance();
     }
 
     public boolean recommendationNeeded(User user, TrackingObjectType type, String category) {
@@ -28,7 +28,7 @@ public class RecommendationController {
         double counter = 0.0;
         if (user.getLastRecommendations() == null || user.getLastRecommendations().get(type) == null || (currentDate.getTime() - user.getLastRecommendations().get(type).getTime() >= 60 * 60 * 1000))
             for (TrackingObject tObject : user.getTrackingObjects()) {
-                if (trackingObject.getType(tObject.getName()) == type) {
+                if (trackingObjects.getType(tObject.getName()) == type) {
                     for (Track track : tObject.getTracks()) {
                         if (category.equals("drink")) {
                             if (currentDate.getTime() - track.getDate().getTime() <= 2 * 60 * 60 * 1000) {
