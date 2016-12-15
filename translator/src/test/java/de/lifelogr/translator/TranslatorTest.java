@@ -120,7 +120,7 @@ public class TranslatorTest
     public void testTranslateToTrack_00()
     {
         String userText = "Track Banane";
-        CommandParams expected = new CommandParams("track", new String[]{"banane", "1.0"});
+        CommandParams expected = new CommandParams("track", "banane", "1.0");
         CommandParams actual = this.translator.translate(userText);
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getParams(), actual.getParams());
@@ -130,7 +130,7 @@ public class TranslatorTest
     public void testTranslateToTrack_01()
     {
         String userText = "tracke Banane";
-        CommandParams expected = new CommandParams("track", new String[]{"banane", "1.0"});
+        CommandParams expected = new CommandParams("track", "banane", "1.0");
         CommandParams actual = this.translator.translate(userText);
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getParams(), actual.getParams());
@@ -139,8 +139,8 @@ public class TranslatorTest
     @Test
     public void testTranslateToTrack_02()
     {
-        String userText = "zähle Banane";
-        CommandParams expected = new CommandParams("track", new String[]{"banane", "1.0"});
+        String userText = "zaehle Banane";
+        CommandParams expected = new CommandParams("track", "banane", "1.0");
         CommandParams actual = this.translator.translate(userText);
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getParams(), actual.getParams());
@@ -150,7 +150,7 @@ public class TranslatorTest
     public void testTranslateToTrack_03()
     {
         String userText = "track Banane 2";
-        CommandParams expected = new CommandParams("track", new String[]{"banane", "2.0"});
+        CommandParams expected = new CommandParams("track", "banane", "2.0");
         CommandParams actual = this.translator.translate(userText);
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getParams(), actual.getParams());
@@ -159,8 +159,8 @@ public class TranslatorTest
     @Test
     public void testTranslateToTrack_04()
     {
-        String userText = "Zähle Kaffee 3";
-        CommandParams expected = new CommandParams("track", new String[]{"kaffee", "3.0"});
+        String userText = "Z\u00E4hle Kaffee 3";
+        CommandParams expected = new CommandParams("track", "kaffee", "3.0");
         CommandParams actual = this.translator.translate(userText);
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getParams(), actual.getParams());
@@ -170,7 +170,7 @@ public class TranslatorTest
     public void testTranslateToTrack_05()
     {
         String userText = "Ich habe 2 Kaffee getrunken";
-        CommandParams expected = new CommandParams("track", new String[]{"kaffee", "2.0"});
+        CommandParams expected = new CommandParams("track", "kaffee", "2.0");
         CommandParams actual = this.translator.translate(userText);
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getParams(), actual.getParams());
@@ -180,7 +180,7 @@ public class TranslatorTest
     public void testTranslateToTrack_06()
     {
         String userText = "Ich habe drei Kaffee getrunken";
-        CommandParams expected = new CommandParams("track", new String[]{"kaffee", "3.0"});
+        CommandParams expected = new CommandParams("track", "kaffee", "3.0");
         CommandParams actual = this.translator.translate(userText);
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getParams(), actual.getParams());
@@ -189,8 +189,8 @@ public class TranslatorTest
     @Test
     public void testTranslateToTrack_07()
     {
-        String userText = "Ich habe fünf Bananen gegessen";
-        CommandParams expected = new CommandParams("track", new String[]{"banane", "5.0"});
+        String userText = "Ich habe f\u00FCnf Bananen gegessen";
+        CommandParams expected = new CommandParams("track", "banane", "5.0");
         CommandParams actual = this.translator.translate(userText);
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getParams(), actual.getParams());
@@ -200,7 +200,7 @@ public class TranslatorTest
     public void testTranslateToTrack_08()
     {
         String userText = "2.5 Kaffee getrunken";
-        CommandParams expected = new CommandParams("track", new String[]{"kaffee", "2.5"});
+        CommandParams expected = new CommandParams("track", "kaffee", "2.5");
         CommandParams actual = this.translator.translate(userText);
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getParams(), actual.getParams());
@@ -210,7 +210,7 @@ public class TranslatorTest
     public void testTranslateToTrack_09()
     {
         String userText = "Ich hatte 2 Bier";
-        CommandParams expected = new CommandParams("track", new String[]{"bier", "2.0"});
+        CommandParams expected = new CommandParams("track", "bier", "2.0");
         CommandParams actual = this.translator.translate(userText);
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getParams(), actual.getParams());
@@ -220,7 +220,7 @@ public class TranslatorTest
     public void testTranslateToTrack_10()
     {
         String userText = "1 Bier";
-        CommandParams expected = new CommandParams("track", new String[]{"bier", "1.0"});
+        CommandParams expected = new CommandParams("track", "bier", "1.0");
         CommandParams actual = this.translator.translate(userText);
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getParams(), actual.getParams());
@@ -230,7 +230,7 @@ public class TranslatorTest
     public void testTranslateToTrack_11()
     {
         String userText = "12 Bier getrunken";
-        CommandParams expected = new CommandParams("track", new String[]{"bier", "12.0"});
+        CommandParams expected = new CommandParams("track", "bier", "12.0");
         CommandParams actual = this.translator.translate(userText);
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getParams(), actual.getParams());

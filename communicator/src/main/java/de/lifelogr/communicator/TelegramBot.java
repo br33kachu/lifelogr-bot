@@ -17,6 +17,7 @@ import org.telegram.telegrambots.bots.commands.BotCommand;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.logging.BotLogger;
 
+import java.util.Random;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 
@@ -29,6 +30,12 @@ public class TelegramBot extends TelegramLongPollingCommandBot
 
     private final String botUsername = "syp_lifelog_bot";
     private final String botToken = "289154338:AAHw9d0vFfamnqQjIJDiCpPrXfHcRaG3cwg";
+
+    private final String[] failMessages = {
+            "Tut mir Leid, das habe ich nicht verstanden. Versuche es mal mit <b>Hilfe</b>",
+            "Das konnte ich nicht verarbeiten... " + Emoji.DISAPPOINTED_BUT_RELIEVED_FACE + ". <b>/hilfe</b> gibt dir eine Übersicht meiner Fähigkeiten.",
+            "Ui, das hat nicht geklappt. Hast du dich vielleicht verschrieben?"
+    };
 
     private ICRUDUser icrudUser;
 
@@ -112,12 +119,11 @@ public class TelegramBot extends TelegramLongPollingCommandBot
                             return;
                         }
 
-                    } else {
-                        sendMessage.setText("Sorry, das habe ich leider nicht verstanden...");
                     }
 
                     // Das Kommando konnte nicht gefunden werden
-                    sendMessage.setText("Sorry, das habe ich leider nicht verstanden. " + Emoji.DISAPPOINTED_BUT_RELIEVED_FACE);
+                    sendMessage.enableHtml(true);
+                    sendMessage.setText(this.failMessages[new Random().nextInt(this.failMessages.length)]);
                 } else {
                     // Der User hat noch ein Profil angelegt
                     sendMessage.enableHtml(true);

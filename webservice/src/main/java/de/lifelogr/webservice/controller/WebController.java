@@ -36,7 +36,7 @@ public class WebController {
                     jsonObject.put("x", formattedDate);
                     sum = sum + track.getCount();
                     jsonObject.put("y", sum);
-                    jsonObject.put("group", trackingObject.getName());
+                    jsonObject.put("group", this.capitalize(trackingObject.getName()));
                     jsonArray.put(jsonObject);
                 }
             } else if (trackingObject.getCategory() == 1) {
@@ -45,7 +45,7 @@ public class WebController {
                     String formattedDate = simpleDateFormat.format(track.getDate());
                     jsonObject.put("x", formattedDate);
                     jsonObject.put("y", track.getCount());
-                    jsonObject.put("group", trackingObject.getName());
+                    jsonObject.put("group", this.capitalize(trackingObject.getName()));
                     jsonArray.put(jsonObject);
                 }
             }
@@ -61,5 +61,9 @@ public class WebController {
     public User getUserByTelegramId(int telegramId) {
         User user = icrudUser.getUserByTelegramId(telegramId);
         return user;
+    }
+
+    private String capitalize(final String line) {
+        return Character.toUpperCase(line.charAt(0)) + line.substring(1);
     }
 }
