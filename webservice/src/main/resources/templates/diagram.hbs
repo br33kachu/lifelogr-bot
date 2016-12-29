@@ -58,11 +58,11 @@
     <div class="row">
         <!-- DATEFORMS -->
         <div class="col s3"></div>
-        <div id="datefrom" class="col s3">
+        <div class="col s3">
             <label for="dateFrom">Datum von:</label>
             <input id="dateFrom" type="date" class="date-picker" name="dateFrom">
         </div>
-        <div id="dateTo" class="col s3">
+        <div class="col s3">
             <label for="dateTo">Datum bis:</label>
             <input id="dateTo" type="date" class="date-picker" name="dateTo">
         </div>
@@ -95,16 +95,33 @@
     /* SETTINGS FOR VISJS */
     var dateEnd = new Date();
     dateEnd.setHours(0,0,0,0);
-    var dateStart = dateEnd - (15 * 1000 * 60 * 60 * 24);
+    var dateStart = new Date(dateEnd - (15 * 1000 * 60 * 60 * 24));
     var options = {
         legend: true,
         defaultGroup: '',
         start: dateStart,
         end: dateEnd,
     };
+    $('#dateFrom').val(dateStart.toISOString().substr(0,10));
+    $('#dateTo').val(dateEnd.toISOString().substr(0,10));
 
     var dataset = new vis.DataSet(items);
     var graph2d = new vis.Graph2d(container, dataset, options);
+
+    $(".date").datepicker({
+        onSelect: function() {
+            var $date = $(this);
+            if(id.equals('dateFrom')) {
+                graph2d.setupOptions('start', $date.value());
+            } else {
+                graph2d.setupOptions('end', $date.value());
+            }
+        }
+    });
+
+    function onDateChanged(id) {
+
+    }
 
     function onClickCheckbox(id) {
         var $checkbox = $('#'+id);

@@ -59,11 +59,12 @@
     function login() {
         var $textfield = $('#input_token');
         $.ajax({
-            datatype: 'json',
-            url: 'login?token='+$textfield.val(),
-            type: 'GET',
+            datatype: 'text/plain',
+            url: '/token',
+            type: 'POST',
+            data: $textfield.val(),
             success: function(result) {
-                if(result['auth'] === 'true') {
+                if(result === 'auth_ok') {
                     window.open('diagram','_self');
                 } else {
                     var $authfail = $('#authfail');
@@ -72,11 +73,12 @@
             }
         })
     }
+    /*
     $('#input_token').onkeyup(function (e) {
         if (e.keyCode === 13) {
             login();
         }
-    })
+    }) */
 </script>
 </body>
 </html>

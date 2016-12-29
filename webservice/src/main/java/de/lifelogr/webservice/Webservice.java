@@ -5,7 +5,9 @@ import de.lifelogr.webservice.controller.WebController;
 import de.lifelogr.webservice.model.WebModel;
 import spark.Spark;
 
-import static spark.Spark.get;
+import java.util.Date;
+
+import static spark.Spark.*;
 
 public class Webservice implements Runnable {
     @Override
@@ -22,62 +24,100 @@ public class Webservice implements Runnable {
         get("/", (request, response) -> webModel.getLogin());
 
         /**
-         * Login with Token - If user with that token exists, create a session and save the objectID
+         * GET Login with Token - If user with that token exists, create a session and save the telegramId
          * If login is successfull -> Redirect the user to /diagram site
          * If login fails -> Send a message with wrong token
          */
-        get("/login", ((request, response) -> {
-            String token = request.queryParams("token");
-            int id = webController.getTelegramIdByToken(token);
-            if (id != 0) {
-                String ok = "{\"auth\":\"true\"}";
-                if (!request.session().isNew()) {
+        get("/token/:token", ((request, response) -> {
+            String token = request.params("token");
+            if (request.session().attributes().isEmpty()) {
+                int id = webController.getTelegramIdByToken(token);
+                // Benutzer mit passendem Token gefunden
+                if (id != 0) {
                     System.out.println("create Session!");
                     request.session(true);
                     request.session().attribute("telegramID", id);
-                    return ok;
+                    response.redirect("/diagram");
+                    return response.body();
                 } else {
-                    System.out.println("Session already exists!");
-                    return ok;
+                    // Kein User mit passendem Token gefunden
+                    String authFail = "{\"auth\":\"false\"}";
+                    System.out.println(authFail);
+                    response.status(401);
+                    return response.body();
                 }
-            } else {
-                return "{\"auth\":\"false\"}";
             }
+            // Session existiert bereits
+            response.redirect("/diagram");
+            return response.body();
         }));
+
+        post("/token", (request, response) -> {
+            String token = request.body();
+            response.type(" text/plain");
+            response.body("auth_ok");
+            // Existiert noch keine Session
+            if (request.session().attributes().isEmpty()) {
+                int id = webController.getTelegramIdByToken(token);
+                // Benutzer mit passendem Token gefunden
+                if (id != 0) {
+                    // Neue Session wird erstellt
+                    request.session(true);
+                    request.session().attribute("telegramID", id);
+                    return response.body();
+                } else {
+                    // Es existiert kein User mit dem Token - Fehlermeldung
+                    response.body("auth_false");
+                    return response.body();
+                }
+            }
+            // Session existiert bereits
+            return response.body();
+        });
 
         /**
          *  Get DiagramSite - if a session exists
          */
         get("/diagram", (request, response) -> {
-            int telegramId = request.session().attribute("telegramID");
-            User user = webController.getUserByTelegramId(telegramId);
-            String dataSet = webController.getJSONDataSet(telegramId);
-            return webModel.getDiagram(dataSet, user);
+            if (!request.session().attributes().isEmpty()) {
+                int telegramId = request.session().attribute("telegramID");
+                User user = webController.getUserByTelegramId(telegramId);
+                String dataSet = webController.getJSONDataSet(telegramId, null, null);
+                return webModel.getDiagram(dataSet, user);
+            } else {
+                halt(401, "Keine Authorisierung!!");
+            }
+            return null;
         });
 
         /**
          * Get Trackingobjects, for the sessionUser
          */
         //get("/", (req,res) -> new ModelAndView(model), "main.hbs"), new HandlebarsTemplateEngine());
-        get("/dataset/{telegramId}", (request, response) -> {
-            //ObjectId id = request.session().attribute("userID");
-            try {
-                int telegramId = Integer.parseInt(request.params("telegramId"));
-                return webController.getJSONDataSet(telegramId);
-            } catch (NumberFormatException e) {
-                return null;
-            }
+        get("/dataset", (request, response) -> {
+            int telegramId = request.session().attribute("telegramId");
+            Date from = new Date(request.queryParams("from"));
+            Date to = new Date(request.queryParams("to"));
+            return webController.getJSONDataSet(telegramId, from, to);
         });
-
 
         /**
          * Loging out and destroy Session
          * TODO Destroy the Session!
          */
-        get("/test/logout", (request, response) -> "{'loggedout': 'ok'}");
+        get("/logout", (request, response) -> {
+            request.session().removeAttribute("telegramId");
+            request.session().invalidate();
+            response.redirect("/");
+            return response.body();
+        });
 
         // ----------- TEST METHODS FOR PROTOTYPE -------------
 
+        get("/test/logout", (request, response) -> {
+            request.session().removeAttribute("telegramId");
+            return "{'loggedout': 'ok'}";
+        });
         /**
          * MainLoginScreen where the user can send the token for authenticating
          */
@@ -89,7 +129,7 @@ public class Webservice implements Runnable {
         get("/test/diagram", (request, response) -> {
             int telegramId = 292994467;
             User user = webController.getUserByTelegramId(telegramId);
-            String dataSet = webController.getJSONDataSet(telegramId);
+            String dataSet = webController.getJSONDataSet(telegramId, null, null);
             return webModel.getDiagram(dataSet, user);
         });
 
