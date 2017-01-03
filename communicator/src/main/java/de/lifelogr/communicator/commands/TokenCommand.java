@@ -43,14 +43,16 @@ public class TokenCommand extends BotCommand {
             String token = "00000";
             String webSiteToken = "lifelogr.de/token/";
 
-            // TODO token kreieren und überprüfen ob Token bereits exisitert
             // Token erstellen und überprüfen ob Token bereits vorhanden ist, falls ja, neuen Token erstellen
             boolean tokenExists = false;
             ICRUDUser icrudUser = new ICRUDUserImpl();
             do {
                 SecureRandom random = new SecureRandom();
                 int num = random.nextInt(100000);
-                if (icrudUser.getUserByToken(String.valueOf(num)) == null) tokenExists = false;
+                if (icrudUser.getUserByToken(String.valueOf(num)) == null) {
+                    tokenExists = false;
+                    token = String.valueOf(num);
+                }
                 else tokenExists = true;
             } while (tokenExists);
 
@@ -63,6 +65,7 @@ public class TokenCommand extends BotCommand {
             Date date = new Date();
             long ms = new Date().getTime() + 90000;
             Date expiration = new Date(ms);
+            currentUser.setTokenExpirationDate(date);
 
             // Persist changes
             this.icrudUser.saveUser(currentUser);
