@@ -48,8 +48,9 @@ public class WebControllerTest {
         int telegramId = 292994467;
         User user = webController.getUserByTelegramId(telegramId);
         String dataSet = webController.getJSONDataSet(telegramId, null, null);
+        System.out.println(dataSet);
         assertNotNull(dataSet);
-        assertNotEquals(3, dataSet.length());
+        assertNotEquals("[]", dataSet);
     }
 
     /**
@@ -62,6 +63,7 @@ public class WebControllerTest {
         int telegramId = 292994468;
         User user = webController.getUserByTelegramId(telegramId);
         String dataSet = webController.getJSONDataSet(telegramId, null, null);
+        System.out.println(dataSet);
         assertEquals("[]", dataSet);
     }
 
@@ -74,8 +76,23 @@ public class WebControllerTest {
         int telegramId = 292994469;
         User user = webController.getUserByTelegramId(telegramId);
         String dataSet = webController.getJSONDataSet(telegramId, null, null);
+        System.out.println(dataSet);
         assertEquals("[]", dataSet);
     }
 
 
+    /**
+     * Hole JSON-DataSet,
+     * wenn Tracks in der Datenbank vorhanden sind,
+     * ein Datum eingegeben wurde
+     */
+    @Test
+    public void testGetJSONDataSet_03() {
+        int telegramId = 292994467;
+        User user = webController.getUserByTelegramId(telegramId);
+        String dataSet = webController.getJSONDataSet(telegramId, null, null);
+        System.out.println(dataSet);
+        assertNotNull(dataSet);
+        assertNotEquals(2, dataSet.length());
+    }
 }

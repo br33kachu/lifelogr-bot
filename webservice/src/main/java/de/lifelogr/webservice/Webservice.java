@@ -6,10 +6,15 @@ import de.lifelogr.webservice.model.WebModel;
 import spark.Spark;
 
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
+import static spark.Spark.post;
 
 public class Webservice implements Runnable {
+    private final Logger log = Logger.getLogger(Webservice.class.getName());
+
     @Override
     public void run() {
         Spark.staticFileLocation("/public");
@@ -18,17 +23,23 @@ public class Webservice implements Runnable {
         WebController webController = new WebController();
         WebModel webModel = new WebModel();
 
-        /**
-         * MainLoginScreen where the user can send the token for authenticating
-         */
-        get("/", (request, response) -> webModel.getLogin());
 
         /**
-         * GET Login with Token - If user with that token exists, create a session and save the telegramId
-         * If login is successfull -> Redirect the user to /diagram site
-         * If login fails -> Send a message with wrong token
+         * GET-Pfad für die Hauptseite mit der Anmeldemaske
+         */
+        get("/", (request, response) -> {
+            if (StartWebServer.LOGGING) log.log(Level.INFO, "Seite \"/\" aufgerufen.");
+            return webModel.getLogin();
+        });
+
+        /**
+         * GET-Pfad für die Token-Authentifizierung. Erzeugt eine Session und speichert die telegramId in der Session,
+         * falls der Token gültig ist.
+         * Wenn die Anmeldung erfolgreich war, Weiterleitung zur Diagramm-Seite
+         * Wenn die Anmeldung erfolglos war, Weiterleitung auf eine Fehlerseite
          */
         get("/token/:token", ((request, response) -> {
+            if (StartWebServer.LOGGING) log.log(Level.INFO, "Seite \"/token/:token\" aufgerufen.");
             String token = request.params("token");
             if (request.session().attributes().isEmpty()) {
                 int id = webController.getTelegramIdByToken(token);
@@ -44,6 +55,7 @@ public class Webservice implements Runnable {
                     String authFail = "{\"auth\":\"false\"}";
                     System.out.println(authFail);
                     response.status(401);
+                    response.body("Status Code: 401\nToken ist ungültig!");
                     return response.body();
                 }
             }
@@ -52,8 +64,15 @@ public class Webservice implements Runnable {
             return response.body();
         }));
 
+        /**
+         * POST-Pfad für das Token-Login über die Webseite.
+         * Wenn ein Token vorhanden ist wird ein Session erstellt und ein "auth_ok" zurückgegeben.
+         * Wenn kein Token in der DB gefunden wird, wird ein "auth_false" zurückgegeben und es wird kein Session erstellt.
+         */
         post("/token", (request, response) -> {
+            if (StartWebServer.LOGGING) log.log(Level.INFO, "Seite \"/token\" aufgerufen.");
             String token = request.body();
+            response.status(200);
             response.type(" text/plain");
             response.body("auth_ok");
             // Existiert noch keine Session
@@ -62,83 +81,70 @@ public class Webservice implements Runnable {
                 // Benutzer mit passendem Token gefunden
                 if (id != 0) {
                     // Neue Session wird erstellt
+                    if (StartWebServer.LOGGING)
+                        log.log(Level.INFO, "token: \"" + token + "\" wurde uebergeben - User mit der ID: " + id + " gefunden. Session wird erstellt und Weiterleitung auf die Diagramm-Seite");
                     request.session(true);
                     request.session().attribute("telegramID", id);
                     return response.body();
                 } else {
                     // Es existiert kein User mit dem Token - Fehlermeldung
+                    if (StartWebServer.LOGGING)
+                        log.log(Level.INFO, "token: \"" + token + "\" wurde uebergeben - Es existiert kein User mit dem Token");
+                    response.status(401);
                     response.body("auth_false");
                     return response.body();
                 }
             }
             // Session existiert bereits
+            if (StartWebServer.LOGGING)
+                log.log(Level.INFO, "token: \"" + token + "\" wurde uebergeben - Session existiert bereits, Weiterleitung auf die Diagramm-Seite");
             return response.body();
         });
 
         /**
-         *  Get DiagramSite - if a session exists
+         *  GET-Pfad für die Diagramm-Seite. Die Seite kann nur aufgerufen werden, wenn eine Session existiert.
          */
         get("/diagram", (request, response) -> {
+            if (StartWebServer.LOGGING) log.log(Level.INFO, "Seite \"/diagram\" aufgerufen.");
             if (!request.session().attributes().isEmpty()) {
+                if (StartWebServer.LOGGING) log.log(Level.INFO, "Session existiert und die Seite wird übergeben.");
                 int telegramId = request.session().attribute("telegramID");
                 User user = webController.getUserByTelegramId(telegramId);
                 String dataSet = webController.getJSONDataSet(telegramId, null, null);
                 return webModel.getDiagram(dataSet, user);
-            } else {
-                halt(401, "Keine Authorisierung!!");
             }
-            return null;
+            if (StartWebServer.LOGGING)
+                log.log(Level.INFO, "Session existiert nicht - 401 Fehlerseite wird übergeben.");
+            response.status(401);
+            response.body("Status Code: 401\nKeine Authorisierung!");
+            return response.body();
         });
 
         /**
-         * Get Trackingobjects, for the sessionUser
+         * GET-Pfad um das JSON-DataSet zu erstellen und zu übergeben
          */
-        //get("/", (req,res) -> new ModelAndView(model), "main.hbs"), new HandlebarsTemplateEngine());
         get("/dataset", (request, response) -> {
-            int telegramId = request.session().attribute("telegramId");
-            Date from = new Date(request.queryParams("from"));
-            Date to = new Date(request.queryParams("to"));
-            return webController.getJSONDataSet(telegramId, from, to);
+            if (StartWebServer.LOGGING) log.log(Level.INFO, "Seite \"/diagram\" aufgerufen.");
+            if (!request.session().attributes().isEmpty()) {
+                int telegramId = request.session().attribute("telegramId");
+                Date from = new Date(request.queryParams("from"));
+                Date to = new Date(request.queryParams("to"));
+                return webController.getJSONDataSet(telegramId, from, to);
+            }
+            response.status(401);
+            response.body("Status Code: 401\nKeine Authorisierung!");
+            return response.body();
         });
 
         /**
-         * Loging out and destroy Session
-         * TODO Destroy the Session!
+         * Löscht die Session-Attribute und leitet den Nutzer weiter zur Startseite "/"
          */
         get("/logout", (request, response) -> {
+            if (StartWebServer.LOGGING) log.log(Level.INFO, "Seite \"/logout\" aufgerufen. Session wird gelöscht.");
             request.session().removeAttribute("telegramId");
             request.session().invalidate();
             response.redirect("/");
             return response.body();
         });
-
-        // ----------- TEST METHODS FOR PROTOTYPE -------------
-
-        get("/test/logout", (request, response) -> {
-            request.session().removeAttribute("telegramId");
-            return "{'loggedout': 'ok'}";
-        });
-        /**
-         * MainLoginScreen where the user can send the token for authenticating
-         */
-        get("/test", (request, response) -> webModel.getTestLogin());
-
-        /**
-         * Get TestDiagrams - only showing one specifig testUser
-         */
-        get("/test/diagram", (request, response) -> {
-            int telegramId = 292994467;
-            User user = webController.getUserByTelegramId(telegramId);
-            String dataSet = webController.getJSONDataSet(telegramId, null, null);
-            return webModel.getDiagram(dataSet, user);
-        });
-
-        get("/favicon.ico", (request, response) -> {
-            response.header("Content-Type", "x-icon");
-            return "/favicon.ico";
-        });
-
-
     }
-
 }

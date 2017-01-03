@@ -26,22 +26,9 @@
 <div class="container">
     <div class="row">
         <div class="col s10"></div>
-        <div id="logout" class="waves-effect waves-light btn red col s2" onclick="logout()">
+        <div id="logout" class="waves-effect waves-light btn red col s2" onclick="window.open('/logout','_self')">
             <span>Abmelden</span>
         </div>
-        <script>
-            function logout() {
-                var $textfield = $('#logout');
-                $.ajax({
-                    datatype: 'json',
-                    url: 'logout',
-                    type: 'GET',
-                    success: function(result) {
-                        window.open('/','_self');
-                    }
-                })
-            }
-        </script>
     </div>
     <div class="header center green-text">
         <h5>{{welcome}}</h5>
@@ -67,14 +54,6 @@
             <input id="dateTo" type="date" class="date-picker" name="dateTo">
         </div>
         <div class="col s3"></div>
-        <script>
-            /* TODO Datum einstellen und bei Auswahl, Graph verändern!
-            var $datepickerfrom = $('#datefrom');
-            $datepickerfrom.set('select', dateStart, {format: 'yyyy-mm-dd'});
-            var $datepickerto = $('#dateTo');
-            $datepickerto.set('select', dateEnd, {format: 'yyyy-mm-dd'});
-            */
-        </script>
     </div>
 
     <div class="row">
@@ -108,6 +87,7 @@
     var dataset = new vis.DataSet(items);
     var graph2d = new vis.Graph2d(container, dataset, options);
 
+    /*
     $(".date").datepicker({
         onSelect: function() {
             var $date = $(this);
@@ -117,7 +97,7 @@
                 graph2d.setupOptions('end', $date.value());
             }
         }
-    });
+     });*/
 
     function onDateChanged(id) {
 
@@ -135,6 +115,33 @@
         options.groups.visibility[groupId] = visibility;
         graph2d.setOptions(options);
     }
+    /*
+     function setGroups() {
+     var jsonItems = items;
+     JSON.stringify(jsonItems);
+     var groups = jsonItems.getElementsByName('group');
+     do{
+     var work = true;
+     if(groups)
+
+     }while(work);
+     var cbGroups;
+     for(var i=0; i<groups.length; i++) {
+     var group = groups[i];
+
+     if (groups.length != 0) {
+     var exists = false;
+     for (var j=0; j < groups.length && !exists; j++) {
+     var existingGroup = groups[j];
+     if (group.equals(existingGroup)) exists = true;
+     }
+     if (!exists) groups.add(group);
+     } else {
+     groups.add(group);
+     }
+     }
+     }
+     */
 </script>
 </body>
 </html>

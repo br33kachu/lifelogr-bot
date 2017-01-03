@@ -41,7 +41,7 @@
             </form>
         </div>
     </div>
-    <div id="authfail" class="col s2 red"></div>
+    <div id="authfail" class="alert-box alert col s2 red"></div>
     <div class="col s2"></div>
     <div class="row center">
         <div class="col s1"></div>
@@ -63,12 +63,13 @@
             url: '/token',
             type: 'POST',
             data: $textfield.val(),
-            success: function(result) {
-                if(result === 'auth_ok') {
+            statusCode: {
+                200: function () {
                     window.open('diagram','_self');
-                } else {
+                },
+                401: function () {
                     var $authfail = $('#authfail');
-                    $authfail.text("Token existiert nicht");
+                    $authfail.text("Token existiert nicht!");
                 }
             }
         })
