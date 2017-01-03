@@ -85,7 +85,9 @@ public class WebController {
 
     public int getTelegramIdByToken(String token) {
         User user = icrudUser.getUserByToken(token);
-        if (user != null) return user.getTelegramId();
+        if (StartWebServer.LOGGING) log.log(Level.INFO, "Date Expiration: " + user.getTokenExpirationDate().toString());
+        if (StartWebServer.LOGGING) log.log(Level.INFO, "Date Now: " + new Date());
+        if (user != null && user.getTokenExpirationDate().after(new Date())) return user.getTelegramId();
         return 0;
     }
 

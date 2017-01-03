@@ -62,10 +62,9 @@ public class TokenCommand extends BotCommand {
             currentUser.setToken(token);
 
             // Set expiration Date = now + 90s
-            Date date = new Date();
             long ms = new Date().getTime() + 90000;
             Date expiration = new Date(ms);
-            currentUser.setTokenExpirationDate(date);
+            currentUser.setTokenExpirationDate(expiration);
 
             // Persist changes
             this.icrudUser.saveUser(currentUser);
