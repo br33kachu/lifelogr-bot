@@ -70,6 +70,10 @@
                 401: function () {
                     var $authfail = $('#authfail');
                     $authfail.text("Token existiert nicht!");
+                },
+                410: function () {
+                    var $authfail = $('#authfail');
+                    $authfail.text("Token ist abgelaufen. Bitte hole dir einen neuen Token!");
                 }
             }
         })

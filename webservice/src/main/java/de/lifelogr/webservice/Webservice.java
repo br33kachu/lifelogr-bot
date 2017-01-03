@@ -43,20 +43,28 @@ public class Webservice implements Runnable {
             String token = request.params("token");
             if (request.session().attributes().isEmpty()) {
                 int id = webController.getTelegramIdByToken(token);
-                // Benutzer mit passendem Token gefunden
-                if (id != 0) {
-                    System.out.println("create Session!");
-                    request.session(true);
-                    request.session().attribute("telegramID", id);
-                    response.redirect("/diagram");
-                    return response.body();
-                } else {
-                    // Kein User mit passendem Token gefunden
-                    String authFail = "{\"auth\":\"false\"}";
-                    System.out.println(authFail);
-                    response.status(401);
-                    response.body("Status Code: 401\nToken ist ungültig!");
-                    return response.body();
+                switch (id) {
+                    case 0:
+                        // Kein User mit passendem Token gefunden
+                        String authFail = "{\"auth\":\"false\"}";
+                        System.out.println(authFail);
+                        response.status(401);
+                        response.body("Status Code: 401\nToken ist ungültig!");
+                        return response.body();
+                    case -1:
+                        // Token ist abgelaufen - Fehlermeldung
+                        if (StartWebServer.LOGGING)
+                            log.log(Level.INFO, "token: \"" + token + "\" wurde uebergeben - Token ist aber abgelaufen!");
+                        response.status(410);
+                        response.body("auth_expired");
+                        return response.body();
+                    default:
+                        // Benutzer mit passendem Token gefunden
+                        System.out.println("create Session!");
+                        request.session(true);
+                        request.session().attribute("telegramID", id);
+                        response.redirect("/diagram");
+                        return response.body();
                 }
             }
             // Session existiert bereits
@@ -79,20 +87,28 @@ public class Webservice implements Runnable {
             if (request.session().attributes().isEmpty()) {
                 int id = webController.getTelegramIdByToken(token);
                 // Benutzer mit passendem Token gefunden
-                if (id != 0) {
-                    // Neue Session wird erstellt
-                    if (StartWebServer.LOGGING)
-                        log.log(Level.INFO, "token: \"" + token + "\" wurde uebergeben - User mit der ID: " + id + " gefunden. Session wird erstellt und Weiterleitung auf die Diagramm-Seite");
-                    request.session(true);
-                    request.session().attribute("telegramID", id);
-                    return response.body();
-                } else {
-                    // Es existiert kein User mit dem Token - Fehlermeldung
-                    if (StartWebServer.LOGGING)
-                        log.log(Level.INFO, "token: \"" + token + "\" wurde uebergeben - Es existiert kein User mit dem Token");
-                    response.status(401);
-                    response.body("auth_false");
-                    return response.body();
+                switch (id) {
+                    case 0:
+                        // Es existiert kein User mit dem Token - Fehlermeldung
+                        if (StartWebServer.LOGGING)
+                            log.log(Level.INFO, "token: \"" + token + "\" wurde uebergeben - Es existiert kein User mit dem Token");
+                        response.status(401);
+                        response.body("auth_false");
+                        return response.body();
+                    case -1:
+                        // Token ist abgelaufen - Fehlermeldung
+                        if (StartWebServer.LOGGING)
+                            log.log(Level.INFO, "token: \"" + token + "\" wurde uebergeben - Token ist aber abgelaufen!");
+                        response.status(410);
+                        response.body("auth_expired");
+                        return response.body();
+                    default:
+                        // Neue Session wird erstellt
+                        if (StartWebServer.LOGGING)
+                            log.log(Level.INFO, "token: \"" + token + "\" wurde uebergeben - User mit der ID: " + id + " gefunden. Session wird erstellt und Weiterleitung auf die Diagramm-Seite");
+                        request.session(true);
+                        request.session().attribute("telegramID", id);
+                        return response.body();
                 }
             }
             // Session existiert bereits

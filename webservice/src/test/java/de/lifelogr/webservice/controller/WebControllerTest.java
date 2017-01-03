@@ -1,7 +1,11 @@
 package de.lifelogr.webservice.controller;
 
 import de.lifelogr.dbconnector.entity.User;
+import de.lifelogr.dbconnector.impl.ICRUDUserImpl;
+import de.lifelogr.dbconnector.services.ICRUDUser;
 import org.junit.Test;
+
+import java.util.Date;
 
 import static org.junit.Assert.*;
 
@@ -94,5 +98,48 @@ public class WebControllerTest {
         System.out.println(dataSet);
         assertNotNull(dataSet);
         assertNotEquals(2, dataSet.length());
+    }
+
+    /**
+     * Teste Token,
+     * User mit dem Token existiert,
+     * Verfallsdatum des Tokens wird nicht überschritten
+     */
+    @Test
+    public void testGetUserByTelegramId_00() {
+        int telegramId = 292994467;
+        User user = webController.getUserByTelegramId(telegramId);
+        user.setTokenExpirationDate(new Date(new Date().getTime() + 90000));
+        ICRUDUser icrudUser = new ICRUDUserImpl();
+        icrudUser.saveUser(user);
+        int expectedId = user.getTelegramId();
+        int userId = webController.getTelegramIdByToken(user.getToken());
+        assertEquals(expectedId, userId);
+    }
+
+    /**
+     * Teste Token,
+     * User mit dem Token existiert,
+     * Verfallsdatum des Tokens ist überschritten
+     */
+    @Test
+    public void testGetUserByTelegramId_01() {
+        int telegramId = 292994467;
+        User user = webController.getUserByTelegramId(telegramId);
+        user.setTokenExpirationDate(new Date(new Date().getTime() - 90000));
+        ICRUDUser icrudUser = new ICRUDUserImpl();
+        icrudUser.saveUser(user);
+        int userId = webController.getTelegramIdByToken(user.getToken());
+        assertEquals(-1, userId);
+    }
+
+    /**
+     * Teste Token,
+     * User mit dem Token existiert nicht
+     */
+    @Test
+    public void testGetUserByTelegramId_02() {
+        int userId = webController.getTelegramIdByToken("00000");
+        assertEquals(0, userId);
     }
 }
