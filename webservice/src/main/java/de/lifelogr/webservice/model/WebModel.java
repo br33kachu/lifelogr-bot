@@ -22,13 +22,6 @@ public class WebModel {
         return login;
     }
 
-    public String getTestLogin() {
-        Map<String, String> model = new HashMap<>();
-        model.put("title", "Lgr - Login");
-        String login = new HandlebarsTemplateEngine().render(new ModelAndView(model, "testlogin.hbs"));
-        return login;
-    }
-
     public String getDiagram(String items, User user) {
         Map<String, String> model = new HashMap<>();
 

@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 abstract class CommandMatcher
 {
-    protected ArrayList<String> patterns = new ArrayList<>();
+    ArrayList<String> patterns = new ArrayList<>();
 
     public boolean matches(String text)
     {

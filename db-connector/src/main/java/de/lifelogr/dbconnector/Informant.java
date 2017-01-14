@@ -13,7 +13,7 @@ public class Informant {
     private static Informant instance = null;
     private static List<Observer> observerList = new ArrayList<>();
 
-    private void Informant() {}
+    private Informant() {}
 
     public static Informant getInstance() {
         if(instance == null) {

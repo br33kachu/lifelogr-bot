@@ -1,5 +1,6 @@
 package de.lifelogr.communicator.commands;
 
+import de.lifelogr.communicator.services.Emoji;
 import de.lifelogr.dbconnector.entity.Track;
 import de.lifelogr.dbconnector.entity.TrackingObject;
 import de.lifelogr.dbconnector.impl.ICRUDUserImpl;
@@ -13,6 +14,8 @@ import org.telegram.telegrambots.bots.commands.ICommandRegistry;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.logging.BotLogger;
 
+import java.util.Random;
+
 /**
  * @author marco
  */
@@ -22,6 +25,12 @@ public class TrackCommand extends BotCommand
 
     private final ICommandRegistry commandRegistry;
     private final ICRUDUser icrudUser = new ICRUDUserImpl();
+
+    private final String[] successMessages = {
+            "Alles klar! Ist gespeichert. " + Emoji.SMILING_FACE_WITH_SMILING_EYES,
+            "Okay, habe ich mir notiert. " + Emoji.FACE_WITH_OK_GESTURE,
+            "Check!"
+    };
 
     /**
      * @param commandRegistry
@@ -41,7 +50,7 @@ public class TrackCommand extends BotCommand
         msg.enableHtml(true);
 
         if (arguments.length == 0) {
-            msg.setText("Ich brauch mehr Informationen. Versuche es mal mit <b>/track Banane 1</b>");
+            msg.setText("Ich brauche mehr Informationen. Versuche es mal mit <b>/track Banane 1</b>");
         } else if (arguments.length > 2) {
             msg.setText("Das ist zuviel Information. Versuche es mal mit <b>/track Banane 1</b>");
         } else if (currentUser != null) {
@@ -72,9 +81,9 @@ public class TrackCommand extends BotCommand
             // Persist changes
             this.icrudUser.saveUser(currentUser);
 
-            msg.setText("Alles klar! Ist gespeichert :)");
+            msg.setText(this.successMessages[new Random().nextInt(this.successMessages.length)]);
         } else {
-            msg.setText("Jetzt weiss ich gerade nicht weiter...");
+            msg.setText("Hey, du hast noch kein Profil, daher kannst du das leider noch nicht tun!");
         }
 
         try {

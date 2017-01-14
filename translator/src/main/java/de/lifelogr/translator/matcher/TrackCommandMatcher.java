@@ -16,8 +16,8 @@ public class TrackCommandMatcher extends CommandMatcher
 
     public TrackCommandMatcher()
     {
-        this.patterns.add("^(track(e)?|z(ä|ae)hl(e)?)\\s(?<name>\\w+)(\\s(?<value>[-+]?[0-9]*\\.?[0-9]+))?$");
-        this.patterns.add("^(ich\\s(hab(e)|hatte)?\\s)?(?<value>[-+]?[0-9]*\\.?[0-9]+|ein(e)?|zwei|drei|vier|f(ü|ue)nf|sechs|sieben|acht|neun|zehn|elf|zw(ö|oe)lf)\\s(?<name>\\w+)(\\s(gegessen|getrunken|verspeist))?$");
+        this.patterns.add("^(track(e)?|z(\u00E4|ae)hl(e)?)\\s(?<name>\\w+)(\\s(?<value>[-+]?[0-9]*\\.?[0-9]+))?$");
+        this.patterns.add("^(ich\\s(hab(e)|hatte)?\\s)?(?<value>[-+]?[0-9]*\\.?[0-9]+|ein(e)?|zwei|drei|vier|f(\u00FC|ue)nf|sechs|sieben|acht|neun|zehn|elf|zw(\u00F6|oe)lf)\\s(?<name>\\w+)(\\s(gegessen|getrunken|verspeist))?$");
 
         this.numberStringMap = new HashMap<>();
         this.numberStringMap.put("ein", 1.0);
@@ -26,7 +26,7 @@ public class TrackCommandMatcher extends CommandMatcher
         this.numberStringMap.put("zwei", 2.0);
         this.numberStringMap.put("drei", 3.0);
         this.numberStringMap.put("view", 4.0);
-        this.numberStringMap.put("fünf", 5.0);
+        this.numberStringMap.put("f\u00FCnf", 5.0);
         this.numberStringMap.put("fuenf", 5.0);
         this.numberStringMap.put("sechs", 6.0);
         this.numberStringMap.put("sieben", 7.0);
@@ -34,7 +34,7 @@ public class TrackCommandMatcher extends CommandMatcher
         this.numberStringMap.put("neun", 9.0);
         this.numberStringMap.put("zehn", 10.0);
         this.numberStringMap.put("elf", 11.0);
-        this.numberStringMap.put("zwölf", 12.0);
+        this.numberStringMap.put("zw\u00F6lf", 12.0);
         this.numberStringMap.put("zwoelf", 12.0);
     }
 
