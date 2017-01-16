@@ -72,7 +72,9 @@ public class Webservice implements Runnable {
          */
         post("/token", (request, response) -> {
             if (StartWebServer.LOGGING) log.log(Level.INFO, "Seite \"/token\" aufgerufen.");
+            // Token is post as a string, so just convert it to a string
             String token = request.body();
+            // creates a success body
             response.status(200);
             response.type(" text/plain");
             response.body("auth_ok");
@@ -81,7 +83,7 @@ public class Webservice implements Runnable {
                 int id = webController.getTelegramIdByToken(token);
                 // Benutzer mit passendem Token gefunden
                 switch (id) {
-                    case 0:
+                    case 0: // user
                         // Es existiert kein User mit dem Token - Fehlermeldung
                         if (StartWebServer.LOGGING)
                             log.log(Level.INFO, "token: \"" + token + "\" wurde uebergeben - Es existiert kein User mit dem Token");
@@ -111,7 +113,8 @@ public class Webservice implements Runnable {
         });
 
         /**
-         *  GET-Pfad für die Diagramm-Seite. Die Seite kann nur aufgerufen werden, wenn eine Session existiert.
+         *  GET-Path for the diagram-site. This page can only be accessed if a session exists, otherwise it will returns
+         *  a failpage.
          */
         get("/diagram", (request, response) -> {
             if (StartWebServer.LOGGING) log.log(Level.INFO, "Seite \"/diagram\" aufgerufen.");
@@ -140,7 +143,7 @@ public class Webservice implements Runnable {
         });
 
         /**
-         * GET-Pfad um das JSON-DataSet zu erstellen und zu übergeben
+         * GET-Path to create a String-Dataset for the vis.js diagram
          */
         get("/dataset", (request, response) -> {
             if (StartWebServer.LOGGING) log.log(Level.INFO, "Seite \"/diagram\" aufgerufen.");
@@ -158,7 +161,7 @@ public class Webservice implements Runnable {
         });
 
         /**
-         * Löscht die Session-Attribute und leitet den Nutzer weiter zur Startseite "/"
+         * deletes the sessison attribute and redirects to the mainpage
          */
         get("/logout", (request, response) -> {
             if (StartWebServer.LOGGING) log.log(Level.INFO, "Seite \"/logout\" aufgerufen. Session wird gelöscht.");
