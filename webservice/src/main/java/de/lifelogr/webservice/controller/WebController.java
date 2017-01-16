@@ -43,7 +43,7 @@ public class WebController {
         if (from == null) {
             if (StartWebServer.LOGGING) log.log(Level.INFO, "Date 'from' is null");
             LocalDate now = LocalDate.now();
-            now = now.minusMonths(1);
+            now = now.minusWeeks(1);
             from = Date.from(now.atStartOfDay(ZoneId.systemDefault()).toInstant());
             if (StartWebServer.LOGGING) log.log(Level.INFO, "Date 'from': " + from.toString());
         }
