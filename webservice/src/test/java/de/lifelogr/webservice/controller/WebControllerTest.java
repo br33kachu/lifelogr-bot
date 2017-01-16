@@ -15,33 +15,6 @@ import static org.junit.Assert.*;
 public class WebControllerTest {
     private final WebController webController = new WebController();
 
-    @org.junit.Before
-    public void setUp() throws Exception {
-
-    }
-
-    @org.junit.After
-    public void tearDown() throws Exception {
-
-    }
-
-    /*
-    @org.junit.Test
-    public void getJSONDataSet() throws Exception {
-        int telegramId = 666999;
-        String result = webController.getJSONDataSet(telegramId);
-        assertNotEquals(result, null);
-        System.out.println(result);
-    }
-
-    @org.junit.Test
-    public void getUserIdByToken_01() throws Exception {
-        int telegramId = webController.getTelegramIdByToken("112233aabbcc");
-        int expectedId = 666999;
-        assertEquals(telegramId, expectedId);
-    }
-*/
-
     /**
      * Hole JSON-DataSet,
      * wenn Tracks in der Datenbank vorhanden sind,
@@ -83,7 +56,6 @@ public class WebControllerTest {
         System.out.println(dataSet);
         assertEquals("[]", dataSet);
     }
-
 
     /**
      * Hole JSON-DataSet,
