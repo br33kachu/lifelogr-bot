@@ -124,7 +124,7 @@ public class Webservice implements Runnable {
                 User user = webController.getUserByTelegramId(telegramId);
                 String dataSet;
                 try {
-                    DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+                    DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                     String strFrom = request.queryParams("from");
                     String strTo = request.queryParams("to");
                     Date from = format.parse(strFrom);
