@@ -45,13 +45,18 @@
     <div class="row">
         <!-- DATEFORMS -->
         <div class="col s3"></div>
-        <div class="col s3">
+        <div class="col s2">
             <label for="dateFrom">Datum von:</label>
             <input id="dateFrom" type="date" class="date-picker" name="dateFrom">
         </div>
-        <div class="col s3">
+        <div class="col s2">
             <label for="dateTo">Datum bis:</label>
             <input id="dateTo" type="date" class="date-picker" name="dateTo">
+        </div>
+        <div class="col s1"></div>
+        <div id="refreshDate" class="waves-effect waves-light btn green col s1" style="font-size: 70%;"
+             onclick="refreshDate()">
+            <span>aktualisieren</span>
         </div>
         <div class="col s3"></div>
     </div>
@@ -87,27 +92,10 @@
     var dataset = new vis.DataSet(items);
     var graph2d = new vis.Graph2d(container, dataset, options);
 
-    /*
-    $(".date").datepicker({
-        onSelect: function() {
-            var $date = $(this);
-            if(id.equals('dateFrom')) {
-                graph2d.setupOptions('start', $date.value());
-            } else {
-                graph2d.setupOptions('end', $date.value());
-            }
-        }
-     });*/
-
-    function onDateChanged(id) {
-
-    }
-
-    function onClickCheckbox(id) {
-        var $checkbox = $('#'+id);
-        var groupId = $('#label'+id).text();
-        var visibility = $checkbox.prop('checked');
-        setVisibility(groupId, visibility);
+    function refreshDate(id) {
+        var $from = $('#dateFrom').val();
+        var $to = $('#dateTo').val();
+        window.open('/diagram?from=' + $from + '&to=' + $to, '_self');
     }
 
     function setVisibility(groupId, visibility) {
@@ -115,33 +103,6 @@
         options.groups.visibility[groupId] = visibility;
         graph2d.setOptions(options);
     }
-    /*
-     function setGroups() {
-     var jsonItems = items;
-     JSON.stringify(jsonItems);
-     var groups = jsonItems.getElementsByName('group');
-     do{
-     var work = true;
-     if(groups)
-
-     }while(work);
-     var cbGroups;
-     for(var i=0; i<groups.length; i++) {
-     var group = groups[i];
-
-     if (groups.length != 0) {
-     var exists = false;
-     for (var j=0; j < groups.length && !exists; j++) {
-     var existingGroup = groups[j];
-     if (group.equals(existingGroup)) exists = true;
-     }
-     if (!exists) groups.add(group);
-     } else {
-     groups.add(group);
-     }
-     }
-     }
-     */
 </script>
 </body>
 </html>
