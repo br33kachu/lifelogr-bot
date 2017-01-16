@@ -60,6 +60,6 @@ public class ICRUDUserImpl implements ICRUDUser
     @Override
     public WriteResult deleteUser(User user)
     {
-        return null;
+        return this.ds.delete(User.class, user.getId());
     }
 }
