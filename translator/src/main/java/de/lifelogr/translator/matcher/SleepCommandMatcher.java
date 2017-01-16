@@ -8,15 +8,13 @@ import java.util.regex.Pattern;
 
 /**
  * @author Marco Kretz
- * @date 04.12.2016
  */
 public class SleepCommandMatcher extends CommandMatcher
 {
-    private HashMap<String, Double> numberStringMap;
-
     public SleepCommandMatcher()
     {
         this.patterns.add("^(?<value>[1-9][0-9]*)\\s(?<unit>stunde(n)?|minute(n)|sekunde(n))\\sruhe$");
+        this.patterns.add("^(ruhe|nerv\\snicht|schlafen|ruhemodus)(!)?");
     }
 
     @Override
@@ -30,14 +28,17 @@ public class SleepCommandMatcher extends CommandMatcher
             // Wurde der aktuelle Ausdruck gematcht?
             if (m.find()) {
                 Integer value;
-                String unit = m.group("unit");
+
+                String unit;
+                try {
+                     unit = m.group("unit");
+                } catch (IllegalArgumentException e) {
+                    return new CommandParams("sleep");
+                }
 
                 // Versuche, den angegebenen Wert zu ermitteln
                 try {
                     value = Integer.parseInt(m.group("value"));
-                } catch (NumberFormatException nfe) {
-                    //value = this.numberStringMap.get(m.group("value"));
-                    value = 1;
                 } catch (Exception e) {
                     value = 1;
                 }
