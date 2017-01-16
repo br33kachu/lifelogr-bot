@@ -11,10 +11,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by micha on 04.12.2016.
+ * This class creates is required to build html-codes from models
  */
 public class WebModel {
 
+    /**
+     * Creates a login-site
+     *
+     * @return html-string of the login-site
+     */
     public String getLogin() {
         Map<String, String> model = new HashMap<>();
         model.put("title", "Lgr - Login");
@@ -22,6 +27,12 @@ public class WebModel {
         return login;
     }
 
+    /**
+     * Creates a diagram-site
+     * @param items is the vis.js dataset as string
+     * @param user who is logged in on the website
+     * @return html-string of the diagram-site
+     */
     public String getDiagram(String items, User user) {
         Map<String, String> model = new HashMap<>();
 
@@ -60,6 +71,12 @@ public class WebModel {
     }
 
 
+    /**
+     * This method is necessary to summarize all trackingObject names and remove duplicates. This is needed for the
+     * HTML-Checkboxes
+     * @param items is the vis.js dataset as string
+     * @return a list with summarized item names
+     */
     private List<String> getGroups(String items) {
         JSONArray jsonArray = new JSONArray(items);
         List<String> groups = new ArrayList<>();

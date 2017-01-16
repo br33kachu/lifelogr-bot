@@ -18,14 +18,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by micha on 29.11.2016.
+ * It's the control class for data-handling, which the Webservice.class needs
  */
 public class WebController {
     private final Logger log = Logger.getLogger(WebController.class.getName());
     private ICRUDUser icrudUser;
 
     /**
-     * Standardkonstruktor
+     * Standard Constructor, initalizing the ICRUDUser object
      */
     public WebController() {
         icrudUser = new ICRUDUserImpl();
@@ -35,9 +35,9 @@ public class WebController {
      * Get a user objekt with the telegramId and returns the trackingobjects as a vis.js-dataset.
      *
      * @param telegramId of the user
-     * @param from       date from which trackingObjects should be return
-     * @param to         dta to which trackingObjects should be return
-     * @return wenn ein User mit der telegramId existiert und Objekte zwischen dem from und to Datum existiert, wird ein String mit den TrackingObjekten zurückgegeben, ansonsten "[]"
+     * @param from       date from, which trackingObjects should be return
+     * @param to         date to, which trackingObjects should be return
+     * @return if user with the telegramId found and date is between from and to, returns the string dataset, otherwise "[]"
      */
     public String getJSONDataSet(int telegramId, Date from, Date to) {
         if (from == null) {
@@ -54,6 +54,8 @@ public class WebController {
             to = Date.from(now.atStartOfDay(ZoneId.systemDefault()).toInstant());
             if (StartWebServer.LOGGING) log.log(Level.INFO, "Date 'to': " + to.toString());
         }
+        if (StartWebServer.LOGGING)
+            log.log(Level.INFO, "Date 'from': " + from.toString() + "; Date 'to': " + to.toString());
         User user = getUserByTelegramId(telegramId);
         if (user != null && !user.getTrackingObjects().isEmpty()) {
             if (StartWebServer.LOGGING) log.log(Level.INFO, "User and TrackingObjects found - start filtering)");
@@ -66,7 +68,11 @@ public class WebController {
                 if (trackingObject.isCountable()) {
                     Double sum = 0.0;
                     for (Track track : trackingObject.getTracks()) {
+                        if (StartWebServer.LOGGING)
+                            log.log(Level.INFO, "TrackingObject Date: " + track.getDate().toString());
                         if (track.getDate().after(from) && track.getDate().before(to)) {
+                            if (StartWebServer.LOGGING)
+                                log.log(Level.INFO, "Trackingobjekt " + trackingObject.getName() + " added");
                             jsonObject = new JSONObject();
                             String formattedDate = simpleDateFormat.format(track.getDate());
                             jsonObject.put("x", formattedDate);
@@ -95,12 +101,9 @@ public class WebController {
     }
 
     /**
-     * Damit ein User mit einem Token identifiziert werden kann und zurückgegben wird, wird diese Methode benötigt.
-     *
-     * @param token das Token, das einem User zugewiesen wird
-     * @return wenn ein User mit dem Token existiert, wird die telegramId des Users zurückgegeben,
-     * 0 falls kein User mit dem Token existiert,
-     * -1 falls das Token abgelaufen ist
+     * Identify a user with a given token
+     * @param token which belongs to a user
+     * @return the users telegramId, if a token existst, 0 if no token exists, -1 if the token is expired
      */
     public int getTelegramIdByToken(String token) {
         User user = icrudUser.getUserByToken(token);
@@ -118,9 +121,9 @@ public class WebController {
     }
 
     /**
-     * Ein User wird mithilfe des TelegramId zur Identifikation zurückgegeben
-     * @param telegramId die TelegramId des Users, der zurückgegeben werden soll
-     * @return wenn ein User mit der TelegramId existiert wird der User zurückgegeben, ansonsten null
+     * Gets a user who has the telegramID
+     * @param telegramId of the user
+     * @return the user if exist, otherwise null
      */
     public User getUserByTelegramId(int telegramId) {
         User user = icrudUser.getUserByTelegramId(telegramId);
@@ -128,9 +131,9 @@ public class WebController {
     }
 
     /**
-     * Methode um die erste Buchstabe eines Wortes in Großbuchstaben zu ändern
-     * @param line das Wort als String, dessen erste Buchstabe geändert werden soll
-     * @return das Wort als String mit geänderter Anfangsbuchstabe
+     * Capitalizing the first letter of a word
+     * @param line is the word you want to capitalize
+     * @return returns a capitalized word
      */
     private String capitalize(final String line) {
         return Character.toUpperCase(line.charAt(0)) + line.substring(1);
