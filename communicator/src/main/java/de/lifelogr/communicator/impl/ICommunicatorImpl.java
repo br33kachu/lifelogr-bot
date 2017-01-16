@@ -5,7 +5,9 @@ import de.lifelogr.communicator.services.ICommunicator;
 import de.lifelogr.dbconnector.entity.User;
 
 /**
- * @author marco
+ * Implementation for the ICommunicator interface.
+ *
+ * @author Marco Kretz
  */
 public class ICommunicatorImpl implements ICommunicator
 {

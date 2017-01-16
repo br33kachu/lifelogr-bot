@@ -6,12 +6,22 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 import org.telegram.telegrambots.logging.BotLogger;
 
+/**
+ * Communicator's main class.
+ *
+ * @author Marco Kretz
+ */
 public class Communicator
 {
     private static Communicator instance = null;
     private static TelegramBot bot = null;
     private static final Object mutex = new Object();
 
+    /**
+     * Constructor
+     *
+     * Register bot at Telegram.
+     */
     private Communicator()
     {
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
@@ -23,6 +33,11 @@ public class Communicator
         }
     }
 
+    /**
+     * Get unique instance. (Singleton)
+     *
+     * @return Communicator instance
+     */
     public static Communicator getInstance()
     {
         if (instance == null) {
@@ -36,6 +51,12 @@ public class Communicator
         return instance;
     }
 
+    /**
+     * Send message to specific User.
+     *
+     * @param userId
+     * @param message
+     */
     public void sendMessage(String userId, String message) {
         SendMessage sendMessageRequest = new SendMessage();
         sendMessageRequest.setChatId(userId);

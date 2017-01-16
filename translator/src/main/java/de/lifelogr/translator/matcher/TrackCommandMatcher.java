@@ -1,5 +1,6 @@
 package de.lifelogr.translator.matcher;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import de.lifelogr.translator.structures.CommandParams;
 
 import java.util.HashMap;
@@ -18,6 +19,8 @@ public class TrackCommandMatcher extends CommandMatcher
     {
         this.patterns.add("^(track(e)?|z(\u00E4|ae)hl(e)?)\\s(?<name>\\w+)(\\s(?<value>[-+]?[0-9]*\\.?[0-9]+))?$");
         this.patterns.add("^(ich\\s(hab(e)|hatte)?\\s)?(?<value>[-+]?[0-9]*\\.?[0-9]+|ein(e)?|zwei|drei|vier|f(\u00FC|ue)nf|sechs|sieben|acht|neun|zehn|elf|zw(\u00F6|oe)lf)\\s(?<name>\\w+)(\\s(gegessen|getrunken|verspeist))?$");
+        this.patterns.add("^(mir geht(\\ses|(')?s))\\s(?<mood>[A-Za-z]{2,})$");
+        this.patterns.add("^ich\\sf\u00fchle\\smich\\s(?<mood>[A-Za-z]{2,})$");
 
         this.numberStringMap = new HashMap<>();
         this.numberStringMap.put("ein", 1.0);
@@ -49,7 +52,16 @@ public class TrackCommandMatcher extends CommandMatcher
             // Wurde der aktuelle Ausdruck gematcht?
             if (m.find()) {
                 Double value;
-                String name = m.group("name");
+                String name;
+
+                try {
+                    name = m.group("name");
+                } catch (IllegalArgumentException e) {
+                    String mood = m.group("mood");
+
+                    return new CommandParams("track", "stimmung", mood);
+                }
+
 
                 // Wenn Mehrzahl angegeben wurde, Einzahl verwenden
                 if (name.endsWith("en") || name.endsWith("re")) {
