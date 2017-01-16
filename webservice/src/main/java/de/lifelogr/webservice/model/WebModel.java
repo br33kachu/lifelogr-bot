@@ -35,7 +35,7 @@ public class WebModel {
         } else {
             username = "Anwender";
         }
-        String welcome = "Hi " + username + "! Hier sind deine tracks: ";
+        String welcome = "Hallo " + username + "! Hier sind deine Tracks:";
         model.put("welcome", welcome);
 
         // Get Items and set it as 'item' element for HBS
@@ -49,7 +49,7 @@ public class WebModel {
         List<String> groups = getGroups(items);
         for (String group : groups) {
             checkBoxes = checkBoxes.concat("\n" +
-                    "        <div class=\"row\">\n" +
+                    "        <div>\n" +
                     "            <input type=\"checkbox\" class=\"filled-in\" id=\"checkbox-" + group + "\" checked=\"checked\" onclick=\"onClickCheckbox(this.id);\"/>\n" +
                     "            <label for=\"checkbox-" + group + "\" id=\"labelcheckbox-" + group + "\">" + group + "</label>\n" +
                     "        </div>");

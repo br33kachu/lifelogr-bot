@@ -36,6 +36,7 @@ public class User
     @Embedded
     private ArrayList<TrackingObject> trackingObjects;
     private String question;
+    private Date dndUntil;
 
     public User()
     {
@@ -232,5 +233,15 @@ public class User
         if (lastTrackingObject != null) {
             Informant.notifyObserver(this, this.getLastAddedTrackingObject());
         }
+    }
+
+    public Date getDndUntil()
+    {
+        return dndUntil;
+    }
+
+    public void setDndUntil(Date dndUntil)
+    {
+        this.dndUntil = dndUntil;
     }
 }
