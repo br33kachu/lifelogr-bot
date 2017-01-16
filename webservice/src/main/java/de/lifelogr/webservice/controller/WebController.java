@@ -24,10 +24,21 @@ public class WebController {
     private final Logger log = Logger.getLogger(WebController.class.getName());
     private ICRUDUser icrudUser;
 
+    /**
+     * Standardkonstruktor
+     */
     public WebController() {
         icrudUser = new ICRUDUserImpl();
     }
 
+    /**
+     * Get a user objekt with the telegramId and returns the trackingobjects as a vis.js-dataset.
+     *
+     * @param telegramId of the user
+     * @param from       das Datum ab wann die Trackingobjekte zurückgegeben werden sollen
+     * @param to         das Datum bis wann die Trackingobjekte zurückgegeben werden sollen
+     * @return wenn ein User mit der telegramId existiert und Objekte zwischen dem from und to Datum existiert, wird ein String mit den TrackingObjekten zurückgegeben, ansonsten "[]"
+     */
     public String getJSONDataSet(int telegramId, Date from, Date to) {
         if (from == null) {
             if (StartWebServer.LOGGING) log.log(Level.INFO, "Date 'from' is null");
@@ -83,6 +94,14 @@ public class WebController {
         return "[]";
     }
 
+    /**
+     * Damit ein User mit einem Token identifiziert werden kann und zurückgegben wird, wird diese Methode benötigt.
+     *
+     * @param token das Token, das einem User zugewiesen wird
+     * @return wenn ein User mit dem Token existiert, wird die telegramId des Users zurückgegeben,
+     * 0 falls kein User mit dem Token existiert,
+     * -1 falls das Token abgelaufen ist
+     */
     public int getTelegramIdByToken(String token) {
         User user = icrudUser.getUserByToken(token);
         if (user != null) {
@@ -98,11 +117,21 @@ public class WebController {
         return 0;
     }
 
+    /**
+     * Ein User wird mithilfe des TelegramId zur Identifikation zurückgegeben
+     * @param telegramId die TelegramId des Users, der zurückgegeben werden soll
+     * @return wenn ein User mit der TelegramId existiert wird der User zurückgegeben, ansonsten null
+     */
     public User getUserByTelegramId(int telegramId) {
         User user = icrudUser.getUserByTelegramId(telegramId);
         return user;
     }
 
+    /**
+     * Methode um die erste Buchstabe eines Wortes in Großbuchstaben zu ändern
+     * @param line das Wort als String, dessen erste Buchstabe geändert werden soll
+     * @return das Wort als String mit geänderter Anfangsbuchstabe
+     */
     private String capitalize(final String line) {
         return Character.toUpperCase(line.charAt(0)) + line.substring(1);
     }

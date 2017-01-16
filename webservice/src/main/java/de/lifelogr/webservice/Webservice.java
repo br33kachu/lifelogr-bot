@@ -5,6 +5,8 @@ import de.lifelogr.webservice.controller.WebController;
 import de.lifelogr.webservice.model.WebModel;
 import spark.Spark;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,9 +25,8 @@ public class Webservice implements Runnable {
         WebController webController = new WebController();
         WebModel webModel = new WebModel();
 
-
         /**
-         * GET-Pfad für die Hauptseite mit der Anmeldemaske
+         * GET-Path for the main-page with the login-mask
          */
         get("/", (request, response) -> {
             if (StartWebServer.LOGGING) log.log(Level.INFO, "Seite \"/\" aufgerufen.");
@@ -33,10 +34,8 @@ public class Webservice implements Runnable {
         });
 
         /**
-         * GET-Pfad für die Token-Authentifizierung. Erzeugt eine Session und speichert die telegramId in der Session,
-         * falls der Token gültig ist.
-         * Wenn die Anmeldung erfolgreich war, Weiterleitung zur Diagramm-Seite
-         * Wenn die Anmeldung erfolglos war, Weiterleitung auf eine Fehlerseite
+         * GET-Path for the token authentication. Creates a session and saves the telegramId in the actual user session,
+         * if the token is valid. If valid, redirecting to the diagram-site. If not valid, redirect on a failpage.
          */
         get("/token/:token", ((request, response) -> {
             if (StartWebServer.LOGGING) log.log(Level.INFO, "Seite \"/token/:token\" aufgerufen.");
@@ -44,38 +43,32 @@ public class Webservice implements Runnable {
             if (request.session().attributes().isEmpty()) {
                 int id = webController.getTelegramIdByToken(token);
                 switch (id) {
-                    case 0:
-                        // Kein User mit passendem Token gefunden
+                    case 0: // No user found with the connected token
                         String authFail = "{\"auth\":\"false\"}";
-                        System.out.println(authFail);
                         response.status(401);
                         response.body("Status Code: 401\nToken ist ungültig!");
                         return response.body();
-                    case -1:
-                        // Token ist abgelaufen - Fehlermeldung
+                    case -1: // Token is expired
                         if (StartWebServer.LOGGING)
                             log.log(Level.INFO, "token: \"" + token + "\" wurde uebergeben - Token ist aber abgelaufen!");
                         response.status(410);
                         response.body("auth_expired");
                         return response.body();
-                    default:
-                        // Benutzer mit passendem Token gefunden
-                        System.out.println("create Session!");
+                    default: // User with the matched token found
                         request.session(true);
                         request.session().attribute("telegramID", id);
                         response.redirect("/diagram");
                         return response.body();
                 }
             }
-            // Session existiert bereits
+            // Session already exists, redirects to the diagram
             response.redirect("/diagram");
             return response.body();
         }));
 
         /**
-         * POST-Pfad für das Token-Login über die Webseite.
-         * Wenn ein Token vorhanden ist wird ein Session erstellt und ein "auth_ok" zurückgegeben.
-         * Wenn kein Token in der DB gefunden wird, wird ein "auth_false" zurückgegeben und es wird kein Session erstellt.
+         * POST-Path for the tokin-login site. If token exists, creates a session and returns "auth_ok". If no tokens
+         * found, returns "auth_false" and no session will be created.
          */
         post("/token", (request, response) -> {
             if (StartWebServer.LOGGING) log.log(Level.INFO, "Seite \"/token\" aufgerufen.");
@@ -83,7 +76,7 @@ public class Webservice implements Runnable {
             response.status(200);
             response.type(" text/plain");
             response.body("auth_ok");
-            // Existiert noch keine Session
+            // No session exists
             if (request.session().attributes().isEmpty()) {
                 int id = webController.getTelegramIdByToken(token);
                 // Benutzer mit passendem Token gefunden
@@ -126,7 +119,17 @@ public class Webservice implements Runnable {
                 if (StartWebServer.LOGGING) log.log(Level.INFO, "Session existiert und die Seite wird übergeben.");
                 int telegramId = request.session().attribute("telegramID");
                 User user = webController.getUserByTelegramId(telegramId);
-                String dataSet = webController.getJSONDataSet(telegramId, null, null);
+                String dataSet;
+                try {
+                    DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+                    String strFrom = request.queryParams("from");
+                    String strTo = request.queryParams("to");
+                    Date from = format.parse(strFrom);
+                    Date to = format.parse(strTo);
+                    dataSet = webController.getJSONDataSet(telegramId, from, to);
+                } catch (Exception e) {
+                    dataSet = webController.getJSONDataSet(telegramId, null, null);
+                }
                 return webModel.getDiagram(dataSet, user);
             }
             if (StartWebServer.LOGGING)
