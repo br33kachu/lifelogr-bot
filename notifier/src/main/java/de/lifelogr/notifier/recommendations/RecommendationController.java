@@ -8,6 +8,7 @@ import de.lifelogr.dbconnector.services.ICRUDUser;
 import de.lifelogr.dbconnector.services.TrackingObjectType;
 import de.lifelogr.notifier.trackingobjects.TrackingObjects;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -27,14 +28,24 @@ public class RecommendationController {
         this.trackingObject = TrackingObjects.getInstance();
     }
 
+    /**
+     *
+     * @param user
+     * @param type
+     * @return
+     */
     public boolean recommendationNeeded(User user, TrackingObjectType type) {
         Date currentDate = new Date();
         double counter = 0.0;
-        if (user.getLastRecommendations() == null || user.getLastRecommendations().get(type) == null || (currentDate.getTime() - user.getLastRecommendations().get(type).getTime() >= 60 * 60 * 1000))
+
+        // Dont send of User has DND turned on
+        if (user.getDndUntil() != null && user.getDndUntil().after(currentDate)) {
+            return false;
+        } else if (user.getLastRecommendations() == null || user.getLastRecommendations().get(type) == null || (user.getLastRecommendations().get(type) != null && this.getTimeDiffInHours(currentDate, user.getLastRecommendations().get(type)) >= 1)) {
             for (TrackingObject tObject : user.getTrackingObjects()) {
-                if (trackingObject.getType(tObject.getName()) == type) {
+                if (trackingObject.getType(tObject.getName()) == type && tObject.isCountable()) {
                     for (Track track : tObject.getTracks()) {
-                        if (currentDate.getTime() - track.getDate().getTime() <= 2 * 60 * 60 * 1000) {
+                        if (this.getTimeDiffInHours(currentDate, track.getDate()) <= 2) {
                             counter = counter + track.getCount();
                             if (counter > 3.0) {
                                 return true;
@@ -43,14 +54,16 @@ public class RecommendationController {
                     }
                 }
             }
+        }
 
-            return false;
+        return false;
     }
 
-    public String[] recommend(User user, TrackingObjectType type) {
+    public String[] getRecommendations(User user, TrackingObjectType type) {
         user.addLastRecommendations(type, new Date());
         ICRUDUser icrudUser = new ICRUDUserImpl();
         icrudUser.saveUser(user);
+
         if (type == TrackingObjectType.CAFFEIN || type == TrackingObjectType.ALCOHOL || type == TrackingObjectType.BEAUTY) {
             return this.recommendationsDrink.getRecommendationsDrink().get(type);
         } else if (type == TrackingObjectType.SUPERFOOD || type == TrackingObjectType.CANDY || type == TrackingObjectType.FASTFOOD) {
@@ -60,5 +73,11 @@ public class RecommendationController {
         }
 
         else return null;
+    }
+
+    private int getTimeDiffInHours(Date d1, Date d2) {
+        int diffInHours = (int)((d1.getTime() - d2.getTime()) / (1000 * 60 * 60));
+
+        return diffInHours;
     }
 }
