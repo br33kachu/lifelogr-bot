@@ -119,6 +119,13 @@
         graph2d.setOptions(options);
     }
 
+    function onClickCheckbox(id) {
+        var $checkbox = $('#' + id);
+        var groupId = $('#label' + id).text();
+        var visibility = $checkbox.prop('checked');
+        setVisibility(groupId, visibility);
+    }
+
     function findGetParameter(parameterName) {
         var result = null, tmp = [];
         location.search
