@@ -95,6 +95,8 @@ public class TelegramBot extends TelegramLongPollingCommandBot
                 if (user != null && user.getQuestion() != null && !user.getQuestion().isEmpty()) {
                     sendMessage.setText(this.processQuestion(user, message.getText()));
                 } else if (user != null) {
+                    // TODO: accept start command if no profile exists!
+
                     // Übersetzte Text in Kommando
                     CommandParams translatedCmdParams = Translator.getInstance().translate(message.getText());
 
