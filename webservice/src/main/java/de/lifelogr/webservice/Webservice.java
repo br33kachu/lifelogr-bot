@@ -113,7 +113,8 @@ public class Webservice implements Runnable {
         });
 
         /**
-         *  GET-Pfad für die Diagramm-Seite. Die Seite kann nur aufgerufen werden, wenn eine Session existiert.
+         *  GET-Path for the diagram-site. This page can only be accessed if a session exists, otherwise it will returns
+         *  a failpage.
          */
         get("/diagram", (request, response) -> {
             if (StartWebServer.LOGGING) log.log(Level.INFO, "Seite \"/diagram\" aufgerufen.");
@@ -142,7 +143,7 @@ public class Webservice implements Runnable {
         });
 
         /**
-         * GET-Pfad um das JSON-DataSet zu erstellen und zu übergeben
+         * GET-Path to create a String-Dataset for the vis.js diagram
          */
         get("/dataset", (request, response) -> {
             if (StartWebServer.LOGGING) log.log(Level.INFO, "Seite \"/diagram\" aufgerufen.");
@@ -160,7 +161,7 @@ public class Webservice implements Runnable {
         });
 
         /**
-         * Löscht die Session-Attribute und leitet den Nutzer weiter zur Startseite "/"
+         * deletes the sessison attribute and redirects to the mainpage
          */
         get("/logout", (request, response) -> {
             if (StartWebServer.LOGGING) log.log(Level.INFO, "Seite \"/logout\" aufgerufen. Session wird gelöscht.");
