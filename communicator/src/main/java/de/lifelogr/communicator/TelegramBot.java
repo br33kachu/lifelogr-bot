@@ -1,9 +1,6 @@
 package de.lifelogr.communicator;
 
-import de.lifelogr.communicator.commands.HelpCommand;
-import de.lifelogr.communicator.commands.StartCommand;
-import de.lifelogr.communicator.commands.TokenCommand;
-import de.lifelogr.communicator.commands.TrackCommand;
+import de.lifelogr.communicator.commands.*;
 import de.lifelogr.communicator.services.Emoji;
 import de.lifelogr.dbconnector.entity.User;
 import de.lifelogr.dbconnector.impl.ICRUDUserImpl;
@@ -55,6 +52,8 @@ public class TelegramBot extends TelegramLongPollingCommandBot
         register(new StartCommand(this));
         register(new TrackCommand(this));
         register(new TokenCommand(this));
+        register(new SleepCommand(this));
+        register(new WakeupCommand(this));
 
         // Registriere Aktion für unbekannte Kommandos
         registerDefaultAction(((absSender, message) -> {

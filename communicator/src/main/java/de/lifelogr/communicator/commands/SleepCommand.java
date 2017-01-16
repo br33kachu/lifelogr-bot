@@ -1,6 +1,5 @@
 package de.lifelogr.communicator.commands;
 
-import de.lifelogr.communicator.services.Emoji;
 import de.lifelogr.dbconnector.impl.ICRUDUserImpl;
 import de.lifelogr.dbconnector.services.ICRUDUser;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
@@ -14,7 +13,6 @@ import org.telegram.telegrambots.logging.BotLogger;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Command: /sleep
@@ -26,7 +24,6 @@ import java.util.Date;
 public class SleepCommand extends BotCommand
 {
     private static final String LOGTAG = "SLEEPCOMMAND";
-    private final ICommandRegistry commandRegistry;
 
     /**
      * Constructor
@@ -36,7 +33,6 @@ public class SleepCommand extends BotCommand
     public SleepCommand(ICommandRegistry commandRegistry)
     {
         super("sleep", "Ruhezeit einrichten z.B. \"/sleep 1h\" für eine Stunde");
-        this.commandRegistry = commandRegistry;
     }
 
     @Override
