@@ -147,9 +147,11 @@ public class Webservice implements Runnable {
         get("/dataset", (request, response) -> {
             if (StartWebServer.LOGGING) log.log(Level.INFO, "Seite \"/diagram\" aufgerufen.");
             if (!request.session().attributes().isEmpty()) {
+                DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
                 int telegramId = request.session().attribute("telegramId");
-                Date from = new Date(request.queryParams("from"));
-                Date to = new Date(request.queryParams("to"));
+                Date from = format.parse(request.queryParams("from"));
+                Date to = format.parse(request.queryParams("to"));
                 return webController.getJSONDataSet(telegramId, from, to);
             }
             response.status(401);
