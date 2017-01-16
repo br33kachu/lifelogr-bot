@@ -18,14 +18,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by micha on 29.11.2016.
+ * It's the control class for data-handling, which the Webservice.class needs
  */
 public class WebController {
     private final Logger log = Logger.getLogger(WebController.class.getName());
     private ICRUDUser icrudUser;
 
     /**
-     * Standardkonstruktor
+     * Standard Constructor, initalizing the ICRUDUser object
      */
     public WebController() {
         icrudUser = new ICRUDUserImpl();

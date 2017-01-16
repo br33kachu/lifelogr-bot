@@ -66,6 +66,12 @@ public class HandlebarsTemplateEngine extends TemplateEngine {
         handlebars = handlebars.with(new GuavaTemplateCache(cache));
     }
 
+    /**
+     * Compiles model and view into a string object
+     *
+     * @param modelAndView which needs to be compiled
+     * @return compiled string
+     */
     @Override
     public String render(ModelAndView modelAndView) {
         String viewName = modelAndView.getViewName();

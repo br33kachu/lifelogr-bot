@@ -14,9 +14,15 @@ import java.util.logging.Logger;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+/**
+ * The Webservice contains the SparkJava Webserver and all available paths
+ */
 public class Webservice implements Runnable {
     private final Logger log = Logger.getLogger(Webservice.class.getName());
 
+    /**
+     * This is the runnable method which always needs to be run, for the Webserver to work.
+     */
     @Override
     public void run() {
         Spark.staticFileLocation("/public");
@@ -161,7 +167,7 @@ public class Webservice implements Runnable {
         });
 
         /**
-         * deletes the sessison attribute and redirects to the mainpage
+         * GET-Path that deletes the existing session attribute and redirects to the mainpage
          */
         get("/logout", (request, response) -> {
             if (StartWebServer.LOGGING) log.log(Level.INFO, "Seite \"/logout\" aufgerufen. Session wird gelöscht.");
