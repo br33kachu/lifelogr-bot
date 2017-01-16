@@ -12,6 +12,7 @@ public class TrackingObject {
     private Double currentCount;
     private Integer category;
     private List<Track> tracks;
+    private boolean isCountable;
 
     public TrackingObject() {
         this.tracks = new ArrayList<>()
@@ -55,5 +56,15 @@ public class TrackingObject {
 
     public void setTracks(List<Track> tracks) {
         this.tracks = tracks;
+    }
+
+    public boolean isCountable()
+    {
+        return isCountable;
+    }
+
+    public void setCountable(boolean countable)
+    {
+        isCountable = countable;
     }
 }

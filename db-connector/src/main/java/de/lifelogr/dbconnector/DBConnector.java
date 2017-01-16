@@ -53,32 +53,6 @@ public class DBConnector
         return instance;
     }
 
-    public DBCollection getUsersCollection()
-    {
-        return this.datastore.getCollection(User.class);
-    }
-
-    /**
-     * Save a single User to the database.
-     *
-     * @param user User to be saved.
-     */
-    public void saveUser(User user)
-    {
-        datastore.save(user);
-    }
-
-    /**
-     * Retrieve a List of all Users in the database.
-     *
-     * @return List of Users.
-     */
-    public List<User> getAllUsers()
-    {
-        final Query<User> query = datastore.createQuery(User.class);
-        return query.asList();
-    }
-
     public Datastore getDatastore() {
         return datastore;
     }
