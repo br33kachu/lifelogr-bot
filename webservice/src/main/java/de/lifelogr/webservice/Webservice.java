@@ -72,7 +72,9 @@ public class Webservice implements Runnable {
          */
         post("/token", (request, response) -> {
             if (StartWebServer.LOGGING) log.log(Level.INFO, "Seite \"/token\" aufgerufen.");
+            // Token is post as a string, so just convert it to a string
             String token = request.body();
+            // creates a success body
             response.status(200);
             response.type(" text/plain");
             response.body("auth_ok");
@@ -81,7 +83,7 @@ public class Webservice implements Runnable {
                 int id = webController.getTelegramIdByToken(token);
                 // Benutzer mit passendem Token gefunden
                 switch (id) {
-                    case 0:
+                    case 0: // user
                         // Es existiert kein User mit dem Token - Fehlermeldung
                         if (StartWebServer.LOGGING)
                             log.log(Level.INFO, "token: \"" + token + "\" wurde uebergeben - Es existiert kein User mit dem Token");

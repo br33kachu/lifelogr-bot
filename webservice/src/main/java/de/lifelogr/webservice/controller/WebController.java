@@ -35,8 +35,8 @@ public class WebController {
      * Get a user objekt with the telegramId and returns the trackingobjects as a vis.js-dataset.
      *
      * @param telegramId of the user
-     * @param from       das Datum ab wann die Trackingobjekte zurückgegeben werden sollen
-     * @param to         das Datum bis wann die Trackingobjekte zurückgegeben werden sollen
+     * @param from       date from which trackingObjects should be return
+     * @param to         dta to which trackingObjects should be return
      * @return wenn ein User mit der telegramId existiert und Objekte zwischen dem from und to Datum existiert, wird ein String mit den TrackingObjekten zurückgegeben, ansonsten "[]"
      */
     public String getJSONDataSet(int telegramId, Date from, Date to) {
