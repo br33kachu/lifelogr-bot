@@ -27,7 +27,6 @@ public class TokenCommand extends BotCommand
 {
     private static final String LOGTAG = "TOKENCOMMAND";
     private final ICommandRegistry commandRegistry;
-    private final SecureRandom random = new SecureRandom();
 
     /**
      * Constructor
@@ -93,9 +92,9 @@ public class TokenCommand extends BotCommand
      * @return Generated token
      */
     private String getToken()
-    {
-        return RandomStringUtils.randomNumeric(8);
-    }
+{
+    return RandomStringUtils.randomNumeric(8);
+}
 
     /**
      * Get Date object which represents the current time + 90 seconds.
