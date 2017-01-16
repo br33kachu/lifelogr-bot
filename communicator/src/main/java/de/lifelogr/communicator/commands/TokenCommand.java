@@ -70,7 +70,7 @@ public class TokenCommand extends BotCommand
         } while (icrudUser.getUserByToken(token) != null && maxTries > 0);
 
         currentUser.setToken(token);
-        msg.setText("Token wurde erstellt \"" + token + "\". Oder gehe direkt auf die Seite: " + webSiteToken.concat(token));
+        msg.setText("Token wurde erstellt \"<b>" + token + "</b>\". Oder gehe direkt auf die Seite: " + webSiteToken.concat(token));
 
         currentUser.setToken(token);
 

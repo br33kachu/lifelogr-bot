@@ -54,6 +54,7 @@ public class TelegramBot extends TelegramLongPollingCommandBot
         register(new TokenCommand(this));
         register(new SleepCommand(this));
         register(new WakeupCommand(this));
+        register(new EndCommand(this));
 
         // Registriere Aktion für unbekannte Kommandos
         registerDefaultAction(((absSender, message) -> {
@@ -92,13 +93,7 @@ public class TelegramBot extends TelegramLongPollingCommandBot
 
                 // Der User ist registriert und antwortet auf eine Frage
                 if (user != null && user.getQuestion() != null && !user.getQuestion().isEmpty()) {
-                    switch (user.getQuestion()) {
-                        case "username":
-                            this.icrudUser.updateField(user, "username", message.getText().trim());
-                            this.icrudUser.updateField(user, "question", "");
-                            sendMessage.setText("Hallo " + message.getText().trim() + "! Dein Profil wurde angelegt.\nViel Spaß mit der Nutzung des LifeLogr-Bots " + Emoji.SMILING_FACE_WITH_SMILING_EYES);
-                            break;
-                    }
+                    sendMessage.setText(this.processQuestion(user, message.getText()));
                 } else if (user != null) {
                     // Übersetzte Text in Kommando
                     CommandParams translatedCmdParams = Translator.getInstance().translate(message.getText());
@@ -123,13 +118,13 @@ public class TelegramBot extends TelegramLongPollingCommandBot
                     }
 
                     // Das Kommando konnte nicht gefunden werden
-                    sendMessage.enableHtml(true);
                     sendMessage.setText(this.failMessages[new Random().nextInt(this.failMessages.length)]);
                 } else {
                     // Der User hat noch ein Profil angelegt
-                    sendMessage.enableHtml(true);
                     sendMessage.setText("Bitte lege dir zuerst ein Profil an. Gib einfach '<b>Start</b>' ein, um loszulegen!");
                 }
+
+                sendMessage.enableHtml(true);
 
                 // Sende Nachricht an den User
                 try {
@@ -139,6 +134,57 @@ public class TelegramBot extends TelegramLongPollingCommandBot
                 }
             }
         }
+    }
+
+    /**
+     * If a User has a pending question to be answered, process message as answer.
+     *
+     * @param user User who sent the message.
+     * @param message Message send.
+     * @return Message to be sent back to the User
+     */
+    private String processQuestion(User user, String message)
+    {
+        StringBuilder builder = new StringBuilder();
+
+        switch (user.getQuestion()) {
+            case "username":
+                this.icrudUser.updateField(user, "username", message.trim());
+                this.icrudUser.updateField(user, "question", "");
+                builder
+                        .append("Hallo ")
+                        .append(message.trim())
+                        .append("! Dein Profil wurde angelegt.\nViel Spaß mit der Nutzung des LifeLogr-Bots ")
+                        .append(Emoji.SMILING_FACE_WITH_SMILING_EYES);
+                break;
+            case "deleteProfile":
+                if (this.isPositiveAnswer(message)) {
+                    this.icrudUser.deleteUser(user);
+                    builder
+                            .append("Okay, schade.. Es war schön mit dir. Vielleicht bis zum nächsten Mal! ")
+                            .append(Emoji.FACE_WITH_OK_GESTURE)
+                            .append(" Dein Profil wurde entfernt!");
+                } else {
+                    user.setQuestion(null);
+                    this.icrudUser.saveUser(user);
+                    builder
+                            .append("Der Vorgang wurde abgebrochen!");
+                }
+                break;
+        }
+
+        return builder.toString();
+    }
+
+    /**
+     * Check if a User-message is a positive answer to a question.
+     *
+     * @param answer User-message
+     * @return Wether answer is positive or not
+     */
+    private boolean isPositiveAnswer(String answer)
+    {
+        return answer.toLowerCase().matches("ja|yes|klar|ok|okay");
     }
 
     @Override

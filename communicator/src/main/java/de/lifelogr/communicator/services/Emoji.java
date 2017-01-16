@@ -1,5 +1,8 @@
 package de.lifelogr.communicator.services;
 
+/**
+ * Collection of Emoji-Unicode codes.
+ */
 public enum Emoji {
     // Emoticones group
     GRINNING_FACE_WITH_SMILING_EYES('\uD83D', '\uDE01'),

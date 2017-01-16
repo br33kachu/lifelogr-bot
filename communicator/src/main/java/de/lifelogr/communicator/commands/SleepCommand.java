@@ -80,6 +80,12 @@ public class SleepCommand extends BotCommand
                         .append(dndTime)
                         .append(" Uhr hörst du nichts mehr von mir!");
             }
+        } else if (arguments.length == 0) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.YEAR, 10);
+            currentUser.setDndUntil(calendar.getTime());
+            icrudUser.saveUser(currentUser);
+            builder.append("Okay, ich schicke dir keine Benachrichtigungen mehr, bis du mich wieder aufweckst.");
         } else {
             builder.append("Tut mir Leid, da ist ein Fehler drin. Versuch's mal mit \"/sleep 1h\"");
         }
