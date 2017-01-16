@@ -41,11 +41,12 @@ public class Notifier extends Observer {
     @Override
     public void onInform(User user, TrackingObject trackingObject) {
         this.trackingObjectType = trackingObjects.getType(trackingObject.getName());
-        if ((this.trackingObjectType == TrackingObjectType.CAFFEIN || this.trackingObjectType == TrackingObjectType.ALCOHOL || this.trackingObjectType == TrackingObjectType.BEAUTY) && this.recommendationController.recommendationNeeded(user, trackingObjectType, "drink")) {
+        if ((this.trackingObjectType == TrackingObjectType.CAFFEIN || this.trackingObjectType == TrackingObjectType.ALCOHOL || this.trackingObjectType == TrackingObjectType.BEAUTY || this.trackingObjectType == TrackingObjectType.SUPERFOOD || this.trackingObjectType == TrackingObjectType.CANDY || this.trackingObjectType == TrackingObjectType.FASTFOOD || this.trackingObjectType == TrackingObjectType.POWER || this.trackingObjectType == TrackingObjectType.STAMINA || this.trackingObjectType == TrackingObjectType.RELAX)
+                && this.recommendationController.recommendationNeeded(user, trackingObjectType)) {
             String[] result = this.recommendationController.recommend(user, trackingObjectType);
             int random = new Random().nextInt(result.length);
             this.communicator.sendMessage(user.getChatId().toString(), result[random]);
-        } else if (this.trackingObjectType == TrackingObjectType.UNBEKANNT) {}
+        }
     }
 }
 

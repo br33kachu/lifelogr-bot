@@ -89,6 +89,7 @@ public class Drinks {
         this.drinksAlcohol.add("weizenbier");
         this.drinksAlcohol.add("whisky");
 
+        //beauty
         this.drinksBeauty.add("buttermilch");
         this.drinksBeauty.add("kokoswasser");
         this.drinksBeauty.add("kokosnusswasser");
