@@ -17,12 +17,15 @@ import org.telegram.telegrambots.logging.BotLogger;
 import java.util.Random;
 
 /**
- * @author marco
+ * Command: /track
+ * <p>
+ * BotCommand for adding or updating a TrackingObject.
+ *
+ * @author Marco Kretz
  */
 public class TrackCommand extends BotCommand
 {
     private static final String LOGTAG = "TRACKCOMMAND";
-
     private final ICommandRegistry commandRegistry;
     private final ICRUDUser icrudUser = new ICRUDUserImpl();
 
@@ -33,7 +36,9 @@ public class TrackCommand extends BotCommand
     };
 
     /**
-     * @param commandRegistry
+     * Constructor
+     *
+     * @param commandRegistry Global command registry.
      */
     public TrackCommand(ICommandRegistry commandRegistry)
     {

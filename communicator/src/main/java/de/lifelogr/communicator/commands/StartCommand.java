@@ -13,18 +13,22 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.logging.BotLogger;
 
 /**
- *
+ * Command: /start
+ * <p>
+ * BotCommand starting the profile-creation process.
+ * Executed on first contact with the bot.
  *
  * @author Marco Kretz
  */
 public class StartCommand extends BotCommand
 {
     private static final String LOGTAG = "STARTCOMMAND";
-
     private final ICommandRegistry commandRegistry;
 
     /**
-     * @param commandRegistry
+     * Constructor
+     *
+     * @param commandRegistry Global command-registry
      */
     public StartCommand(ICommandRegistry commandRegistry)
     {
@@ -39,17 +43,27 @@ public class StartCommand extends BotCommand
         SendMessage message = new SendMessage();
         message.setChatId(chat.getId().toString());
 
+        // Only start profile-creation if User not yet exists
         if (icrudUser.getUserByTelegramId(user.getId()) == null) {
+            // Create new User-object
             de.lifelogr.dbconnector.entity.User newUser = new de.lifelogr.dbconnector.entity.User();
             newUser.setTelegramId(user.getId());
             newUser.setChatId(chat.getId());
-            if (user.getFirstName() != null && !user.getFirstName().isEmpty())
+
+            // Try to get the Users firstname
+            if (user.getFirstName() != null && !user.getFirstName().isEmpty()) {
                 newUser.setFirstName(user.getFirstName());
-            if (user.getLastName() != null && !user.getLastName().isEmpty())
+            }
+
+            // Try to get the Users lastname
+            if (user.getLastName() != null && !user.getLastName().isEmpty()) {
                 newUser.setLastName(user.getLastName());
-            if (user.getUserName() != null && !user.getUserName().isEmpty())
-                newUser.setUsername(user.getUserName());
+            }
+
+            // Set, that the User has been asked for his nickname
             newUser.setQuestion("username");
+
+            // Persist User
             icrudUser.saveUser(newUser);
 
             message.setText("Hi, schön dich zu sehen! " + Emoji.HAPPY_PERSON_RAISING_ONE_HAND + "\nWie heißt du?");

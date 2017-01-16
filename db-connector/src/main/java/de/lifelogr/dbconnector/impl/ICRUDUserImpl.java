@@ -1,5 +1,6 @@
 package de.lifelogr.dbconnector.impl;
 
+import com.mongodb.WriteResult;
 import de.lifelogr.dbconnector.DBConnector;
 import de.lifelogr.dbconnector.entity.User;
 import de.lifelogr.dbconnector.services.ICRUDUser;
@@ -10,7 +11,9 @@ import org.mongodb.morphia.query.UpdateOperations;
 import java.util.List;
 
 /**
- * @author marco
+ * Implementation for the ICRUDUser Interface.
+ *
+ * @author Marco Kretz, Christin Schlimbach, Michael Pham
  */
 public class ICRUDUserImpl implements ICRUDUser
 {
@@ -52,5 +55,11 @@ public class ICRUDUserImpl implements ICRUDUser
         UpdateOperations<User> ops = this.ds.createUpdateOperations(User.class).set(field, value);
 
         this.ds.update(query, ops);
+    }
+
+    @Override
+    public WriteResult deleteUser(User user)
+    {
+        return null;
     }
 }
