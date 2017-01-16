@@ -48,7 +48,7 @@ public class WakeupCommand extends BotCommand
             return;
         }
 
-        if (currentUser.getDndUntil() != null) {
+        if (currentUser.getDndUntil() == null) {
             builder.append("Hey, du hast gar keinen Ruhemodus aktiviert.");
         } else {
             currentUser.setDndUntil(null);
