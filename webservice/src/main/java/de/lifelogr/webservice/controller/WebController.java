@@ -63,7 +63,7 @@ public class WebController {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             for (TrackingObject trackingObject : trackingObjectList) {
                 JSONObject jsonObject;
-                if (trackingObject.getCategory() == null) {
+                if (trackingObject.isCountable()) {
                     Double sum = 0.0;
                     for (Track track : trackingObject.getTracks()) {
                         if (track.getDate().after(from) && track.getDate().before(to)) {
@@ -76,7 +76,7 @@ public class WebController {
                             jsonArray.put(jsonObject);
                         }
                     }
-                } else if (trackingObject.getCategory() == 1) {
+                } else {
                     for (Track track : trackingObject.getTracks()) {
                         if (track.getDate().after(from) && track.getDate().before(to)) {
                             jsonObject = new JSONObject();
