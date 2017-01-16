@@ -77,9 +77,12 @@
     var items;
     {{{items}}}
     /* SETTINGS FOR VISJS */
-    var dateEnd = new Date();
-    dateEnd.setHours(0,0,0,0);
-    var dateStart = new Date(dateEnd - (15 * 1000 * 60 * 60 * 24));
+
+    // Today + 1 day
+    var dateEnd = new Date(new Date().getTime() + 86400000);
+
+    // Tommorow - 8 days
+    var dateStart = new Date(dateEnd - (8 * 24 * 60 * 60 * 1000));
     var options = {
         legend: true,
         defaultGroup: '',
