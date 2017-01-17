@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 
 /**
  * @author Marco Kretz
- * @date 04.12.2016
  */
 public class TrackCommandMatcher extends CommandMatcher
 {
@@ -43,12 +42,10 @@ public class TrackCommandMatcher extends CommandMatcher
     @Override
     public CommandParams getCommandParams(String text)
     {
-        // Untersuche den Text mit allen verfügbaren /track-Patterns.
         for (String pattern : this.patterns) {
             Pattern p = Pattern.compile(pattern);
             Matcher m = p.matcher(text);
 
-            // Wurde der aktuelle Ausdruck gematcht?
             if (m.find()) {
                 Double value;
                 String name;
@@ -61,15 +58,12 @@ public class TrackCommandMatcher extends CommandMatcher
                     return new CommandParams("track", "stimmung", mood);
                 }
 
-
-                // Wenn Mehrzahl angegeben wurde, Einzahl verwenden
                 if (name.endsWith("en") || name.endsWith("re")) {
                     name = name.substring(0, name.length() - 1);
                 } else if (name.endsWith("ren")) {
                     name = name.substring(0, name.length() -2);
                 }
 
-                // Versuche, den angegebenen Wert zu ermitteln
                 try {
                     value = Double.parseDouble(m.group("value"));
                 } catch (NumberFormatException nfe) {

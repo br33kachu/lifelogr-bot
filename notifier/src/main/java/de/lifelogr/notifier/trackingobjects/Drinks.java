@@ -46,10 +46,10 @@ public class Drinks {
         this.alcoholList.add("faxe");
         this.alcoholList.add("gaffel");
         this.alcoholList.add("gintonic");
-        this.alcoholList.add("glühwein");
+        this.alcoholList.add("gl\u00fchwein");
         this.alcoholList.add("korn");
-        this.alcoholList.add("kölsch");
-        this.alcoholList.add("likör");
+        this.alcoholList.add("k\u00f6lsch");
+        this.alcoholList.add("lik\u00f6r");
         this.alcoholList.add("longdrink");
         this.alcoholList.add("lumumba");
         this.alcoholList.add("mixery");
@@ -74,7 +74,7 @@ public class Drinks {
         this.alcoholList.add("vodka");
         this.alcoholList.add("wein");
         this.alcoholList.add("weisswein");
-        this.alcoholList.add("weißwein");
+        this.alcoholList.add("wei\u00dfwein");
         this.alcoholList.add("weizen");
         this.alcoholList.add("weizenbier");
         this.alcoholList.add("whisky");
@@ -83,7 +83,7 @@ public class Drinks {
         this.beautyList.add("buttermilch");
         this.beautyList.add("kokoswasser");
         this.beautyList.add("kokosnusswasser");
-        this.beautyList.add("kokosnußwasser");
+        this.beautyList.add("kokosnu\u00dfwasser");
         this.beautyList.add("kefir");
         this.beautyList.add("molke");
 
@@ -92,9 +92,9 @@ public class Drinks {
         this.caffeinList.add("espresso");
         this.caffeinList.add("kaffee");
         this.caffeinList.add("lattemacchiato");
-        this.caffeinList.add("grünertee");
+        this.caffeinList.add("gr\u00fcnertee");
         this.caffeinList.add("schwarzertee");
-        this.caffeinList.add("weißertee");
+        this.caffeinList.add("wei\u00dfertee");
         this.caffeinList.add("weissertee");
         this.caffeinList.add("cola");
         this.caffeinList.add("cocacola");

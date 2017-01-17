@@ -31,22 +31,22 @@ public class TelegramBot extends TelegramLongPollingCommandBot
 
     private final String[] failMessages = {
             "Tut mir Leid, das habe ich nicht verstanden. Versuche es mal mit <b>Hilfe</b>",
-            "Das konnte ich nicht verarbeiten... " + Emoji.DISAPPOINTED_BUT_RELIEVED_FACE + ". <b>/hilfe</b> gibt dir eine Übersicht meiner Fähigkeiten.",
+            "Das konnte ich nicht verarbeiten... " + Emoji.DISAPPOINTED_BUT_RELIEVED_FACE + ". <b>/hilfe</b> gibt dir eine \u00dcbersicht meiner F\u00e4higkeiten.",
             "Ui, das hat nicht geklappt. Hast du dich vielleicht verschrieben?"
     };
 
     private ICRUDUser icrudUser;
 
     /**
-     * Konstruktor
+     * Constructor
      */
     public TelegramBot()
     {
-        // Logger Einstellungen
+        // Logger settings
         BotLogger.setLevel(Level.ALL);
         BotLogger.registerLogger(new ConsoleHandler());
 
-        // Registriere Kommandos
+        // Register commands
         HelpCommand helpCommand = new HelpCommand(this);
         register(helpCommand);
         register(new StartCommand(this));
@@ -56,7 +56,7 @@ public class TelegramBot extends TelegramLongPollingCommandBot
         register(new WakeupCommand(this));
         register(new EndCommand(this));
 
-        // Registriere Aktion für unbekannte Kommandos
+        // What to do for unkown commands
         registerDefaultAction(((absSender, message) -> {
             SendMessage commandUnknownMessage = new SendMessage();
             commandUnknownMessage.setChatId(message.getChatId().toString());
@@ -73,39 +73,37 @@ public class TelegramBot extends TelegramLongPollingCommandBot
     }
 
     /**
-     * Verarbeite Nachrichten, die kein Kommando enthalten.
-     * Versuche den Text in ein entsprechendes Kommando umzusetzen und führe dies aus.
+     * Process messages which are not commands.
+     * Try to translate message into command and execute it.
      *
-     * @param update
+     * @param update Incoming message
      */
     @Override
     public void processNonCommandUpdate(Update update)
     {
-        // Wenn eine Nachricht empfangen wurde
         if (update.hasMessage()) {
             Message message = update.getMessage();
             User user = this.icrudUser.getUserByTelegramId(update.getMessage().getFrom().getId());
 
-            // Wenn die Nachricht Text enthält
             if (message.hasText()) {
                 SendMessage sendMessage = new SendMessage();
                 sendMessage.setChatId(message.getChatId().toString());
 
-                // Der User ist registriert und antwortet auf eine Frage
+                // User has a profile and answers to a question
                 if (user != null && user.getQuestion() != null && !user.getQuestion().isEmpty()) {
                     sendMessage.setText(this.processQuestion(update, message.getText()));
                 } else if (user != null) {
                     // TODO: accept start command if no profile exists!
 
-                    // Übersetzte Text in Kommando
+                    // Translate text to command
                     CommandParams translatedCmdParams = Translator.getInstance().translate(message.getText());
 
-                    // Wenn der Text in ein Kommando übersetzt werden konnte, verusuche das Kommando auszuführen
+                    // Try to execute the command
                     if (translatedCmdParams != null) {
-                        // Hole das entsprechende Kommando
+                        // Get command
                         BotCommand cmd = this.getRegisteredCommand(translatedCmdParams.getName());
 
-                        // Ist das Kommando im System vorhanden, führe es aus
+                        // If command could be found
                         if (cmd != null) {
                             cmd.execute(
                                     this,
@@ -119,7 +117,7 @@ public class TelegramBot extends TelegramLongPollingCommandBot
 
                     }
 
-                    // Das Kommando konnte nicht gefunden werden
+                    // Command could not be found
                     sendMessage.setText(this.failMessages[new Random().nextInt(this.failMessages.length)]);
                 } else {
                     // Der User hat noch ein Profil angelegt
@@ -128,7 +126,7 @@ public class TelegramBot extends TelegramLongPollingCommandBot
 
                 sendMessage.enableHtml(true);
 
-                // Sende Nachricht an den User
+                // Send message to User
                 try {
                     sendMessage(sendMessage);
                 } catch (TelegramApiException e) {
@@ -157,13 +155,13 @@ public class TelegramBot extends TelegramLongPollingCommandBot
             builder
                     .append("Hallo ")
                     .append(message.trim())
-                    .append("! Dein Profil wurde angelegt.\nViel Spaß mit der Nutzung des LifeLogr-Bots ")
+                    .append("! Dein Profil wurde angelegt.\nViel Spa\u00df mit der Nutzung des LifeLogr-Bots ")
                     .append(Emoji.SMILING_FACE_WITH_SMILING_EYES);
         } else if (question.equals("deleteProfile")) { // User has been asked for confirmation to delete profile
             if (this.isPositiveAnswer(message)) {
                 this.icrudUser.deleteUser(user);
                 builder
-                        .append("Okay, schade.. Es war schön mit dir. Vielleicht bis zum nächsten Mal! ")
+                        .append("Okay, schade.. Es war sch\u00f6n mit dir. Vielleicht bis zum n\u00e4chsten Mal! ")
                         .append(Emoji.FACE_WITH_OK_GESTURE)
                         .append(" Dein Profil wurde entfernt!");
             } else {
@@ -183,7 +181,7 @@ public class TelegramBot extends TelegramLongPollingCommandBot
                     BotLogger.error("QUESTION:TR", e.getMessage());
                 }
             } else {
-                builder.append("Okay, vielleicht frage ich die später nochmal!");
+                builder.append("Okay, vielleicht frage ich die sp\u00e4ter nochmal!");
                 user.setQuestion(null);
                 this.icrudUser.saveUser(user);
             }

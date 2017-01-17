@@ -54,8 +54,8 @@ public class Communicator
     /**
      * Send message to specific User.
      *
-     * @param userId
-     * @param message
+     * @param userId UserID
+     * @param message Message to sent
      */
     public void sendMessage(String userId, String message) {
         SendMessage sendMessageRequest = new SendMessage();

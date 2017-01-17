@@ -31,7 +31,7 @@ public class EndCommand extends BotCommand
      */
     public EndCommand(ICommandRegistry commandRegistry)
     {
-        super("end", "Lösche dein Profil.");
+        super("end", "L\u00f6sche dein Profil.");
         this.commandRegistry = commandRegistry;
     }
 
@@ -49,7 +49,7 @@ public class EndCommand extends BotCommand
             return;
         }
 
-        builder.append("Bist du sicher, dass du dein Profil löschen willst? Es kann nicht wiederhergestellt werden!");
+        builder.append("Bist du sicher, dass du dein Profil l\u00f6schen willst? Es kann nicht wiederhergestellt werden!");
         currentUser.setQuestion("deleteProfile");
         icrudUser.saveUser(currentUser);
 

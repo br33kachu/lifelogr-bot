@@ -53,7 +53,7 @@ public interface ICRUDUser
      * Delete a single User.
      *
      * @param user User to be deleted.
-     * @return
+     * @return Result
      */
     WriteResult deleteUser(User user);
 }

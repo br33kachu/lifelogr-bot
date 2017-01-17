@@ -86,7 +86,7 @@ public class ICRUDDatabaseTest {
     /**
      * Wenn ein User mit dem Token nicht existiert,
      * und/oder der User in der Datenbank nicht vorhanden ist,
-     * hole den User mit einem Token, länger als 5 Zeichen
+     * hole den User mit einem Token, laenger als 5 Zeichen
      */
     @Test
     public void getUserByToken_02() {

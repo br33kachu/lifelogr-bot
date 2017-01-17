@@ -4,7 +4,6 @@ import de.lifelogr.translator.structures.CommandParams;
 
 /**
  * @author Marco Kretz
- * @date 04.12.2016
  */
 public class HelpCommandMatcher extends CommandMatcher
 {

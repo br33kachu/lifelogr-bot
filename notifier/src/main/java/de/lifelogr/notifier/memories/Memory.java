@@ -50,7 +50,7 @@ public class Memory extends TimerTask {
             user.setQuestion("tr:" + tObject.getName());
             this.icrudUser.saveUser(user);
             //send message
-            this.communicator.sendMessage(user.getChatId().toString(), "Hey, du hast \"" + tObject.getName() + "\" heute noch nicht getrackt. Soll ich das jetzt für dich erledigen?");
+            this.communicator.sendMessage(user.getChatId().toString(), "Hey, du hast \"" + tObject.getName() + "\" heute noch nicht getrackt. Soll ich das jetzt f\u00fcr dich erledigen?");
         }
     }
 

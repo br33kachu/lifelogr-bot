@@ -36,7 +36,7 @@ public class Food {
         this.candyList.add("bonbon");
         this.candyList.add("bonbons");
         this.candyList.add("eis");
-        this.candyList.add("gummibärchen");
+        this.candyList.add("gummib\u00e4rchen");
         this.candyList.add("keks");
         this.candyList.add("kekse");
         this.candyList.add("karamell");
@@ -54,7 +54,7 @@ public class Food {
         this.fastfoodList.add("fritten");
         this.fastfoodList.add("pommesfrittes");
         this.fastfoodList.add("currywurst");
-        this.fastfoodList.add("döner");
+        this.fastfoodList.add("d\u00f6ner");
         this.fastfoodList.add("chickennuggets");
         this.fastfoodList.add("nuggets");
         this.fastfoodList.add("kroketten");
@@ -63,7 +63,7 @@ public class Food {
         this.superfoodList.add("acai");
         this.superfoodList.add("goji");
         this.superfoodList.add("walnuss");
-        this.superfoodList.add("walnüsse");
+        this.superfoodList.add("waln\u00fcsse");
         this.superfoodList.add("himbeere");
         this.superfoodList.add("himbeeren");
         this.superfoodList.add("johannisbeere");

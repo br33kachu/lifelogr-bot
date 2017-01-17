@@ -11,7 +11,6 @@ import java.util.Set;
  * Class for translating free text into internal commands.
  *
  * @author Marco Kretz
- * @date 04.12.2016
  */
 public class Translator
 {

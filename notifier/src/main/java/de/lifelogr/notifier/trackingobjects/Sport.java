@@ -30,11 +30,11 @@ public class Sport {
         this.powerList.add("krafttraining");
         this.powerList.add("hanteltraining");
         this.powerList.add("bodybuilding");
-        this.powerList.add("gerätetraining");
+        this.powerList.add("ger\u00e4tetraining");
         this.powerList.add("muskeltraining");
         this.powerList.add("muskelaufbau");
         this.powerList.add("gewichtheben");
-        this.powerList.add("bankdrücken");
+        this.powerList.add("bankdr\u00fccken");
         this.powerList.add("kreuzheben");
         this.powerList.add("bodypump");
         this.powerList.add("bbp");
@@ -47,7 +47,7 @@ public class Sport {
         this.relaxList.add("yoga");
         this.relaxList.add("qigong");
         this.relaxList.add("pilates");
-        this.relaxList.add("fünftibeter");
+        this.relaxList.add("f\u00fcnftibeter");
         this.relaxList.add("taichi");
 
         //list for type stamina

@@ -205,7 +205,7 @@ public class User
 
     /**
      * Check if the User if fully registered
-     * @return
+     * @return true if User is fully registered
      */
     public boolean istFullyRegistered()
     {
@@ -214,7 +214,7 @@ public class User
 
     /**
      * Get the last updated TrackingObject
-     * @return
+     * @return Last updated TrackingObject
      */
     public TrackingObject getLastAddedTrackingObject()
     {

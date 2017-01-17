@@ -7,7 +7,6 @@ import java.util.ArrayList;
  * Holds regexes for matching and extracting data from free text.
  *
  * @author Marco Kretz
- * @date 04.12.2016
  */
 public abstract class CommandMatcher
 {
@@ -32,8 +31,8 @@ public abstract class CommandMatcher
     /**
      * Get the command with arguments represented as CommandParams-object.
      * May extract command arguments from the free text.
-     * @param text
-     * @return
+     * @param text Text to extract
+     * @return CommandParams representation
      */
     public abstract CommandParams getCommandParams(String text);
 }

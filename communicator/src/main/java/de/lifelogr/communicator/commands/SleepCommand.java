@@ -32,7 +32,7 @@ public class SleepCommand extends BotCommand
      */
     public SleepCommand(ICommandRegistry commandRegistry)
     {
-        super("sleep", "Ruhezeit einrichten z.B. \"/sleep 1h\" für eine Stunde");
+        super("sleep", "Ruhezeit einrichten z.B. \"/sleep 1h\" f\u00fcr eine Stunde");
     }
 
     @Override
@@ -78,7 +78,7 @@ public class SleepCommand extends BotCommand
                         .append(dndDate)
                         .append(" um ")
                         .append(dndTime)
-                        .append(" Uhr hörst du nichts mehr von mir!");
+                        .append(" Uhr h\u00f6rst du nichts mehr von mir!");
             }
         } else if (arguments.length == 0) {
             Calendar calendar = Calendar.getInstance();

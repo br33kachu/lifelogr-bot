@@ -75,7 +75,7 @@ public class WebControllerTest {
     /**
      * Teste Token,
      * User mit dem Token existiert,
-     * Verfallsdatum des Tokens wird nicht überschritten
+     * Verfallsdatum des Tokens wird nicht ueberschritten
      */
     @Test
     public void testGetUserByTelegramId_00() {
@@ -92,7 +92,7 @@ public class WebControllerTest {
     /**
      * Teste Token,
      * User mit dem Token existiert,
-     * Verfallsdatum des Tokens ist überschritten
+     * Verfallsdatum des Tokens ist ueberschritten
      */
     @Test
     public void testGetUserByTelegramId_01() {

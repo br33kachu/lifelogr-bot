@@ -29,7 +29,7 @@ public class HelpCommand extends BotCommand
      */
     public HelpCommand(ICommandRegistry commandRegistry)
     {
-        super("help", "Zeige alle unterstützten Kommandos.");
+        super("help", "Zeige alle unterst\u00fctzten Kommandos.");
         this.commandRegistry = commandRegistry;
     }
 
@@ -43,7 +43,7 @@ public class HelpCommand extends BotCommand
 
         // Construct message with commands and descriptions
         StringBuilder builder = new StringBuilder();
-        builder.append("Das sind meine unterstützten Kommandos:\n\n");
+        builder.append("Das sind meine unterst\u00fctzten Kommandos:\n\n");
         this.commandRegistry.getRegisteredCommands().forEach((command) -> builder
                 .append("<strong>/")
                 .append(command.getCommandIdentifier())
