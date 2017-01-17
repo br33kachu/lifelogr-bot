@@ -4,7 +4,9 @@ import de.lifelogr.dbconnector.entity.TrackingObject;
 import de.lifelogr.dbconnector.entity.User;
 
 /**
- * Created by christin on 05.12.16.
+ * Abstract class for the Observer-Model.
+ *
+ * @author christin schlimbach
  */
 public abstract class Observer {
 
