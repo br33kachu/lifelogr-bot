@@ -50,7 +50,7 @@ public class Bootloader
         zonedMorning = zonedNow.withHour(8).withMinute(0).withSecond(0);
         if(zonedNow.compareTo(zonedMorning) > 0)
             zonedMorning = zonedMorning.plusDays(1);
-        zonedEvening = zonedNow.withHour(19).withMinute(0).withSecond(0);
+        zonedEvening = zonedNow.withHour(19).withMinute(00).withSecond(0);
         if(zonedNow.compareTo(zonedEvening) > 0)
             zonedEvening = zonedEvening.plusDays(1);
 

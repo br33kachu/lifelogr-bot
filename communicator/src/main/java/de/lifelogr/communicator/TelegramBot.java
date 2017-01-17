@@ -151,15 +151,15 @@ public class TelegramBot extends TelegramLongPollingCommandBot
         User user = this.icrudUser.getUserByTelegramId(update.getMessage().getFrom().getId());
         String question = user.getQuestion();
 
-        if (question.equals("username")) {
+        if (question.equals("username")) { // User has been asked for his username
             this.icrudUser.updateField(user, "username", message.trim());
-            this.icrudUser.updateField(user, "question", "");
+            this.icrudUser.updateField(user, "question", null);
             builder
                     .append("Hallo ")
                     .append(message.trim())
                     .append("! Dein Profil wurde angelegt.\nViel Spaß mit der Nutzung des LifeLogr-Bots ")
                     .append(Emoji.SMILING_FACE_WITH_SMILING_EYES);
-        } else if (question.equals("deleteProfile")) {
+        } else if (question.equals("deleteProfile")) { // User has been asked for confirmation to delete profile
             if (this.isPositiveAnswer(message)) {
                 this.icrudUser.deleteUser(user);
                 builder
@@ -171,7 +171,7 @@ public class TelegramBot extends TelegramLongPollingCommandBot
                 this.icrudUser.saveUser(user);
                 builder.append("Der Vorgang wurde abgebrochen!");
             }
-        } else if (question.startsWith("tr:")) {
+        } else if (question.startsWith("tr:")) { // User has been asked to track a specific object
             if (this.isPositiveAnswer(message)) {
                 try {
                     String toName = question.split(":")[1];
@@ -180,7 +180,7 @@ public class TelegramBot extends TelegramLongPollingCommandBot
                     cmd.execute(this, update.getMessage().getFrom(), update.getMessage().getChat(), params);
                     builder.append(Emoji.HEAVY_CHECK_MARK);
                 } catch (ArrayIndexOutOfBoundsException e) {
-
+                    BotLogger.error("QUESTION:TR", e.getMessage());
                 }
             } else {
                 builder.append("Okay, vielleicht frage ich die später nochmal!");
@@ -188,6 +188,13 @@ public class TelegramBot extends TelegramLongPollingCommandBot
                 this.icrudUser.saveUser(user);
             }
 
+        } else if (question.equals("mood")) { // User has been asked for his mood
+            user.setQuestion(null);
+            this.icrudUser.saveUser(user);
+            BotCommand cmd = this.getRegisteredCommand("track");
+            String[] params = { "stimmung", message };
+            cmd.execute(this, update.getMessage().getFrom(), update.getMessage().getChat(), params);
+            builder.append(Emoji.HEAVY_CHECK_MARK);
         }
 
         return builder.toString();
