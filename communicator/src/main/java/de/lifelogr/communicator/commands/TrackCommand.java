@@ -14,15 +14,19 @@ import org.telegram.telegrambots.bots.commands.ICommandRegistry;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.logging.BotLogger;
 
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Stream;
 
 /**
- * @author marco
+ * Command: /track
+ * <p>
+ * BotCommand for adding or updating a TrackingObject.
+ *
+ * @author Marco Kretz
  */
 public class TrackCommand extends BotCommand
 {
     private static final String LOGTAG = "TRACKCOMMAND";
-
     private final ICommandRegistry commandRegistry;
     private final ICRUDUser icrudUser = new ICRUDUserImpl();
 
@@ -31,14 +35,25 @@ public class TrackCommand extends BotCommand
             "Okay, habe ich mir notiert. " + Emoji.FACE_WITH_OK_GESTURE,
             "Check!"
     };
+    private final String[] nonCountableObjects = {
+            "stimmung",
+            "gewicht",
+            "bmi",
+            "blutdruck",
+            "kontostand"
+    };
+    private final Map<Double, List<String>> moods = new HashMap<>();
 
     /**
-     * @param commandRegistry
+     * Constructor
+     *
+     * @param commandRegistry Global command registry.
      */
     public TrackCommand(ICommandRegistry commandRegistry)
     {
         super("track", "Verwalte deine Tracking-Objekte.");
         this.commandRegistry = commandRegistry;
+        this.initializeMoodTable();
     }
 
     @Override
@@ -57,20 +72,30 @@ public class TrackCommand extends BotCommand
             String name = arguments[0].trim();
             Double count;
             try {
-                count = Double.parseDouble(arguments[1]);
-            } catch (ArrayIndexOutOfBoundsException|NumberFormatException e) {
+                if (name.endsWith("stimmung")) {
+                    count = this.moodToDouble(arguments[1]);
+                } else {
+                    count = Double.parseDouble(arguments[1]);
+                }
+            } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
                 count = 1.0;
             }
 
             TrackingObject trackingObject = currentUser.getTrackingObjectByName(name);
 
+            // Create new TackingObject if it not yet exists
             if (trackingObject == null) {
                 trackingObject = new TrackingObject();
                 trackingObject.setName(name);
                 trackingObject.setCurrentCount(count);
+                trackingObject.setCountable(this.isCountable(name));
                 currentUser.getTrackingObjects().add(trackingObject);
             } else {
-                trackingObject.setCurrentCount(trackingObject.getCurrentCount() + count);
+                if (this.isCountable(name)) {
+                    trackingObject.setCurrentCount(trackingObject.getCurrentCount() + count);
+                } else {
+                    trackingObject.setCurrentCount(count);
+                }
             }
 
             // Add Track to TrackingObject
@@ -90,6 +115,67 @@ public class TrackCommand extends BotCommand
             absSender.sendMessage(msg);
         } catch (TelegramApiException e) {
             BotLogger.error(LOGTAG, e);
+        }
+    }
+
+    private void initializeMoodTable()
+    {
+        List<String> bestMoods = new ArrayList<>();
+        bestMoods.add("spitze");
+        bestMoods.add("super");
+        bestMoods.add("bestens");
+        bestMoods.add("hervorragend");
+
+        List<String> okMoods = new ArrayList<>();
+        okMoods.add("ok");
+        okMoods.add("okay");
+        okMoods.add("gut");
+
+        List<String> mediumMoods = new ArrayList<>();
+        mediumMoods.add("normal");
+
+        List<String> badMoods = new ArrayList<>();
+        badMoods.add("schlecht");
+
+
+        List<String> veryBadMoods = new ArrayList<>();
+        veryBadMoods.add("beschissen");
+        veryBadMoods.add("scheisse");
+
+        this.moods.put(5.0, bestMoods);
+        this.moods.put(4.0, okMoods);
+        this.moods.put(3.0, mediumMoods);
+        this.moods.put(2.0, badMoods);
+        this.moods.put(1.0, veryBadMoods);
+    }
+
+    /**
+     * @param name
+     * @return
+     */
+    private boolean isCountable(String name)
+    {
+        for (String s : this.nonCountableObjects) {
+            if (s.equals(name.toLowerCase())) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private Double moodToDouble(String mood)
+    {
+        try {
+            return this.moods
+                    .entrySet()
+                    .parallelStream()
+                    .filter(e -> e.getValue().contains(mood))
+                    .findFirst()
+                    .get()
+                    .getKey();
+        } catch (NoSuchElementException e) {
+            return 3.0;
         }
     }
 }

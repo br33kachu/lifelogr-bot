@@ -1,9 +1,11 @@
 package de.lifelogr.translator;
 
-import de.lifelogr.translator.matcher.HelpCommandMatcher;
-import de.lifelogr.translator.matcher.StartCommandMatcher;
-import de.lifelogr.translator.matcher.TrackCommandMatcher;
+import de.lifelogr.translator.matcher.*;
 import de.lifelogr.translator.structures.CommandParams;
+
+import java.util.HashSet;
+import java.util.NoSuchElementException;
+import java.util.Set;
 
 /**
  * Klasse zum Übersetzen von freiem Text in entsprechende Kommandos.
@@ -16,15 +18,18 @@ public class Translator
     private static Translator instance = null;
     private static final Object mutex = new Object();
 
-    private HelpCommandMatcher hcm;
-    private StartCommandMatcher scm;
-    private TrackCommandMatcher tcm;
+    private Set<CommandMatcher> matchers;
 
     private Translator()
     {
-        this.hcm = new HelpCommandMatcher();
-        this.scm = new StartCommandMatcher();
-        this.tcm = new TrackCommandMatcher();
+        this.matchers = new HashSet<>();
+        this.matchers.add(new HelpCommandMatcher());
+        this.matchers.add(new StartCommandMatcher());
+        this.matchers.add(new TrackCommandMatcher());
+        this.matchers.add(new EndCommandMatcher());
+        this.matchers.add(new WakeupCommandMatcher());
+        this.matchers.add(new TokenCommandMatcher());
+        this.matchers.add(new SleepCommandMatcher());
     }
 
     public static Translator getInstance()
@@ -49,20 +54,17 @@ public class Translator
     public CommandParams translate(String text)
     {
         // Text normalisieren
-        text = text.trim().toLowerCase().replaceAll(" +", " ");
+        final String normalizedText = text.trim().toLowerCase().replaceAll(" +", " ");
 
-        if (this.hcm.matches(text)) {
-            return this.hcm.getCommandParams(text);
+        try {
+            return this.matchers
+                    .parallelStream()
+                    .filter(m -> m.matches(normalizedText))
+                    .findFirst()
+                    .get()
+                    .getCommandParams(normalizedText);
+        } catch (NoSuchElementException e) {
+            return null;
         }
-
-        if (this.scm.matches(text)) {
-            return this.scm.getCommandParams(text);
-        }
-
-        if (this.tcm.matches(text)) {
-            return this.tcm.getCommandParams(text);
-        }
-
-        return null;
     }
 }

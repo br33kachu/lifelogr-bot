@@ -18,21 +18,33 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by micha on 29.11.2016.
+ * Control class for data communication between the database and the webserver
+ *
  */
 public class WebController {
     private final Logger log = Logger.getLogger(WebController.class.getName());
     private ICRUDUser icrudUser;
 
+    /**
+     * Standard Constructor, initalizing the ICRUDUser object
+     */
     public WebController() {
         icrudUser = new ICRUDUserImpl();
     }
 
+    /**
+     * Get a user objekt with the telegramId and returns the trackingobjects as a vis.js-dataset.
+     *
+     * @param telegramId of the user
+     * @param from       date from, which trackingObjects should be return
+     * @param to         date to, which trackingObjects should be return
+     * @return if user with the telegramId found and date is between from and to, returns the string dataset, otherwise "[]"
+     */
     public String getJSONDataSet(int telegramId, Date from, Date to) {
         if (from == null) {
             if (StartWebServer.LOGGING) log.log(Level.INFO, "Date 'from' is null");
             LocalDate now = LocalDate.now();
-            now = now.minusMonths(1);
+            now = now.minusWeeks(1);
             from = Date.from(now.atStartOfDay(ZoneId.systemDefault()).toInstant());
             if (StartWebServer.LOGGING) log.log(Level.INFO, "Date 'from': " + from.toString());
         }
@@ -43,6 +55,8 @@ public class WebController {
             to = Date.from(now.atStartOfDay(ZoneId.systemDefault()).toInstant());
             if (StartWebServer.LOGGING) log.log(Level.INFO, "Date 'to': " + to.toString());
         }
+        if (StartWebServer.LOGGING)
+            log.log(Level.INFO, "Date 'from': " + from.toString() + "; Date 'to': " + to.toString());
         User user = getUserByTelegramId(telegramId);
         if (user != null && !user.getTrackingObjects().isEmpty()) {
             if (StartWebServer.LOGGING) log.log(Level.INFO, "User and TrackingObjects found - start filtering)");
@@ -52,10 +66,14 @@ public class WebController {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             for (TrackingObject trackingObject : trackingObjectList) {
                 JSONObject jsonObject;
-                if (trackingObject.getCategory() == null) {
+                if (trackingObject.isCountable()) {
                     Double sum = 0.0;
                     for (Track track : trackingObject.getTracks()) {
+                        if (StartWebServer.LOGGING)
+                            log.log(Level.INFO, "TrackingObject Date: " + track.getDate().toString());
                         if (track.getDate().after(from) && track.getDate().before(to)) {
+                            if (StartWebServer.LOGGING)
+                                log.log(Level.INFO, "Trackingobjekt " + trackingObject.getName() + " added");
                             jsonObject = new JSONObject();
                             String formattedDate = simpleDateFormat.format(track.getDate());
                             jsonObject.put("x", formattedDate);
@@ -65,7 +83,7 @@ public class WebController {
                             jsonArray.put(jsonObject);
                         }
                     }
-                } else if (trackingObject.getCategory() == 1) {
+                } else {
                     for (Track track : trackingObject.getTracks()) {
                         if (track.getDate().after(from) && track.getDate().before(to)) {
                             jsonObject = new JSONObject();
@@ -83,6 +101,12 @@ public class WebController {
         return "[]";
     }
 
+    /**
+     * Identify a user with a given token
+     *
+     * @param token which belongs to a user
+     * @return the users telegramId, if a token existst, 0 if no token exists, -1 if the token is expired
+     */
     public int getTelegramIdByToken(String token) {
         User user = icrudUser.getUserByToken(token);
         if (user != null) {
@@ -98,11 +122,23 @@ public class WebController {
         return 0;
     }
 
+    /**
+     * Gets a user who has the telegramID
+     *
+     * @param telegramId of the user
+     * @return the user if exist, otherwise null
+     */
     public User getUserByTelegramId(int telegramId) {
         User user = icrudUser.getUserByTelegramId(telegramId);
         return user;
     }
 
+    /**
+     * Capitalizing the first letter of a word
+     *
+     * @param line is the word you want to capitalize
+     * @return returns a capitalized word
+     */
     private String capitalize(final String line) {
         return Character.toUpperCase(line.charAt(0)) + line.substring(1);
     }

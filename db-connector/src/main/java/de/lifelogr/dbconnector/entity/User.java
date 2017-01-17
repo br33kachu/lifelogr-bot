@@ -25,7 +25,6 @@ public class User
     private Long chatId;
     private String token;
     private Date tokenExpirationDate;
-    private Date doNotDisturbUntil;
     private String username;
     private Date createdAt;
     private String firstName;
@@ -36,6 +35,7 @@ public class User
     @Embedded
     private ArrayList<TrackingObject> trackingObjects;
     private String question;
+    private Date dndUntil;
 
     public User()
     {
@@ -91,16 +91,6 @@ public class User
     public void setTokenExpirationDate(Date tokenExpirationDate)
     {
         this.tokenExpirationDate = tokenExpirationDate;
-    }
-
-    public Date getDoNotDisturbUntil()
-    {
-        return doNotDisturbUntil;
-    }
-
-    public void setDoNotDisturbUntil(Date doNotDisturbUntil)
-    {
-        this.doNotDisturbUntil = doNotDisturbUntil;
     }
 
     public String getUsername()
@@ -232,5 +222,15 @@ public class User
         if (lastTrackingObject != null) {
             Informant.notifyObserver(this, this.getLastAddedTrackingObject());
         }
+    }
+
+    public Date getDndUntil()
+    {
+        return dndUntil;
+    }
+
+    public void setDndUntil(Date dndUntil)
+    {
+        this.dndUntil = dndUntil;
     }
 }

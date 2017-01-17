@@ -11,10 +11,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by micha on 04.12.2016.
+ * This class creates is required to build html-codes from models
  */
 public class WebModel {
 
+    /**
+     * Creates a login-site from the template file: "resources\templates\login.hbs"
+     *
+     * @return html-string of the login-site
+     */
     public String getLogin() {
         Map<String, String> model = new HashMap<>();
         model.put("title", "Lgr - Login");
@@ -22,6 +27,13 @@ public class WebModel {
         return login;
     }
 
+    /**
+     * Creates a diagram-site from the template file: "resources\templates\diagram.hbs"
+     *
+     * @param items is the vis.js dataset as string
+     * @param user who is logged in on the website
+     * @return html-string of the diagram-site
+     */
     public String getDiagram(String items, User user) {
         Map<String, String> model = new HashMap<>();
 
@@ -35,7 +47,7 @@ public class WebModel {
         } else {
             username = "Anwender";
         }
-        String welcome = "Hi " + username + "! Hier sind deine tracks: ";
+        String welcome = "Hallo " + username + "! Hier sind deine Tracks:";
         model.put("welcome", welcome);
 
         // Get Items and set it as 'item' element for HBS
@@ -49,7 +61,7 @@ public class WebModel {
         List<String> groups = getGroups(items);
         for (String group : groups) {
             checkBoxes = checkBoxes.concat("\n" +
-                    "        <div class=\"row\">\n" +
+                    "        <div>\n" +
                     "            <input type=\"checkbox\" class=\"filled-in\" id=\"checkbox-" + group + "\" checked=\"checked\" onclick=\"onClickCheckbox(this.id);\"/>\n" +
                     "            <label for=\"checkbox-" + group + "\" id=\"labelcheckbox-" + group + "\">" + group + "</label>\n" +
                     "        </div>");
@@ -60,6 +72,13 @@ public class WebModel {
     }
 
 
+    /**
+     * This method is necessary to summarize all trackingObject names and remove duplicates. This is needed for the
+     *
+     * HTML-Checkboxes for the diagram-site
+     * @param items is the vis.js dataset as string
+     * @return a list with summarized item names
+     */
     private List<String> getGroups(String items) {
         JSONArray jsonArray = new JSONArray(items);
         List<String> groups = new ArrayList<>();

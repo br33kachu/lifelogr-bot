@@ -4,108 +4,118 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by christin on 06.12.16.
+ * Contains the lists of related tracking object names for the different drink types.
+ *
+ * @author christin schlimbach
  */
 public class Drinks {
 
-    private List<String> drinksCaffein;
-    private List<String> drinksAlcohol;
-    private List<String> drinksBeauty;
+    private List<String> caffeinList;
+    private List<String> alcoholList;
+    private List<String> beautyList;
 
+    /**
+     * Constructor
+     *
+     * Adds related tracking object names to the list of the specific drink type.
+     */
     public Drinks() {
-        this.drinksCaffein = new ArrayList<>();
-        this.drinksAlcohol = new ArrayList<>();
-        this.drinksBeauty = new ArrayList<>();
 
-        //caffein
-        this.drinksCaffein.add("cappuccino");
-        this.drinksCaffein.add("espresso");
-        this.drinksCaffein.add("kaffee");
-        this.drinksCaffein.add("lattemacchiato");
-        this.drinksCaffein.add("grünertee");
-        this.drinksCaffein.add("schwarzertee");
-        this.drinksCaffein.add("weißertee");
-        this.drinksCaffein.add("weissertee");
-        this.drinksCaffein.add("cola");
-        this.drinksCaffein.add("cocacola");
-        this.drinksCaffein.add("mate");
-        this.drinksCaffein.add("clubmate");
-        this.drinksCaffein.add("mate");
-        this.drinksCaffein.add("pepsi");
-        this.drinksCaffein.add("energydrink");
-        this.drinksCaffein.add("redbull");
+        this.caffeinList = new ArrayList<>();
+        this.alcoholList = new ArrayList<>();
+        this.beautyList = new ArrayList<>();
 
-        //alcohol
-        this.drinksAlcohol.add("absinth");
-        this.drinksAlcohol.add("alcopops");
-        this.drinksAlcohol.add("altbier");
-        this.drinksAlcohol.add("armagnac");
-        this.drinksAlcohol.add("bananenweizen");
-        this.drinksAlcohol.add("bier");
-        this.drinksAlcohol.add("bowle");
-        this.drinksAlcohol.add("caipirinha");
-        this.drinksAlcohol.add("calvados");
-        this.drinksAlcohol.add("campari");
-        this.drinksAlcohol.add("champagner");
-        this.drinksAlcohol.add("cocktail");
-        this.drinksAlcohol.add("colabier");
-        this.drinksAlcohol.add("cognac");
-        this.drinksAlcohol.add("cubalibre");
-        this.drinksAlcohol.add("dekanter");
-        this.drinksAlcohol.add("eiswein");
-        this.drinksAlcohol.add("faxe");
-        this.drinksAlcohol.add("gaffel");
-        this.drinksAlcohol.add("gintonic");
-        this.drinksAlcohol.add("glühwein");
-        this.drinksAlcohol.add("korn");
-        this.drinksAlcohol.add("kölsch");
-        this.drinksAlcohol.add("likör");
-        this.drinksAlcohol.add("longdrink");
-        this.drinksAlcohol.add("lumumba");
-        this.drinksAlcohol.add("mixery");
-        this.drinksAlcohol.add("obstbrand");
-        this.drinksAlcohol.add("ouzo");
-        this.drinksAlcohol.add("portwein");
-        this.drinksAlcohol.add("prosecco");
-        this.drinksAlcohol.add("punsch");
-        this.drinksAlcohol.add("rosewein");
-        this.drinksAlcohol.add("rotwein");
-        this.drinksAlcohol.add("rum");
-        this.drinksAlcohol.add("sake");
-        this.drinksAlcohol.add("schankbier");
-        this.drinksAlcohol.add("schaumwein");
-        this.drinksAlcohol.add("schnaps");
-        this.drinksAlcohol.add("schwarzbier");
-        this.drinksAlcohol.add("sekt");
-        this.drinksAlcohol.add("sexonthebeach");
-        this.drinksAlcohol.add("starkbier");
-        this.drinksAlcohol.add("tequila");
-        this.drinksAlcohol.add("tonicwater");
-        this.drinksAlcohol.add("vodka");
-        this.drinksAlcohol.add("wein");
-        this.drinksAlcohol.add("weisswein");
-        this.drinksAlcohol.add("weißwein");
-        this.drinksAlcohol.add("weizen");
-        this.drinksAlcohol.add("weizenbier");
-        this.drinksAlcohol.add("whisky");
+        //list for type alcohol
+        this.alcoholList.add("absinth");
+        this.alcoholList.add("alcopops");
+        this.alcoholList.add("altbier");
+        this.alcoholList.add("armagnac");
+        this.alcoholList.add("bananenweizen");
+        this.alcoholList.add("bier");
+        this.alcoholList.add("bowle");
+        this.alcoholList.add("caipirinha");
+        this.alcoholList.add("calvados");
+        this.alcoholList.add("campari");
+        this.alcoholList.add("champagner");
+        this.alcoholList.add("cocktail");
+        this.alcoholList.add("colabier");
+        this.alcoholList.add("cognac");
+        this.alcoholList.add("cubalibre");
+        this.alcoholList.add("dekanter");
+        this.alcoholList.add("eiswein");
+        this.alcoholList.add("faxe");
+        this.alcoholList.add("gaffel");
+        this.alcoholList.add("gintonic");
+        this.alcoholList.add("glühwein");
+        this.alcoholList.add("korn");
+        this.alcoholList.add("kölsch");
+        this.alcoholList.add("likör");
+        this.alcoholList.add("longdrink");
+        this.alcoholList.add("lumumba");
+        this.alcoholList.add("mixery");
+        this.alcoholList.add("obstbrand");
+        this.alcoholList.add("ouzo");
+        this.alcoholList.add("portwein");
+        this.alcoholList.add("prosecco");
+        this.alcoholList.add("punsch");
+        this.alcoholList.add("rosewein");
+        this.alcoholList.add("rotwein");
+        this.alcoholList.add("rum");
+        this.alcoholList.add("sake");
+        this.alcoholList.add("schankbier");
+        this.alcoholList.add("schaumwein");
+        this.alcoholList.add("schnaps");
+        this.alcoholList.add("schwarzbier");
+        this.alcoholList.add("sekt");
+        this.alcoholList.add("sexonthebeach");
+        this.alcoholList.add("starkbier");
+        this.alcoholList.add("tequila");
+        this.alcoholList.add("tonicwater");
+        this.alcoholList.add("vodka");
+        this.alcoholList.add("wein");
+        this.alcoholList.add("weisswein");
+        this.alcoholList.add("weißwein");
+        this.alcoholList.add("weizen");
+        this.alcoholList.add("weizenbier");
+        this.alcoholList.add("whisky");
 
-        this.drinksBeauty.add("buttermilch");
-        this.drinksBeauty.add("kokoswasser");
-        this.drinksBeauty.add("kokosnusswasser");
-        this.drinksBeauty.add("kokosnußwasser");
-        this.drinksBeauty.add("kefir");
-        this.drinksBeauty.add("molke");
+        //list for type beauty
+        this.beautyList.add("buttermilch");
+        this.beautyList.add("kokoswasser");
+        this.beautyList.add("kokosnusswasser");
+        this.beautyList.add("kokosnußwasser");
+        this.beautyList.add("kefir");
+        this.beautyList.add("molke");
+
+        //list for type caffein
+        this.caffeinList.add("cappuccino");
+        this.caffeinList.add("espresso");
+        this.caffeinList.add("kaffee");
+        this.caffeinList.add("lattemacchiato");
+        this.caffeinList.add("grünertee");
+        this.caffeinList.add("schwarzertee");
+        this.caffeinList.add("weißertee");
+        this.caffeinList.add("weissertee");
+        this.caffeinList.add("cola");
+        this.caffeinList.add("cocacola");
+        this.caffeinList.add("mate");
+        this.caffeinList.add("clubmate");
+        this.caffeinList.add("mate");
+        this.caffeinList.add("pepsi");
+        this.caffeinList.add("energydrink");
+        this.caffeinList.add("redbull");
     }
 
-    public List<String> getDrinksCaffein() {
-        return drinksCaffein;
+    //getter
+    public List<String> getCaffeinList() {
+        return caffeinList;
     }
 
-    public List<String> getDrinksAlcohol() {
-        return drinksAlcohol;
+    public List<String> getAlcoholList() {
+        return alcoholList;
     }
 
-    public List<String> getDrinksBeauty() {
-        return drinksBeauty;
+    public List<String> getBeautyList() {
+        return beautyList;
     }
 }
