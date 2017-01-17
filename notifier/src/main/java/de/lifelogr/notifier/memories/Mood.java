@@ -26,7 +26,11 @@ public class Mood extends TimerTask {
     private Communicator communicator;
     private int threadType =  0;
 
-    //constructor
+    /**
+     * Sets the type of the Thread.
+     *
+     * @param type Thread type
+     */
     public Mood(int type) {
 
         this.icrudUser = new ICRUDUserImpl();
