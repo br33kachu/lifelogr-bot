@@ -18,7 +18,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * It's the control class for data-handling, which the Webservice.class needs
+ * Control class for data communication between the database and the webserver
+ *
  */
 public class WebController {
     private final Logger log = Logger.getLogger(WebController.class.getName());
@@ -102,6 +103,7 @@ public class WebController {
 
     /**
      * Identify a user with a given token
+     *
      * @param token which belongs to a user
      * @return the users telegramId, if a token existst, 0 if no token exists, -1 if the token is expired
      */
@@ -122,6 +124,7 @@ public class WebController {
 
     /**
      * Gets a user who has the telegramID
+     *
      * @param telegramId of the user
      * @return the user if exist, otherwise null
      */
@@ -132,6 +135,7 @@ public class WebController {
 
     /**
      * Capitalizing the first letter of a word
+     *
      * @param line is the word you want to capitalize
      * @return returns a capitalized word
      */
