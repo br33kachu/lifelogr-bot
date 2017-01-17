@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * Internal represenation of a command with arguments.
+ *
  * @author marco
  */
 public class CommandParams
@@ -12,6 +14,11 @@ public class CommandParams
     private String name;
     private List<String> params;
 
+    /**
+     * Constructor
+     * @param name Command-name
+     * @param params Command-params
+     */
     public CommandParams(String name, String... params)
     {
         this.name = name;

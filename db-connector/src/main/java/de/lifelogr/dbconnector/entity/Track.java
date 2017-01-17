@@ -4,6 +4,9 @@ import org.mongodb.morphia.annotations.Embedded;
 
 import java.util.Date;
 
+/**
+ * Represents a single Track within a TrackingObject.
+ */
 @Embedded
 public class Track {
     private Double count;

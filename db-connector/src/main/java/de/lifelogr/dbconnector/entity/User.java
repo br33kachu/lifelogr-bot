@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+/**
+ * User class. Represents a single User in the system and gets persisted.
+ */
 @Entity("users")
 @Indexes(
         {
@@ -37,6 +40,9 @@ public class User
     private String question;
     private Date dndUntil;
 
+    /**
+     * Constructor
+     */
     public User()
     {
         this.trackingObjects = new ArrayList<>();
@@ -166,6 +172,11 @@ public class User
         return trackingObjects;
     }
 
+    /**
+     * Get a single TrackingObject by name
+     * @param name Name of the TrackingObject
+     * @return TrackingObject if one with the given name exists, else null
+     */
     public TrackingObject getTrackingObjectByName(String name)
     {
         for (TrackingObject trackingObject : this.trackingObjects) {
@@ -192,11 +203,19 @@ public class User
         this.question = question;
     }
 
+    /**
+     * Check if the User if fully registered
+     * @return
+     */
     public boolean istFullyRegistered()
     {
         return (!this.username.isEmpty() && !this.birthDate.isEmpty());
     }
 
+    /**
+     * Get the last updated TrackingObject
+     * @return
+     */
     public TrackingObject getLastAddedTrackingObject()
     {
         TrackingObject result = null;
@@ -214,6 +233,9 @@ public class User
         return result;
     }
 
+    /**
+     * Inform observers after document has been persisted to database.
+     */
     @PostPersist
     public void postPersist()
     {

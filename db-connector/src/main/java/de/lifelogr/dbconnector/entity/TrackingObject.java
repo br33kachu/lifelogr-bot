@@ -5,6 +5,9 @@ import org.mongodb.morphia.annotations.Embedded;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a single TrackingObject within the User.
+ */
 @Embedded
 public class TrackingObject {
     private String name;
