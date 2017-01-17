@@ -24,7 +24,7 @@ public class Mood extends TimerTask {
 
     private ICRUDUser icrudUser;
     private Communicator communicator;
-    int threadType =  0;
+    private int threadType =  0;
 
     //constructor
     public Mood(int type) {
