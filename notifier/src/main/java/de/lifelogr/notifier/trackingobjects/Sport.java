@@ -4,69 +4,76 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by christin on 16.01.17.
+ * Contains the lists of related tracking object names for the different sport types.
+ *
+ * @author christin schlimbach
  */
 public class Sport {
 
-    private List<String> sportPower;
-    private List<String> sportStamina;
-    private List<String> sportRelax;
+    private List<String> powerList;
+    private List<String> staminaList;
+    private List<String> relaxList;
 
+    /**
+     * Constructor
+     *
+     * Adds related tracking object names to the list of the specific sport type.
+     */
     public Sport() {
-        this.sportPower = new ArrayList<>();
-        this.sportStamina = new ArrayList<>();
-        this.sportRelax = new ArrayList<>();
+        
+        this.powerList = new ArrayList<>();
+        this.staminaList = new ArrayList<>();
+        this.relaxList = new ArrayList<>();
 
-        //power
-        this.sportPower.add("gewichttraining");
-        this.sportPower.add("krafttraining");
-        this.sportPower.add("hanteltraining");
-        this.sportPower.add("bodybuilding");
-        this.sportPower.add("gerätetraining");
-        this.sportPower.add("muskeltraining");
-        this.sportPower.add("muskelaufbau");
-        this.sportPower.add("gewichtheben");
-        this.sportPower.add("bankdrücken");
-        this.sportPower.add("kreuzheben");
-        this.sportPower.add("bodypump");
-        this.sportPower.add("bbp");
-        this.sportPower.add("bauchbeinepo");
-        this.sportPower.add("rudern");
+        //list for type power
+        this.powerList.add("gewichttraining");
+        this.powerList.add("krafttraining");
+        this.powerList.add("hanteltraining");
+        this.powerList.add("bodybuilding");
+        this.powerList.add("gerätetraining");
+        this.powerList.add("muskeltraining");
+        this.powerList.add("muskelaufbau");
+        this.powerList.add("gewichtheben");
+        this.powerList.add("bankdrücken");
+        this.powerList.add("kreuzheben");
+        this.powerList.add("bodypump");
+        this.powerList.add("bbp");
+        this.powerList.add("bauchbeinepo");
+        this.powerList.add("rudern");
 
-        //stamina
-        this.sportStamina.add("joggen");
-        this.sportStamina.add("laufen");
-        this.sportStamina.add("radeln");
-        this.sportStamina.add("marathon");
-        this.sportStamina.add("radfahren");
-        this.sportStamina.add("parcours");
-        this.sportStamina.add("parcour");
-        this.sportStamina.add("parkour");
-        this.sportStamina.add("parkours");
-        this.sportStamina.add("laufband");
-        this.sportStamina.add("stepper");
-        this.sportStamina.add("schwimmen");
-        this.sportStamina.add("biken");
+        //list for type relax
+        this.relaxList.add("meditieren");
+        this.relaxList.add("meditation");
+        this.relaxList.add("yoga");
+        this.relaxList.add("qigong");
+        this.relaxList.add("pilates");
+        this.relaxList.add("fünftibeter");
+        this.relaxList.add("taichi");
 
-        //relax
-        this.sportRelax.add("meditieren");
-        this.sportRelax.add("meditation");
-        this.sportRelax.add("yoga");
-        this.sportRelax.add("qigong");
-        this.sportRelax.add("pilates");
-        this.sportRelax.add("fünftibeter");
-        this.sportRelax.add("taichi");
+        //list for type stamina
+        this.staminaList.add("joggen");
+        this.staminaList.add("laufen");
+        this.staminaList.add("radeln");
+        this.staminaList.add("marathon");
+        this.staminaList.add("radfahren");
+        this.staminaList.add("parcours");
+        this.staminaList.add("parcour");
+        this.staminaList.add("parkour");
+        this.staminaList.add("parkours");
+        this.staminaList.add("laufband");
+        this.staminaList.add("stepper");
+        this.staminaList.add("schwimmen");
+        this.staminaList.add("biken");
     }
 
-    public List<String> getSportPower() {
-        return sportPower;
+    //getter
+    public List<String> getPowerList() { return powerList; }
+
+    public List<String> getStaminaList() {
+        return staminaList;
     }
 
-    public List<String> getSportStamina() {
-        return sportStamina;
-    }
-
-    public List<String> getSportRelax() {
-        return sportRelax;
+    public List<String> getRelaxList() {
+        return relaxList;
     }
 }

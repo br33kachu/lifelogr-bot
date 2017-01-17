@@ -4,90 +4,97 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by christin on 16.01.17.
+ * Contains the lists of related tracking object names for the different food types.
+ *
+ * @author christin schlimbach
  */
 public class Food {
 
-    private List<String> foodSuperfood;
-    private List<String> foodCandy;
-    private List<String> foodFastfood;
+    private List<String> superfoodList;
+    private List<String> candyList;
+    private List<String> fastfoodList;
 
+    /**
+     * Constructor
+     *
+     * Adds related tracking object names to the list of the specific food type.
+     */
     public Food() {
-        this.foodSuperfood = new ArrayList<>();
-        this.foodCandy = new ArrayList<>();
-        this.foodFastfood = new ArrayList<>();
 
-        //superfood
-        this.foodSuperfood.add("acai");
-        this.foodSuperfood.add("goji");
-        this.foodSuperfood.add("walnuss");
-        this.foodSuperfood.add("walnüsse");
-        this.foodSuperfood.add("himbeere");
-        this.foodSuperfood.add("himbeeren");
-        this.foodSuperfood.add("johannisbeere");
-        this.foodSuperfood.add("johannisbeeren");
-        this.foodSuperfood.add("matcha");
-        this.foodSuperfood.add("matchatee");
-        this.foodSuperfood.add("kokosnuss");
-        this.foodSuperfood.add("ananas");
-        this.foodSuperfood.add("granatapfel");
-        this.foodSuperfood.add("kohl");
-        this.foodSuperfood.add("mango");
-        this.foodSuperfood.add("mandel");
-        this.foodSuperfood.add("mandeln");
-        this.foodSuperfood.add("chia");
-        this.foodSuperfood.add("chiasamen");
-        this.foodSuperfood.add("avocado");
-        this.foodSuperfood.add("kakao");
-        this.foodSuperfood.add("lachs");
-        this.foodSuperfood.add("acerola");
-        this.foodSuperfood.add("physalis");
-        this.foodSuperfood.add("ingwer");
+        this.superfoodList = new ArrayList<>();
+        this.candyList = new ArrayList<>();
+        this.fastfoodList = new ArrayList<>();
 
-        //candy
-        this.foodCandy.add("schokolade");
-        this.foodCandy.add("pralinen");
-        this.foodCandy.add("schokoriegel");
-        this.foodCandy.add("fruchtgummi");
-        this.foodCandy.add("weingummi");
-        this.foodCandy.add("chips");
-        this.foodCandy.add("kartoffelchips");
-        this.foodCandy.add("bonbon");
-        this.foodCandy.add("bonbons");
-        this.foodCandy.add("eis");
-        this.foodCandy.add("gummibärchen");
-        this.foodCandy.add("keks");
-        this.foodCandy.add("kekse");
-        this.foodCandy.add("karamell");
-        this.foodCandy.add("lebkuchen");
-        this.foodCandy.add("lakritz");
-        this.foodCandy.add("lutscher");
-        this.foodCandy.add("nougat");
+        //list for type candy
+        this.candyList.add("schokolade");
+        this.candyList.add("pralinen");
+        this.candyList.add("schokoriegel");
+        this.candyList.add("fruchtgummi");
+        this.candyList.add("weingummi");
+        this.candyList.add("chips");
+        this.candyList.add("kartoffelchips");
+        this.candyList.add("bonbon");
+        this.candyList.add("bonbons");
+        this.candyList.add("eis");
+        this.candyList.add("gummibärchen");
+        this.candyList.add("keks");
+        this.candyList.add("kekse");
+        this.candyList.add("karamell");
+        this.candyList.add("lebkuchen");
+        this.candyList.add("lakritz");
+        this.candyList.add("lutscher");
+        this.candyList.add("nougat");
 
-        //fastfood
-        this.foodFastfood.add("burger");
-        this.foodFastfood.add("cheeseburger");
-        this.foodFastfood.add("hamburger");
-        this.foodFastfood.add("pizza");
-        this.foodFastfood.add("pommes");
-        this.foodFastfood.add("fritten");
-        this.foodFastfood.add("pommesfrittes");
-        this.foodFastfood.add("currywurst");
-        this.foodFastfood.add("döner");
-        this.foodFastfood.add("chickennuggets");
-        this.foodFastfood.add("nuggets");
-        this.foodFastfood.add("kroketten");
+        //list for type fastfood
+        this.fastfoodList.add("burger");
+        this.fastfoodList.add("cheeseburger");
+        this.fastfoodList.add("hamburger");
+        this.fastfoodList.add("pizza");
+        this.fastfoodList.add("pommes");
+        this.fastfoodList.add("fritten");
+        this.fastfoodList.add("pommesfrittes");
+        this.fastfoodList.add("currywurst");
+        this.fastfoodList.add("döner");
+        this.fastfoodList.add("chickennuggets");
+        this.fastfoodList.add("nuggets");
+        this.fastfoodList.add("kroketten");
+
+        //list for type superfood
+        this.superfoodList.add("acai");
+        this.superfoodList.add("goji");
+        this.superfoodList.add("walnuss");
+        this.superfoodList.add("walnüsse");
+        this.superfoodList.add("himbeere");
+        this.superfoodList.add("himbeeren");
+        this.superfoodList.add("johannisbeere");
+        this.superfoodList.add("johannisbeeren");
+        this.superfoodList.add("matcha");
+        this.superfoodList.add("matchatee");
+        this.superfoodList.add("kokosnuss");
+        this.superfoodList.add("ananas");
+        this.superfoodList.add("granatapfel");
+        this.superfoodList.add("kohl");
+        this.superfoodList.add("mango");
+        this.superfoodList.add("mandel");
+        this.superfoodList.add("mandeln");
+        this.superfoodList.add("chia");
+        this.superfoodList.add("chiasamen");
+        this.superfoodList.add("avocado");
+        this.superfoodList.add("kakao");
+        this.superfoodList.add("lachs");
+        this.superfoodList.add("acerola");
+        this.superfoodList.add("physalis");
+        this.superfoodList.add("ingwer");
     }
 
-    public List<String> getFoodSuperfood() {
-        return foodSuperfood;
+    //getter
+    public List<String> getSuperfoodList() {
+        return superfoodList;
     }
 
-    public List<String> getFoodCandy() {
-        return foodCandy;
+    public List<String> getCandyList() {
+        return candyList;
     }
 
-    public List<String> getFoodFastfood() {
-        return foodFastfood;
-    }
+    public List<String> getFastfoodList() { return fastfoodList; }
 }
