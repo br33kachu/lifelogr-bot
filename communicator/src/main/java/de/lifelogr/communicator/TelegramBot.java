@@ -93,7 +93,7 @@ public class TelegramBot extends TelegramLongPollingCommandBot
 
                 // Der User ist registriert und antwortet auf eine Frage
                 if (user != null && user.getQuestion() != null && !user.getQuestion().isEmpty()) {
-                    sendMessage.setText(this.processQuestion(user, message.getText()));
+                    sendMessage.setText(this.processQuestion(update, message.getText()));
                 } else if (user != null) {
                     // TODO: accept start command if no profile exists!
 
@@ -141,38 +141,53 @@ public class TelegramBot extends TelegramLongPollingCommandBot
     /**
      * If a User has a pending question to be answered, process message as answer.
      *
-     * @param user User who sent the message.
+     * @param update Update
      * @param message Message send.
      * @return Message to be sent back to the User
      */
-    private String processQuestion(User user, String message)
+    private String processQuestion(Update update, String message)
     {
         StringBuilder builder = new StringBuilder();
+        User user = this.icrudUser.getUserByTelegramId(update.getMessage().getFrom().getId());
+        String question = user.getQuestion();
 
-        switch (user.getQuestion()) {
-            case "username":
-                this.icrudUser.updateField(user, "username", message.trim());
-                this.icrudUser.updateField(user, "question", "");
+        if (question.equals("username")) {
+            this.icrudUser.updateField(user, "username", message.trim());
+            this.icrudUser.updateField(user, "question", "");
+            builder
+                    .append("Hallo ")
+                    .append(message.trim())
+                    .append("! Dein Profil wurde angelegt.\nViel Spaß mit der Nutzung des LifeLogr-Bots ")
+                    .append(Emoji.SMILING_FACE_WITH_SMILING_EYES);
+        } else if (question.equals("deleteProfile")) {
+            if (this.isPositiveAnswer(message)) {
+                this.icrudUser.deleteUser(user);
                 builder
-                        .append("Hallo ")
-                        .append(message.trim())
-                        .append("! Dein Profil wurde angelegt.\nViel Spaß mit der Nutzung des LifeLogr-Bots ")
-                        .append(Emoji.SMILING_FACE_WITH_SMILING_EYES);
-                break;
-            case "deleteProfile":
-                if (this.isPositiveAnswer(message)) {
-                    this.icrudUser.deleteUser(user);
-                    builder
-                            .append("Okay, schade.. Es war schön mit dir. Vielleicht bis zum nächsten Mal! ")
-                            .append(Emoji.FACE_WITH_OK_GESTURE)
-                            .append(" Dein Profil wurde entfernt!");
-                } else {
-                    user.setQuestion(null);
-                    this.icrudUser.saveUser(user);
-                    builder
-                            .append("Der Vorgang wurde abgebrochen!");
+                        .append("Okay, schade.. Es war schön mit dir. Vielleicht bis zum nächsten Mal! ")
+                        .append(Emoji.FACE_WITH_OK_GESTURE)
+                        .append(" Dein Profil wurde entfernt!");
+            } else {
+                user.setQuestion(null);
+                this.icrudUser.saveUser(user);
+                builder.append("Der Vorgang wurde abgebrochen!");
+            }
+        } else if (question.startsWith("tr:")) {
+            if (this.isPositiveAnswer(message)) {
+                try {
+                    String toName = question.split(":")[1];
+                    BotCommand cmd = this.getRegisteredCommand("track");
+                    String[] params = { toName };
+                    cmd.execute(this, update.getMessage().getFrom(), update.getMessage().getChat(), params);
+                    builder.append(Emoji.HEAVY_CHECK_MARK);
+                } catch (ArrayIndexOutOfBoundsException e) {
+
                 }
-                break;
+            } else {
+                builder.append("Okay, vielleicht frage ich die später nochmal!");
+                user.setQuestion(null);
+                this.icrudUser.saveUser(user);
+            }
+
         }
 
         return builder.toString();
