@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 /**
- * Klasse zum Übersetzen von freiem Text in entsprechende Kommandos.
+ * Class for translating free text into internal commands.
  *
  * @author Marco Kretz
  * @date 04.12.2016
@@ -20,6 +20,11 @@ public class Translator
 
     private Set<CommandMatcher> matchers;
 
+    /**
+     * Constructor.
+     *
+     * Add all available CommandMatchers into a single Map.
+     */
     private Translator()
     {
         this.matchers = new HashSet<>();
@@ -46,16 +51,17 @@ public class Translator
     }
 
     /**
-     * Übersetze einen vom User gesendeten Text in das entsprechende Kommando.
+     * Translate free text sent by a User into an internal command.
      *
-     * @param text Zu übersetzender Text
-     * @return Übersetztes Kommando
+     * @param text Text to translate
+     * @return Translated command
      */
     public CommandParams translate(String text)
     {
-        // Text normalisieren
+        // Normalize text
         final String normalizedText = text.trim().toLowerCase().replaceAll(" +", " ");
 
+        // Try to find a CommandMatcher which matches the text
         try {
             return this.matchers
                     .parallelStream()

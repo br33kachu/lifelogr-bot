@@ -30,42 +30,43 @@ public class Bootloader
         // Start webserver
         new Thread(new Webservice()).start();
 
-        // Put user in database
+        // Start DBConnector instance
         DBConnector dbc = DBConnector.getInstance();
+
+        // Start Notifier instance
         Notifier notifier = Notifier.getInstance();
 
-        //start Memory-Thread (rate ist 2 hours)
+        // Start Memory-Thread (2h interval)
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new Memory(), 0, 2 * 60 * 60 * 1000);
 
-
-        //configure Mood-Threads
+        // Configure and start "AskForMood"-Tasks
         LocalDateTime now = LocalDateTime.now();
         ZoneId currentZone = ZoneId.of("Europe/Berlin");
         ZonedDateTime zonedNow = ZonedDateTime.of(now, currentZone);
         ZonedDateTime zonedMorning;
         ZonedDateTime zonedEvening;
 
-        //set time to trigger threads
+        // Set time to start threads
         zonedMorning = zonedNow.withHour(8).withMinute(0).withSecond(0);
-        if(zonedNow.compareTo(zonedMorning) > 0)
+        if (zonedNow.compareTo(zonedMorning) > 0)
             zonedMorning = zonedMorning.plusDays(1);
         zonedEvening = zonedNow.withHour(19).withMinute(00).withSecond(0);
-        if(zonedNow.compareTo(zonedEvening) > 0)
+        if (zonedNow.compareTo(zonedEvening) > 0)
             zonedEvening = zonedEvening.plusDays(1);
 
-        //get delays
+        // Calculate delays
         Duration durationMorning = Duration.between(zonedNow, zonedMorning);
         long delayMorning = durationMorning.getSeconds();
         Duration durationEvening = Duration.between(zonedNow, zonedEvening);
         long delayEvening = durationEvening.getSeconds();
 
-        //start morning Mood-Thread (08:00 Uhr)
+        // Start morning Mood-Thread (08:00 Uhr)
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(new Mood(8), delayMorning,
                 24*60*60, TimeUnit.SECONDS);
 
-        //start evening Mood-Thread (19:00 Uhr)
+        // Start evening Mood-Thread (19:00 Uhr)
         scheduler.scheduleAtFixedRate(new Mood(19), delayEvening,
                 24*60*60, TimeUnit.SECONDS);
     }
