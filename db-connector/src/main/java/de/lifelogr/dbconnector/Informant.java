@@ -20,7 +20,7 @@ public class Informant {
     private Informant() {}
 
     /**
-     * Implements the singelton
+     * Implements the singleton.
      *
      * @return Instance of the class
      */

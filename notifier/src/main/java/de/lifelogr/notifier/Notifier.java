@@ -36,7 +36,7 @@ public class Notifier extends Observer {
     }
 
     /**
-     * Implements the singelton
+     * Implements the singleton.
      *
      * @return Instance of the class
      */
