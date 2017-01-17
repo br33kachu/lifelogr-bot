@@ -1,7 +1,6 @@
 package de.lifelogr.translator.matcher;
 
 import de.lifelogr.translator.structures.CommandParams;
-
 import java.util.ArrayList;
 
 /**
