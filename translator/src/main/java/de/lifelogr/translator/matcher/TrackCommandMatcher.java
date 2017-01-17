@@ -1,6 +1,5 @@
 package de.lifelogr.translator.matcher;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import de.lifelogr.translator.structures.CommandParams;
 
 import java.util.HashMap;
