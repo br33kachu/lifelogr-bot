@@ -16,7 +16,7 @@ import java.util.Map;
 public class WebModel {
 
     /**
-     * Creates a login-site
+     * Creates a login-site from the template file: "resources\templates\login.hbs"
      *
      * @return html-string of the login-site
      */
@@ -28,7 +28,8 @@ public class WebModel {
     }
 
     /**
-     * Creates a diagram-site
+     * Creates a diagram-site from the template file: "resources\templates\diagram.hbs"
+     *
      * @param items is the vis.js dataset as string
      * @param user who is logged in on the website
      * @return html-string of the diagram-site
@@ -73,7 +74,8 @@ public class WebModel {
 
     /**
      * This method is necessary to summarize all trackingObject names and remove duplicates. This is needed for the
-     * HTML-Checkboxes
+     *
+     * HTML-Checkboxes for the diagram-site
      * @param items is the vis.js dataset as string
      * @return a list with summarized item names
      */
