@@ -63,6 +63,7 @@ public class Sport {
         this.staminaList.add("laufband");
         this.staminaList.add("stepper");
         this.staminaList.add("schwimmen");
+        this.staminaList.add("wandern");
         this.staminaList.add("biken");
     }
 
