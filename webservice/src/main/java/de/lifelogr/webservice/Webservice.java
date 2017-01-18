@@ -52,11 +52,11 @@ public class Webservice implements Runnable {
                     case 0: // No user found with the connected token
                         String authFail = "{\"auth\":\"false\"}";
                         response.status(401);
-                        response.body("Status Code: 401\nToken ist ungültig!");
+                        response.body("Status Code: 401\nToken ist ung\u00fcltig!");
                         return response.body();
                     case -1: // Token is expired
                         if (StartWebServer.LOGGING)
-                            log.log(Level.INFO, "token: \"" + token + "\" wurde uebergeben - Token ist aber abgelaufen!");
+                            log.log(Level.INFO, "token: \"" + token + "\" wurde \u00fcbergeben - Token ist aber abgelaufen!");
                         response.status(410);
                         response.body("auth_expired");
                         return response.body();
@@ -92,21 +92,21 @@ public class Webservice implements Runnable {
                     case 0: // user
                         // Es existiert kein User mit dem Token - Fehlermeldung
                         if (StartWebServer.LOGGING)
-                            log.log(Level.INFO, "token: \"" + token + "\" wurde uebergeben - Es existiert kein User mit dem Token");
+                            log.log(Level.INFO, "token: \"" + token + "\" wurde \u00fcbergeben - Es existiert kein User mit dem Token");
                         response.status(401);
                         response.body("auth_false");
                         return response.body();
                     case -1:
                         // Token ist abgelaufen - Fehlermeldung
                         if (StartWebServer.LOGGING)
-                            log.log(Level.INFO, "token: \"" + token + "\" wurde uebergeben - Token ist aber abgelaufen!");
+                            log.log(Level.INFO, "token: \"" + token + "\" wurde \u00fcbergeben - Token ist aber abgelaufen!");
                         response.status(410);
                         response.body("auth_expired");
                         return response.body();
                     default:
                         // Neue Session wird erstellt
                         if (StartWebServer.LOGGING)
-                            log.log(Level.INFO, "token: \"" + token + "\" wurde uebergeben - User mit der ID: " + id + " gefunden. Session wird erstellt und Weiterleitung auf die Diagramm-Seite");
+                            log.log(Level.INFO, "token: \"" + token + "\" wurde \u00fcbergeben - User mit der ID: " + id + " gefunden. Session wird erstellt und Weiterleitung auf die Diagramm-Seite");
                         request.session(true);
                         request.session().attribute("telegramID", id);
                         return response.body();
@@ -114,7 +114,7 @@ public class Webservice implements Runnable {
             }
             // Session existiert bereits
             if (StartWebServer.LOGGING)
-                log.log(Level.INFO, "token: \"" + token + "\" wurde uebergeben - Session existiert bereits, Weiterleitung auf die Diagramm-Seite");
+                log.log(Level.INFO, "token: \"" + token + "\" wurde \u00fcbergeben - Session existiert bereits, Weiterleitung auf die Diagramm-Seite");
             return response.body();
         });
 
@@ -125,7 +125,7 @@ public class Webservice implements Runnable {
         get("/diagram", (request, response) -> {
             if (StartWebServer.LOGGING) log.log(Level.INFO, "Seite \"/diagram\" aufgerufen.");
             if (!request.session().attributes().isEmpty()) {
-                if (StartWebServer.LOGGING) log.log(Level.INFO, "Session existiert und die Seite wird übergeben.");
+                if (StartWebServer.LOGGING) log.log(Level.INFO, "Session existiert und die Seite wird \u00fcbergeben.");
                 int telegramId = request.session().attribute("telegramID");
                 User user = webController.getUserByTelegramId(telegramId);
                 String dataSet;
@@ -142,7 +142,7 @@ public class Webservice implements Runnable {
                 return webModel.getDiagram(dataSet, user);
             }
             if (StartWebServer.LOGGING)
-                log.log(Level.INFO, "Session existiert nicht - 401 Fehlerseite wird übergeben.");
+                log.log(Level.INFO, "Session existiert nicht - 401 Fehlerseite wird \u00fcbergeben.");
             response.status(401);
             response.body("Status Code: 401\nKeine Authorisierung!");
             return response.body();
@@ -170,7 +170,7 @@ public class Webservice implements Runnable {
          * GET-Path that deletes the existing session attribute and redirects to the mainpage
          */
         get("/logout", (request, response) -> {
-            if (StartWebServer.LOGGING) log.log(Level.INFO, "Seite \"/logout\" aufgerufen. Session wird gelöscht.");
+            if (StartWebServer.LOGGING) log.log(Level.INFO, "Seite \"/logout\" aufgerufen. Session wird gel\u00f6scht.");
             request.session().removeAttribute("telegramId");
             request.session().invalidate();
             response.redirect("/");

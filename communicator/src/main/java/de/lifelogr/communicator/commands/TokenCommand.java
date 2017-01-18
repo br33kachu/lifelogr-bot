@@ -31,7 +31,7 @@ public class TokenCommand extends BotCommand
     /**
      * Constructor
      *
-     * @param commandRegistry
+     * @param commandRegistry Global command registry
      */
     public TokenCommand(ICommandRegistry commandRegistry)
     {

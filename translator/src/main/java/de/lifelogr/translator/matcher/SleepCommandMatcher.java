@@ -20,12 +20,10 @@ public class SleepCommandMatcher extends CommandMatcher
     @Override
     public CommandParams getCommandParams(String text)
     {
-        // Untersuche den Text mit allen verfügbaren /track-Patterns.
         for (String pattern : this.patterns) {
             Pattern p = Pattern.compile(pattern);
             Matcher m = p.matcher(text);
 
-            // Wurde der aktuelle Ausdruck gematcht?
             if (m.find()) {
                 Integer value;
 
@@ -36,7 +34,6 @@ public class SleepCommandMatcher extends CommandMatcher
                     return new CommandParams("sleep");
                 }
 
-                // Versuche, den angegebenen Wert zu ermitteln
                 try {
                     value = Integer.parseInt(m.group("value"));
                 } catch (Exception e) {

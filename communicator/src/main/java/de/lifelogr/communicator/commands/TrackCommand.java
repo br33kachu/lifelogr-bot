@@ -72,7 +72,7 @@ public class TrackCommand extends BotCommand
             String name = arguments[0].trim();
             Double count;
             try {
-                if (name.endsWith("stimmung")) {
+                if (name.toLowerCase().trim().equals("stimmung")) {
                     count = this.moodToDouble(arguments[1]);
                 } else {
                     count = Double.parseDouble(arguments[1]);
@@ -125,6 +125,8 @@ public class TrackCommand extends BotCommand
         bestMoods.add("super");
         bestMoods.add("bestens");
         bestMoods.add("hervorragend");
+        bestMoods.add("klasse");
+        bestMoods.add("prima");
 
         List<String> okMoods = new ArrayList<>();
         okMoods.add("ok");
@@ -133,14 +135,18 @@ public class TrackCommand extends BotCommand
 
         List<String> mediumMoods = new ArrayList<>();
         mediumMoods.add("normal");
+        mediumMoods.add("naja");
+        mediumMoods.add("joa");
 
         List<String> badMoods = new ArrayList<>();
         badMoods.add("schlecht");
-
+        badMoods.add("mies");
+        bestMoods.add("gestresst");
 
         List<String> veryBadMoods = new ArrayList<>();
         veryBadMoods.add("beschissen");
         veryBadMoods.add("scheisse");
+        veryBadMoods.add("abgefuckt");
 
         this.moods.put(5.0, bestMoods);
         this.moods.put(4.0, okMoods);
@@ -166,11 +172,12 @@ public class TrackCommand extends BotCommand
 
     private Double moodToDouble(String mood)
     {
+        final String normlaizedMood = mood.toLowerCase().trim();
         try {
             return this.moods
                     .entrySet()
                     .parallelStream()
-                    .filter(e -> e.getValue().contains(mood))
+                    .filter(e -> e.getValue().contains(normlaizedMood))
                     .findFirst()
                     .get()
                     .getKey();

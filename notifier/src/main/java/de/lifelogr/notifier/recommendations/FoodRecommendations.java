@@ -23,17 +23,17 @@ public class FoodRecommendations {
 
         //recommendations for type candy
         this.recommendations.put(TrackingObjectType.CANDY, new String[]
-                {"Meinst du nicht, du hast langsam genug Süßigkeiten?" + Emoji.SMILING_FACE_WITH_OPEN_MOUTH,
-                 "Zu viele Süßigkeiten sind schlecht für die Figur."});
+                {"Meinst du nicht, du hast langsam genug S\u00fc\u00dfigkeiten?" + Emoji.SMILING_FACE_WITH_OPEN_MOUTH,
+                 "Zu viele S\u00fc\u00dfigkeiten sind schlecht f\u00fcr die Figur."});
 
         //recommendations for type fastfood
         this.recommendations.put(TrackingObjectType.FASTFOOD, new String[]
                 {"Das war aber jetzt schon ziemlich viel Fastfood in der letzten Zeit...",
-                 "Iss doch lieber mal etwas Gesünderes"});
+                 "Iss doch lieber mal etwas Ges\u00fcnderes"});
 
         //recommendations for type superfood
         this.recommendations.put(TrackingObjectType.SUPERFOOD, new String[]
-                {"Das gehört zu den Superfoods. Die sind super gesund und haben nur wenig Fett.",
+                {"Das geh\u00f6rt zu den Superfoods. Die sind super gesund und haben nur wenig Fett.",
                  "Superfoods sind einfach super!",
                  "Du lebst wirklich sehr gesund, Respekt!"});
     }

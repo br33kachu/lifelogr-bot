@@ -1,7 +1,7 @@
 package de.lifelogr.dbconnector.services;
 
 /**
- * Created by christin on 06.12.16.
+ * Defines types of TrackingObjets.
  */
 public enum TrackingObjectType {
     CAFFEIN, ALCOHOL, BEAUTY, SUPERFOOD, CANDY, FASTFOOD, POWER, STAMINA, RELAX, UNBEKANNT

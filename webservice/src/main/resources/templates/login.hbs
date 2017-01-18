@@ -30,7 +30,8 @@
     <div class="row center">
         <div class="col s4"></div>
         <div class="col s4">
-            <form action="#">
+            <!-- Token Input field and Submit Button -->
+            <form>
                 <div class="request-field input-field">
                     <input id="input_token" type="text" class="validate">
                     <label for="input_token">Token</label>
@@ -41,10 +42,12 @@
             </form>
         </div>
     </div>
+    <!-- Failure Message, is empty if site is newly loaded -->
     <div id="authfail" class="alert-box alert col s2 red"></div>
     <div class="col s2"></div>
     <div class="row center">
         <div class="col s1"></div>
+        <!-- Info Message for the User, how to get a token -->
         <div class="col s10">
             <blockquote>
                 Um einen Token anzufordern, in Telegram eine Nachricht mit /token an den LifeLogr-Bot senden.
@@ -56,6 +59,16 @@
 <!-- Compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
 <script>
+    /* Submitting with pressing ENTER */
+    $(document).ready(function () {
+        $('#input_token').keydown(function (event) {
+            if (event.keyCode == 13) {
+                login();
+                return false;
+            }
+        });
+    });
+    /* POST Token to the Server */
     function login() {
         var $textfield = $('#input_token');
         $.ajax({
@@ -64,13 +77,16 @@
             type: 'POST',
             data: $textfield.val(),
             statusCode: {
+                /* If token and user was found - everything is successfull */
                 200: function () {
                     window.open('diagram','_self');
                 },
+                /* If token doesn't exists */
                 401: function () {
                     var $authfail = $('#authfail');
                     $authfail.text("Token existiert nicht!");
                 },
+                /* If token is expired */
                 410: function () {
                     var $authfail = $('#authfail');
                     $authfail.text("Token ist abgelaufen. Bitte hole dir einen neuen Token!");
@@ -78,12 +94,6 @@
             }
         })
     }
-    /*
-    $('#input_token').onkeyup(function (e) {
-        if (e.keyCode === 13) {
-            login();
-        }
-    }) */
 </script>
 </body>
 </html>

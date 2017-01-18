@@ -8,7 +8,6 @@ import static org.junit.Assert.*;
 
 /**
  * @author Marco Kretz
- * @date 04.12.2016
  */
 public class TranslatorTest
 {

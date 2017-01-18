@@ -66,7 +66,7 @@ public class StartCommand extends BotCommand
             // Persist User
             icrudUser.saveUser(newUser);
 
-            message.setText("Hi, schön dich zu sehen! " + Emoji.HAPPY_PERSON_RAISING_ONE_HAND + "\nWie heißt du?");
+            message.setText("Hi, sch\u00f6n dich zu sehen! " + Emoji.HAPPY_PERSON_RAISING_ONE_HAND + "\nWie hei\u00dft du?");
         } else {
             message.setText("Ach du, wir kennen uns doch schon " + Emoji.SMILING_FACE_WITH_OPEN_MOUTH);
         }

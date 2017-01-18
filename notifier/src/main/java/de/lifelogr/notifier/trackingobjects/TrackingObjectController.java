@@ -23,7 +23,7 @@ public class TrackingObjectController {
     }
 
     /**
-     * Implements the singelton
+     * Implements the singleton.
      *
      * @return Instance of the class
      */

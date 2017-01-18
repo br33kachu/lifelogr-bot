@@ -6,15 +6,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by christin on 05.12.16.
+ * To register an observer.
+ * Notifies all registered observer.
+ *
+ * @author christin schlimbach
  */
 public class Informant {
 
     private static Informant instance = null;
     private static List<Observer> observerList = new ArrayList<>();
 
+    //constructor
     private Informant() {}
 
+    /**
+     * Implements the singleton.
+     *
+     * @return Instance of the class
+     */
     public static Informant getInstance() {
         if(instance == null) {
             instance = new Informant();
@@ -22,12 +31,23 @@ public class Informant {
         return instance;
     }
 
+    /**
+     * Register an observer.
+     *
+     * @param observer Observer
+     */
     public void register(Observer observer) {
-        if(!this.observerList.contains(observer)) {
+        if (!this.observerList.contains(observer)) {
             this.observerList.add(observer);
         }
     }
 
+    /**
+     * Notify all registered observer.
+     *
+     * @param user Current user
+     * @param object Tracking object
+     */
     public static void notifyObserver(User user, TrackingObject object) {
         for (Observer observer : Informant.observerList) {
             observer.onInform(user, object);
