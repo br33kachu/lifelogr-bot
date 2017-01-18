@@ -9,10 +9,7 @@ import de.lifelogr.dbconnector.services.ICRUDUser;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.TimerTask;
+import java.util.*;
 
 /**
  * Sends a question every morning and evening to get the user's current mood.
@@ -50,11 +47,12 @@ public class Mood extends TimerTask {
             if (user.getQuestion() == null || user.getQuestion().isEmpty()) {
                 user.setQuestion("mood");
                 this.icrudUser.saveUser(user);
+                Date currentDate = new Date();
 
                 //send messages
-                if (this.threadType == 8) {
+                if ((this.threadType == 8) && (user.getDndUntil() == null || currentDate.after(user.getDndUntil()))) {
                     this.communicator.sendMessage(user.getChatId().toString(), "Guten Morgen, wie geht's dir heute?");
-                } else if (this.threadType == 19) {
+                } else if ((this.threadType == 19) && (user.getDndUntil() == null || currentDate.after(user.getDndUntil()))) {
                     this.communicator.sendMessage(user.getChatId().toString(), "Na, wie geht es dir heute Abend?");
                 }
             }

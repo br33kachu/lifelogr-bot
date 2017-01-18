@@ -49,8 +49,12 @@ public class Memory extends TimerTask {
             TrackingObject tObject = listTObjects.get(random);
             user.setQuestion("tr:" + tObject.getName());
             this.icrudUser.saveUser(user);
+            Date currentDate = new Date();
+
             //send message
-            this.communicator.sendMessage(user.getChatId().toString(), "Hey, du hast \"" + tObject.getName() + "\" heute noch nicht getrackt. Soll ich das jetzt f\u00fcr dich erledigen?");
+            if (user.getDndUntil() == null || currentDate.after(user.getDndUntil())) {
+                this.communicator.sendMessage(user.getChatId().toString(), "Hey, du hast \"" + tObject.getName() + "\" heute noch nicht getrackt. Soll ich das jetzt f\u00fcr dich erledigen?");
+            }
         }
     }
 
