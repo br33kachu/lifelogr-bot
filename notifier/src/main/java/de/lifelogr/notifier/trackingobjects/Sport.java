@@ -45,6 +45,7 @@ public class Sport {
         this.relaxList.add("meditieren");
         this.relaxList.add("meditation");
         this.relaxList.add("yoga");
+        this.relaxList.add("joga");
         this.relaxList.add("qigong");
         this.relaxList.add("pilates");
         this.relaxList.add("f\u00fcnftibeter");
