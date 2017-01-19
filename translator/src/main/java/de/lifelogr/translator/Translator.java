@@ -29,11 +29,11 @@ public class Translator
         this.matchers = new HashSet<>();
         this.matchers.add(new HelpCommandMatcher());
         this.matchers.add(new StartCommandMatcher());
-        this.matchers.add(new TrackCommandMatcher());
         this.matchers.add(new EndCommandMatcher());
         this.matchers.add(new WakeupCommandMatcher());
         this.matchers.add(new TokenCommandMatcher());
         this.matchers.add(new SleepCommandMatcher());
+        this.matchers.add(new TrackCommandMatcher());
     }
 
     public static Translator getInstance()
@@ -61,15 +61,12 @@ public class Translator
         final String normalizedText = text.trim().toLowerCase().replaceAll(" +", " ");
 
         // Try to find a CommandMatcher which matches the text
-        try {
-            return this.matchers
-                    .parallelStream()
-                    .filter(m -> m.matches(normalizedText))
-                    .findFirst()
-                    .get()
-                    .getCommandParams(normalizedText);
-        } catch (NoSuchElementException e) {
-            return null;
+        for (CommandMatcher cm : this.matchers) {
+            if (cm.matches(normalizedText)) {
+                return cm.getCommandParams(normalizedText);
+            }
         }
+
+        return null;
     }
 }

@@ -183,5 +183,16 @@ public enum Emoji {
         }
 
         return sb.toString();
-    }
+   }
+
+   public static boolean contains(String test)
+   {
+       for (Emoji e : Emoji.values()) {
+           if (e.name().equals(test)) {
+               return true;
+           }
+       }
+
+       return false;
+   }
 }

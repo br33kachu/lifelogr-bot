@@ -13,6 +13,7 @@ import org.telegram.telegrambots.logging.BotLogger;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 /**
  * Command: /sleep
@@ -56,6 +57,7 @@ public class SleepCommand extends BotCommand
                 String unit = param.substring(param.length() - 1);
 
                 Calendar calendar = Calendar.getInstance();
+                calendar.setTimeZone(TimeZone.getTimeZone("Europe/Berlin"));
                 switch (unit) {
                     case "h":
                         calendar.add(Calendar.HOUR, length);
@@ -72,7 +74,7 @@ public class SleepCommand extends BotCommand
                 icrudUser.saveUser(currentUser);
 
                 String dndDate = new SimpleDateFormat("dd.MM.yyyy").format(calendar.getTime());
-                String dndTime = new SimpleDateFormat("hh:mm").format(calendar.getTime());
+                String dndTime = new SimpleDateFormat("HH:mm").format(calendar.getTime());
                 builder
                         .append("Alles klar, bis zum ")
                         .append(dndDate)
