@@ -203,49 +203,6 @@ public class User
         this.question = question;
     }
 
-    /**
-     * Check if the User if fully registered
-     * @return true if User is fully registered
-     */
-    public boolean istFullyRegistered()
-    {
-        return (!this.username.isEmpty() && !this.birthDate.isEmpty());
-    }
-
-    /**
-     * Get the last updated TrackingObject
-     * @return Last updated TrackingObject
-     */
-    public TrackingObject getLastAddedTrackingObject()
-    {
-        TrackingObject result = null;
-
-        for (TrackingObject current : this.trackingObjects) {
-            if (result == null) {
-                result = current;
-            } else {
-                if (current.getTracks().get(current.getTracks().size() - 1).getDate().getTime() > result.getTracks().get(result.getTracks().size() - 1).getDate().getTime()) {
-                    result = current;
-                }
-            }
-        }
-
-        return result;
-    }
-
-    /**
-     * Inform observers after document has been persisted to database.
-     */
-    @PostPersist
-    public void postPersist()
-    {
-        TrackingObject lastTrackingObject = this.getLastAddedTrackingObject();
-
-        if (lastTrackingObject != null) {
-            Informant.notifyObserver(this, this.getLastAddedTrackingObject());
-        }
-    }
-
     public Date getDndUntil()
     {
         return dndUntil;

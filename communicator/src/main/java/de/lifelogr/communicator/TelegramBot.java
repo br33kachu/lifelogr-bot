@@ -151,7 +151,7 @@ public class TelegramBot extends TelegramLongPollingCommandBot
 
         if (question.equals("username")) { // User has been asked for his username
             this.icrudUser.updateField(user, "username", message.trim());
-            this.icrudUser.updateField(user, "question", null);
+            this.icrudUser.updateField(user, "question", "");
             builder
                     .append("Hallo ")
                     .append(message.trim())

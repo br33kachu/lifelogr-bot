@@ -1,6 +1,7 @@
 package de.lifelogr.communicator.commands;
 
 import de.lifelogr.communicator.services.Emoji;
+import de.lifelogr.dbconnector.Informant;
 import de.lifelogr.dbconnector.entity.Track;
 import de.lifelogr.dbconnector.entity.TrackingObject;
 import de.lifelogr.dbconnector.impl.ICRUDUserImpl;
@@ -107,6 +108,7 @@ public class TrackCommand extends BotCommand
             this.icrudUser.saveUser(currentUser);
 
             msg.setText(this.successMessages[new Random().nextInt(this.successMessages.length)]);
+            Informant.notifyObserver(currentUser, trackingObject);
         } else {
             msg.setText("Hey, du hast noch kein Profil, daher kannst du das leider noch nicht tun!");
         }
