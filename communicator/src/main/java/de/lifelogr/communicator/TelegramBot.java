@@ -91,6 +91,10 @@ public class TelegramBot extends TelegramLongPollingCommandBot
 
                 // User has a profile and answers to a question
                 if (user != null && user.getQuestion() != null && !user.getQuestion().isEmpty()) {
+                    String answer = this.processQuestion(update, message.getText());
+                    if (answer == null) {
+                        return;
+                    }
                     sendMessage.setText(this.processQuestion(update, message.getText()));
                 } else if (user != null) {
                     // TODO: accept start command if no profile exists!
@@ -176,7 +180,6 @@ public class TelegramBot extends TelegramLongPollingCommandBot
                     BotCommand cmd = this.getRegisteredCommand("track");
                     String[] params = { toName };
                     cmd.execute(this, update.getMessage().getFrom(), update.getMessage().getChat(), params);
-                    builder.append(Emoji.HEAVY_CHECK_MARK);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     BotLogger.error("QUESTION:TR", e.getMessage());
                 }
@@ -192,7 +195,6 @@ public class TelegramBot extends TelegramLongPollingCommandBot
             BotCommand cmd = this.getRegisteredCommand("track");
             String[] params = { "stimmung", message };
             cmd.execute(this, update.getMessage().getFrom(), update.getMessage().getChat(), params);
-            builder.append(Emoji.HEAVY_CHECK_MARK);
         }
 
         return builder.toString();
