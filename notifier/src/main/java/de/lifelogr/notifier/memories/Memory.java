@@ -91,7 +91,7 @@ public class Memory extends TimerTask {
                 }
             }
             //notable tracking object if tracks yesterday and before yesterday in intervall +- 1 hour exist and no track from today
-            if (inInterval1 && inInterval2 && trackedToday == false && (tObject.isCountable() == true)) {
+            if (inInterval1 == true && inInterval2 == true && trackedToday == false && (tObject.isCountable() == true)) {
                 result.add(tObject);
             }
         }
